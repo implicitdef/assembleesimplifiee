@@ -1,0 +1,54 @@
+{
+  "name": "nosdeputes2-front",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=16",
+    "yarn": "^1.22"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "checktypes": "tsc --noEmit",
+    "format": "prettier --write .",
+    "checkformat": "prettier --check .",
+    "import-latest-dump": "ts-node ./scripts/import-latest-dump.ts",
+    "analyze-nosdeputes-visits": "ts-node ./scripts/analyze-nosdeputes-visits.ts",
+    "switch_server": "rm -f .env.local && cp .env.local.db_server .env.local",
+    "switch_local": "rm -f .env.local && cp .env.local.db_local .env.local"
+  },
+  "dependencies": {
+    "@react-hook/mouse-position": "^4.1.3",
+    "@types/lodash": "^4.14.186",
+    "@types/pg": "^8.6.5",
+    "autoprefixer": "^10.4.12",
+    "kysely": "^0.22.0",
+    "lodash": "^4.17.21",
+    "mysql2": "^2.3.3",
+    "next": "^13.0.2",
+    "node-fetch": "^3.2.10",
+    "pg": "^8.8.0",
+    "php-unserialize": "^0.0.1",
+    "postcss": "^8.4.17",
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-svgmt": "^1.2.0",
+    "recharts": "^2.2.0",
+    "tailwindcss": "^3.1.8"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.3",
+    "@types/node": "18.7.23",
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6",
+    "dotenv": "^16.0.3",
+    "eslint": "8.24.0",
+    "eslint-config-next": "^13.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "4.8.4"
+  }
+}
