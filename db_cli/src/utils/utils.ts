@@ -91,7 +91,7 @@ export async function truncateTable(tableName: string) {
 
 export async function dropTable(tableName: string) {
   console.log(`Dropping table ${tableName} if it exists`)
-  await sql`DROP TABLE ${sql.raw(tableName)} IF EXISTS`.execute(getDb())
+  await sql`DROP TABLE IF EXISTS ${sql.raw(tableName)}`.execute(getDb())
 }
 export async function createTable(tableName: string, script: string) {
   console.log(`Creating table ${tableName}`)

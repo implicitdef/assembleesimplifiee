@@ -17,13 +17,13 @@ type NosDeputesJsonFile = {
   legislature: number
 }[]
 
-export async function autoarchiveInsert(args: CliArgs) {
-  await autoarchiveInsertSlugs(args)
-  await autoarchiveInsertStats(args)
+export async function autoarchiveInsert() {
+  await autoarchiveInsertSlugs()
+  await autoarchiveInsertStats()
 }
 
-async function autoarchiveInsertSlugs(args: CliArgs) {
-  const deputes = readDeputesFile(args)
+async function autoarchiveInsertSlugs() {
+  const deputes = readDeputesFile()
   const table = 'nosdeputes_deputes'
   await truncateTable(table)
   console.log(`Inserting ${deputes.length} rows into ${table}`)
