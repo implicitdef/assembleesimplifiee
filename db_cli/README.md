@@ -1,4 +1,4 @@
-# Script pour construire une nouvelle DB postgres "Releve", pour le nouveau nosdeputes.fr, à partir des données des Tricoteuses + de certaines données du NosDeputes legacy
+# Script pour construire une nouvelle DB postgres "Releve" à partir des données des Tricoteuses + de certaines données du NosDeputes legacy
 
 ## Prequis
 
