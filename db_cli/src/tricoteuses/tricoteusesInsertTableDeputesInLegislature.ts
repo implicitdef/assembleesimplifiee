@@ -23,10 +23,12 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
     circo_dpt_name TEXT NOT NULL,
     circo_dpt_num TEXT NOT NULL,
     circo_num TEXT NOT NULL,
+    group_uid TEXT,
     group_acronym TEXT,
     group_fonction TEXT,
     group_color TEXT,
-    com_perm TEXT,
+    com_perm_uid TEXT,
+    com_perm_name TEXT,
     com_perm_fonction TEXT,
     date_fin TIMESTAMP WITH TIME ZONE
 )`
@@ -37,6 +39,7 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
   const filenames = readFilesInSubdir(dir)
 
   const slugs = await readAutoarchiveSlugs()
+  const groupes = readAllGroupeParlementaires()
 
   const rows = filenames.flatMap(filename => {
     const deputeJson = readFileAsJson(path.join(dir, filename)) as ActeurJson
@@ -62,6 +65,17 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
       ([legislatureStr, lastMandat]) => {
         const gender = deputeJson.etatCivil.ident.civ === 'Mme' ? 'F' : 'M'
         const uid = deputeJson.uid
+
+        const mandatsGroupeThisLegislature = deputeJson.mandats
+          .filter(isMandatGroupe)
+          .filter(_ => _.legislature === legislatureStr)
+        const lastMandatGroupe = lo.last(
+          lo.sortBy(mandatsGroupeThisLegislature, _ => _.dateFin),
+        )
+        const groupeFonction = lastMandatGroupe?.infosQualite.codeQualite
+        const groupeUid = lastMandatGroupe?.organesRefs[0]
+        const groupe = groupes.find(_ => _.uid === groupeUid)
+
         const row: NosDeputesDatabase['deputes_in_legislatures'] = {
           legislature: toInt(legislatureStr),
           uid,
@@ -72,10 +86,12 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
           circo_dpt_num: lastMandat.election.lieu.numDepartement,
           circo_num: toInt(lastMandat.election.lieu.numCirco),
           date_fin: lastMandat.dateFin ?? null,
-          group_acronym: null,
-          group_fonction: null,
-          group_color: null,
-          com_perm: null,
+          group_uid: groupe?.uid ?? null,
+          group_acronym: groupe?.libelleAbrev ?? null,
+          group_fonction: groupeFonction ?? null,
+          group_color: groupe?.couleurAssociee ?? null,
+          com_perm_uid: null,
+          com_perm_name: null,
           com_perm_fonction: null,
         }
         return row
@@ -91,6 +107,19 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
   await getDb().insertInto(tableName).values(rows).execute()
 }
 
+function readAllGroupeParlementaires(): OrganeGroupe[] {
+  const dir = path.join(WORKDIR, 'tricoteuses', AM030, 'organes')
+  const filenames = readFilesInSubdir(dir)
+  const groupes = filenames.flatMap(filename => {
+    const organeJson = readFileAsJson(path.join(dir, filename)) as OrganeJson
+    if (isOrganeGroupe(organeJson)) {
+      return [organeJson]
+    }
+    return []
+  })
+  return groupes
+}
+
 type ActeurJson = {
   uid: string
   etatCivil: {
@@ -101,12 +130,13 @@ type ActeurJson = {
 }
 
 type Mandat =
-  | MandatDepute
+  | MandatAssemblee
+  | MandatGroupe
   | {
-      typeOrgane: '__other__' // there a bunch of possible values
+      typeOrgane: '__other__'
     }
 
-type MandatDepute = {
+type MandatAssemblee = {
   typeOrgane: 'ASSEMBLEE'
   legislature: string
   election: {
@@ -119,8 +149,45 @@ type MandatDepute = {
   dateFin?: string
 }
 
-function isMandatAssemblee(mandat: Mandat): mandat is MandatDepute {
+type MandatGroupe = {
+  typeOrgane: 'GP'
+  legislature: string
+  dateFin?: string
+  infosQualite: {
+    codeQualite: FonctionInGroupe
+  }
+  organesRefs: [string]
+}
+type FonctionInGroupe =
+  | 'Président'
+  | 'Membre apparenté'
+  | 'Membre'
+  | 'Député non-inscrit'
+
+function isMandatAssemblee(mandat: Mandat): mandat is MandatAssemblee {
   return mandat.typeOrgane === 'ASSEMBLEE'
+}
+
+function isMandatGroupe(mandat: Mandat): mandat is MandatGroupe {
+  return mandat.typeOrgane === 'GP'
+}
+
+type OrganeJson =
+  | OrganeGroupe
+  | {
+      codeType: '__other__'
+    }
+
+type OrganeGroupe = {
+  uid: string
+  codeType: 'GP'
+  legislature: string
+  libelleAbrev: string
+  couleurAssociee?: string
+}
+
+function isOrganeGroupe(organe: OrganeJson): organe is OrganeGroupe {
+  return organe.codeType === 'GP'
 }
 
 function toInt(s: string) {
