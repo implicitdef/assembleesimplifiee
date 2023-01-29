@@ -19,7 +19,7 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
     UNIQUE (uid, legislature),
     slug TEXT,
     full_name TEXT NOT NULL,
-    gender TEXT NOT NULL CHECK (gender IN ('M', 'F')),
+    gender TEXT NOT NULL CHECK (gender IN ('M', 'F')), d   
     circo_dpt_name TEXT NOT NULL,
     circo_dpt_num TEXT NOT NULL,
     circo_num TEXT NOT NULL,
@@ -38,7 +38,7 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
   const dir = path.join(WORKDIR, 'tricoteuses', AM030, 'acteurs')
   const filenames = readFilesInSubdir(dir)
 
-  const slugs = await readAutoarchiveSlugs()
+  const slugs = readAutoarchiveSlugs()
   const groupes = readAllGroupeParlementaires()
   const comPerms = readAllComPerm()
 
@@ -108,8 +108,6 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
         return row
       },
     )
-
-    // TODO for each rows, fetch other fields (group etc.)
     return rows
   })
 
