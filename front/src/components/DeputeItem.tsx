@@ -98,7 +98,7 @@ export function NewDeputeItem({
       ? {
           nom: 'Nom du groupe', // TODO this should not be needed
           acronym: depute.group_acronym,
-          color: depute.group_color ?? 'white',
+          color: depute.group_color ?? '#ffffff',
           fonction: depute.group_fonction,
         }
       : null

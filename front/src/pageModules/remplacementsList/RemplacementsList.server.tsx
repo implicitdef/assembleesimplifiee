@@ -1,13 +1,7 @@
-import { sql } from 'kysely'
-import range from 'lodash/range'
 import sortBy from 'lodash/sortBy'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { addLatestGroupToDeputes } from '../../lib/addLatestGroup'
 import { dbReleve } from '../../lib/dbReleve'
-import {
-  FIRST_LEGISLATURE_FOR_DEPUTES,
-  LATEST_LEGISLATURE,
-} from '../../lib/hardcodedData'
+import { FIRST_LEGISLATURE_FOR_DEPUTES } from '../../lib/hardcodedData'
 import {
   buildLegislaturesNavigationUrls,
   buildStaticPaths,
@@ -43,42 +37,14 @@ export const getStaticProps: GetStaticProps<
 
   const deputesIds = collectDeputesIds(rows)
 
-  const deputes = (
-    deputesIds.length
-      ? (
-          await sql<{
-            uid: string
-            full_name: string
-            gender: 'M' | 'F'
-          }>`
-SELECT
-  uid, 
-  CONCAT (
-    data->'etatCivil'->'ident'->>'prenom',
-    ' ',
-    data->'etatCivil'->'ident'->>'nom'
-  ) AS full_name,
-  CASE
-    WHEN acteurs.data->'etatCivil'->'ident'->>'civ' = 'M.' THEN 'H'
-    ELSE 'F'
-  END as gender
-FROM acteurs
-WHERE uid IN (${sql.join(deputesIds)})
-`.execute(dbReleve)
-        ).rows
-      : []
-  ).map(_ => {
-    const { full_name, ...rest } = _
-    return {
-      ...rest,
-      fullName: full_name,
-    }
-  })
-
-  const deputesWithLatestGroup = await addLatestGroupToDeputes(
-    deputes,
-    legislature,
-  )
+  const deputes = deputesIds.length
+    ? await dbReleve
+        .selectFrom('deputes_in_legislatures')
+        .where('legislature', '=', legislature)
+        .where('uid', 'in', deputesIds)
+        .selectAll()
+        .execute()
+    : []
 
   const rowsFinal: types.DerivedDeputesMandatsFinal[] = rows.map(row => {
     const { circo, mandats } = row
@@ -95,18 +61,13 @@ WHERE uid IN (${sql.join(deputesIds)})
             suppleant_ref,
           } = mandat
 
-          const depute = deputesWithLatestGroup.find(_ => _.uid === acteur_uid)
+          const depute = deputes.find(_ => _.uid === acteur_uid)
           if (!depute) {
             throw new Error(`Couldnt find depute ${acteur_uid} (${full_name})`)
           }
 
           return {
-            depute: {
-              ...depute,
-              circo_departement: circo.name_dpt,
-              slug: 'TODO_do_the_slug',
-              mandat_ongoing: true, // pas besoin d'afficher cette notion ici
-            },
+            depute,
             ...(cause_fin ? { cause_fin } : null),
             date_debut_mandat,
             date_fin_mandat,

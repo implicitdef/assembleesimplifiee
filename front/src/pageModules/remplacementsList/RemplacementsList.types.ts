@@ -1,5 +1,4 @@
-import { WithLatestGroupOrNull } from '../../lib/addLatestGroup'
-
+import type { ReleveTables } from '../../lib/dbReleve'
 export type Params = {
   legislature?: string
 }
@@ -12,14 +11,7 @@ export type Props = {
 export type DerivedDeputesMandatsFinal = {
   circo: DerivedDeputesMandatsRawFromDb['circo']
   mandats: {
-    depute: WithLatestGroupOrNull<{
-      uid: string
-      fullName: string
-      circo_departement: string
-      slug: string | null
-      mandat_ongoing: boolean
-      gender: 'F' | 'M'
-    }>
+    depute: ReleveTables['deputes_in_legislatures']
     cause_fin?: CauseChangement
     date_debut_mandat: string
     date_fin_mandat: string | null

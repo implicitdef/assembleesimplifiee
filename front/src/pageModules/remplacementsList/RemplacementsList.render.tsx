@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { BigTitle } from '../../components/BigTitle'
-import { DeputeItem } from '../../components/DeputeItem'
+import { NewDeputeItem } from '../../components/DeputeItem'
 import { LegislatureNavigation } from '../../components/LegislatureNavigation'
 import {
   dateDiffInDays,
@@ -121,14 +121,7 @@ export function Page({
       <div className="">
         {dataByCirco.map(circoData => {
           const {
-            circo: {
-              name_dpt,
-              num_dpt,
-              num_circo,
-              region,
-              region_type,
-              ref_circo,
-            },
+            circo: { name_dpt, num_dpt, num_circo, ref_circo },
             mandats,
           } = circoData
 
@@ -176,8 +169,12 @@ export function Page({
                         return (
                           <Fragment key={date_debut_mandat}>
                             <div className="my-2 flex flex-wrap gap-2">
-                              <DeputeItem
-                                depute={depute}
+                              <NewDeputeItem
+                                depute={{
+                                  ...depute,
+                                  // on force l'affichage comme ongoing, c'est plus lisible ici
+                                  ongoing: true,
+                                }}
                                 legislature={legislature}
                                 className={'border border-slate-400'}
                               />

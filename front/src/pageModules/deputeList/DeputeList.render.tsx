@@ -1,7 +1,7 @@
 import sortBy from 'lodash/sortBy'
 import uniq from 'lodash/uniq'
 import { BigTitle } from '../../components/BigTitle'
-import { DeputeItem, NewDeputeItem } from '../../components/DeputeItem'
+import { NewDeputeItem } from '../../components/DeputeItem'
 import { LegislatureNavigation } from '../../components/LegislatureNavigation'
 import { newPartitionDeputesByGroup } from '../../lib/utils'
 import * as types from './DeputeList.types'
