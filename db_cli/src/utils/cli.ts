@@ -30,7 +30,7 @@ const optionDefinitions: OptionDefinition[] = [
     name: 'doOldTables',
     type: Boolean,
     description:
-      "DO NOT USE. This creates and populates a bunch of legacy tables (heavier and with more raw JSONs). I keep the code around for now but it won't be maintained",
+      'NOT MAINTAINED. This creates and populates a bunch of legacy tables (heavier and with more raw JSONs). I keep the code around for now but it might not work anymore',
   },
   {
     name: 'sandbox',
@@ -48,7 +48,7 @@ const sections: Section[] = [
     header: 'The "Releve DB" script',
     content: [
       'Script to build a new Postgres DB, injecting data from multiple sources (Tricoteuses + NosDeputes)',
-      'By default the script does nothing, you have to activate each step (with --createTables for example).',
+      'By default the script does nothing, you have to activate each step (with --fetchData for example).',
       'If you just want to create the whole DB from scratch, you probably want to do {bold yarn start --all}',
     ],
   },
@@ -59,8 +59,8 @@ const sections: Section[] = [
       '$ yarn start {bold --help}',
       '{italic Clone the data from external repos into ./tmp}',
       '$ yarn start {bold --fetchData}',
-      '{italic Read the data from ./tmp and insert into the tables (it drops/recreates the tables first)}',
-      '$ yarn start {bold --tricoteusesClone}',
+      '{italic Read the data from ./tmp and insert into the tables (drops/recreates the tables first)}',
+      '$ yarn start {bold --insertData}',
       '{italic Everything. Rebuild the whole DB from scratch}',
       '$ yarn start --all',
       '{italic Equivalent to :}',

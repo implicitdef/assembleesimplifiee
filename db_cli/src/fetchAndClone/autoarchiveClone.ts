@@ -7,7 +7,7 @@ export function autoarchiveClone() {
   console.log(`Cloning ${datasetName} dataset into ${targetDir}`)
   rmDirIfExists(targetDir)
   runCmd(
-    `git clone https://github.com/implicitdef/${datasetName}.git ${targetDir}`,
+    `git clone https://github.com/implicitdef/${datasetName}.git --depth=1 ${targetDir}`,
   )
   console.log('Done')
 }

@@ -9,7 +9,7 @@ export function tricoteusesClone() {
     const targetDir = path.join(WORKDIR, 'tricoteuses', name)
     rmDirIfExists(targetDir)
     runCmd(
-      `git clone https://git.en-root.org/tricoteuses/data/assemblee-nettoye/${name}_nettoye.git ${targetDir}`,
+      `git clone https://git.en-root.org/tricoteuses/data/assemblee-nettoye/${name}_nettoye.git --depth=1 ${targetDir}`,
     )
   })
   console.log('Done')
