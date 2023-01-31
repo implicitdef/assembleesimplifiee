@@ -86,6 +86,7 @@ export interface ReleveTables {
     group_acronym: string | null
     group_fonction: string | null
     group_color: string | null
+    group_pos: 'maj' | 'min' | 'opp' | null
     com_perm_uid: string | null
     com_perm_name: string | null
     com_perm_fonction: string | null

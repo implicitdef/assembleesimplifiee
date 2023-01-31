@@ -31,7 +31,8 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
     com_perm_uid TEXT,
     com_perm_name TEXT,
     com_perm_fonction TEXT,
-    date_fin TIMESTAMP WITH TIME ZONE
+    date_fin TIMESTAMP WITH TIME ZONE,
+    ongoing BOOLEAN NOT NULL
 )`
   await dropTable(tableName)
   await createTable(tableName, createTableSql)
@@ -40,6 +41,7 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
   const filenames = readFilesInSubdir(dir)
 
   const slugs = readAutoarchiveSlugs()
+  const assemblees = readAllAssemblees()
   const groupes = readAllGroupeParlementaires()
   const comPerms = readAllComPerm()
 
@@ -67,6 +69,11 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
       ([legislatureStr, lastMandat]) => {
         const gender = deputeJson.etatCivil.ident.civ === 'Mme' ? 'F' : 'M'
         const uid = deputeJson.uid
+
+        const assemblee = assemblees.find(_ => _.legislature === legislatureStr)
+        if (!assemblee) {
+          throw new Error(`Didn't find assemblee ${legislatureStr}`)
+        }
 
         const mandatsGroupeThisLegislature = deputeJson.mandats
           .filter(isMandatGroupe)
@@ -113,6 +120,11 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
           com_perm_uid: comPerm?.uid ?? null,
           com_perm_name: comPerm?.libelleAbrev ?? null,
           com_perm_fonction: comPermFonction ?? null,
+          ongoing:
+            lastMandat.dateFin === undefined ||
+            (assemblee.viMoDe.dateFin !== undefined &&
+              // on marque comme "ongoing" les mandats qui étaient encore en cours lorsque la législature s'est terminée
+              assemblee.viMoDe.dateFin <= lastMandat.dateFin),
         }
         return row
       },
@@ -125,30 +137,43 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
   await getDb().insertInto(tableName).values(rows).execute()
 }
 
+function readAllAssemblees(): OrganeAssemblee[] {
+  const dir = path.join(WORKDIR, 'tricoteuses', AM030, 'organes')
+  const filenames = readFilesInSubdir(dir)
+  const res = filenames.flatMap(filename => {
+    const organeJson = readFileAsJson(path.join(dir, filename)) as OrganeJson
+    if (isOrganeAssemblee(organeJson)) {
+      return [organeJson]
+    }
+    return []
+  })
+  return res
+}
+
 function readAllGroupeParlementaires(): OrganeGroupe[] {
   const dir = path.join(WORKDIR, 'tricoteuses', AM030, 'organes')
   const filenames = readFilesInSubdir(dir)
-  const groupes = filenames.flatMap(filename => {
+  const res = filenames.flatMap(filename => {
     const organeJson = readFileAsJson(path.join(dir, filename)) as OrganeJson
     if (isOrganeGroupe(organeJson)) {
       return [organeJson]
     }
     return []
   })
-  return groupes
+  return res
 }
 
 function readAllComPerm(): OrganeComPerm[] {
   const dir = path.join(WORKDIR, 'tricoteuses', AM030, 'organes')
   const filenames = readFilesInSubdir(dir)
-  const groupes = filenames.flatMap(filename => {
+  const res = filenames.flatMap(filename => {
     const organeJson = readFileAsJson(path.join(dir, filename)) as OrganeJson
     if (isOrganeComPerm(organeJson)) {
       return [organeJson]
     }
     return []
   })
-  return groupes
+  return res
 }
 
 type ActeurJson = {
@@ -227,11 +252,19 @@ function isMandatComPerm(mandat: Mandat): mandat is MandatComPerm {
 }
 
 type OrganeJson =
+  | OrganeAssemblee
   | OrganeGroupe
   | OrganeComPerm
   | {
       codeType: '__other__'
     }
+
+type OrganeAssemblee = {
+  uid: string
+  codeType: 'ASSEMBLEE'
+  legislature: string
+  viMoDe: { dateFin?: string }
+}
 
 type OrganeGroupe = {
   uid: string
@@ -247,6 +280,10 @@ type OrganeComPerm = {
   codeType: 'COMPER'
   libelleAbrege: string
   libelleAbrev: string
+}
+
+function isOrganeAssemblee(organe: OrganeJson): organe is OrganeAssemblee {
+  return organe.codeType === 'ASSEMBLEE'
 }
 
 function isOrganeGroupe(organe: OrganeJson): organe is OrganeGroupe {

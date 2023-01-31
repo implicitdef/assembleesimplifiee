@@ -101,6 +101,7 @@ export interface NosDeputesDatabase {
     com_perm_name: string | null
     com_perm_fonction: string | null
     date_fin: string | null
+    ongoing: boolean
   }
 }
 

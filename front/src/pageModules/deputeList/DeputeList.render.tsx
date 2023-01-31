@@ -223,10 +223,7 @@ export function Page({
 }: types.Props) {
   // Sur des vieilles législature, on n'a pas la notion de position politique
   const positionPolitiquesAreAvailable = deputes.every(_ => {
-    return (
-      _.latestGroup?.position_politique !== null ||
-      _.latestGroup.acronym === 'NI'
-    )
+    return _.group_pos !== null || _.group_acronym === 'NI'
   })
 
   const deputesCurrent = deputes.filter(_ => _.mandat_ongoing)
