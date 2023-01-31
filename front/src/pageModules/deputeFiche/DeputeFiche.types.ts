@@ -1,35 +1,28 @@
-import { WithLatestGroupOrNull } from '../../lib/addLatestGroup'
-
+import type { ReleveTables } from '../../lib/dbReleve'
 export type Params = {
   slug: string
   legislature?: string
 }
 
 export type Props = {
+  legislature: number
+  legislatureNavigationUrls: [number, string][]
+  deputeData: DeputeData
+}
+export type Depute = ReleveTables['deputes_in_legislatures']
+export type DeputeData = {
   depute: Depute
+  mandats_this_legislature: Mandat[]
+  legislatures: number[]
+  stats: WeeklyStats<StatsFinal> | null
   legislatureDates: {
     date_debut: string
     date_fin: string | null
   }
-  legislature: number
-  legislatureNavigationUrls: [number, string][]
 }
 
-export type Depute = WithLatestGroupOrNull<{
-  uid: string
-  gender: 'H' | 'F'
-  slug: string
-  full_name: string
-  circo_departement: string
-  circo_number: number
-  date_of_birth: string
-  mandats_this_legislature: Mandat[]
-  legislatures: number[]
-  stats: WeeklyStats<StatsFinal> | null
-}>
-
 export type Mandat = {
-  uid: string
+  mandat_uid: string
   date_debut: string
   date_fin: string | null
 }

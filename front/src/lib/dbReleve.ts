@@ -79,18 +79,19 @@ export interface ReleveTables {
     legislature: number
     slug: string | null
     full_name: string
+    date_birth: string
     gender: 'F' | 'M'
     circo_dpt_name: string
     circo_dpt_num: string
     circo_num: number
     group_uid: string | null
     group_acronym: string | null
-    group_fonction: string | null
+    group_fonction: FonctionInGroupe | null
     group_color: string | null
     group_pos: 'maj' | 'min' | 'opp' | null
     com_perm_uid: string | null
     com_perm_name: string | null
-    com_perm_fonction: string | null
+    com_perm_fonction: FonctionInCom | null
     date_fin: string | null
     ongoing: boolean
   }

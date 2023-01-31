@@ -7,12 +7,14 @@ import { StatsGraph } from './lib/StatsGraph'
 import { InformationsBlock } from './lib/variousBlocks'
 
 export function Page(props: types.Props) {
-  const { depute, legislature, legislatureNavigationUrls } = props
+  const { deputeData, legislature, legislatureNavigationUrls } = props
+
+  const { uid, full_name } = deputeData.depute
 
   return (
     <div className="">
       <LegislatureNavigation
-        title={`Fiche de ${depute.full_name}`}
+        title={`Fiche de ${full_name}`}
         currentLegislature={legislature}
         urlsByLegislature={legislatureNavigationUrls}
       />
@@ -24,10 +26,10 @@ export function Page(props: types.Props) {
         >
           <Image
             className="shadow-lg"
-            src={`/deputes/photos/${LATEST_LEGISLATURE}/${depute.uid.substring(
+            src={`/deputes/photos/${LATEST_LEGISLATURE}/${uid.substring(
               2,
             )}.jpg`}
-            alt={`Photo du (de la) député(e)} ${depute.full_name}`}
+            alt={`Photo du (de la) député(e)} ${full_name}`}
             width={150}
             height={192}
           />
@@ -37,12 +39,12 @@ export function Page(props: types.Props) {
         </div>
       </div>
 
-      {depute.stats && (
+      {deputeData.stats && (
         <div className="col-span-full my-4 h-44 bg-slate-200 p-4 pb-8">
           <h2 className="text-center text-xl font-bold">
             Présences à l'Assemblée
           </h2>
-          <StatsGraph stats={depute.stats} />
+          <StatsGraph stats={deputeData.stats} />
         </div>
       )}
     </div>

@@ -13,11 +13,11 @@ import * as types from '../DeputeFiche.types'
 const f = formatDate
 
 export function LegislaturesBlock({
-  depute,
+  deputeData,
   legislature: currentLegislature,
 }: types.Props) {
-  const { legislatures } = depute
-  const feminine = depute.gender === 'F'
+  const { legislatures } = deputeData
+  const feminine = deputeData.depute.gender === 'F'
   const feminineE = feminine ? 'e' : ''
   if (legislatures.length == 1) {
     return <p>C'est sa première législature</p>
@@ -85,14 +85,8 @@ function labelDateFinMandat(
     : null
 }
 
-export function MandatsBlock({
-  depute,
-  legislatureDates,
-}: {
-  depute: types.Depute
-  legislatureDates: types.Props['legislatureDates']
-}) {
-  const mandats = depute.mandats_this_legislature
+export function MandatsBlock({ deputeData }: { deputeData: types.DeputeData }) {
+  const mandats = deputeData.mandats_this_legislature
   if (mandats.length === 0) {
     // should not happen, but let's be safe
     return null
@@ -101,9 +95,9 @@ export function MandatsBlock({
   const previousMandats = mandats.filter(_ => _ != lastMandat)
   const { date_debut, date_fin } = lastMandat
   const { date_debut: date_debut_legislature, date_fin: date_fin_legislature } =
-    legislatureDates
+    deputeData.legislatureDates
 
-  const feminine = depute.gender === 'F'
+  const feminine = deputeData.depute.gender === 'F'
   const feminineE = feminine ? 'e' : ''
   // Note : pour voir un cas d'un député avec 3 mandats dans la même législature :
   // cf alain-vidalies dans la legislature 14
@@ -138,7 +132,7 @@ export function MandatsBlock({
           Était déjà en mandat dans cette législature :
           <ul>
             {previousMandats.map(mandat => (
-              <li key={mandat.uid}>
+              <li key={mandat.mandat_uid}>
                 Du{' '}
                 {labelDateDebutMandat(
                   mandat.date_debut,
@@ -155,43 +149,51 @@ export function MandatsBlock({
 }
 
 export function InformationsBlock(props: types.Props) {
-  const { depute, legislatureDates } = props
-  const age = getAge(depute.date_of_birth)
+  const { deputeData } = props
+  const { depute } = deputeData
+  const age = getAge(depute.date_birth)
   const feminine = depute.gender === 'F'
   const feminineE = feminine ? 'e' : ''
-  const mandats = depute.mandats_this_legislature
+  const mandats = deputeData.mandats_this_legislature
   if (mandats.length === 0) {
     // should not happen
     return null
   }
   const lastMandat = mandats[mandats.length - 1]
   const formerDepute = lastMandat.date_fin !== null
+  const groupe =
+    depute.group_acronym && depute.group_fonction
+      ? {
+          acronym: depute.group_acronym,
+          nom: depute.group_acronym, // TODO il faudrait le nom ?
+          fonction: depute.group_fonction,
+          color: depute.group_color ?? '#ffffff',
+        }
+      : null
   return (
     <div className=" px-8 py-4">
       <h1 className="text-xl">
         <span className="font-bold">
-          <GroupeBadge groupe={depute.latestGroup} marginLeft={false} />
+          <GroupeBadge groupe={groupe} marginLeft={false} />
           {depute.full_name}
         </span>{' '}
         {formerDepute ? 'était député' : 'Député'}
-        {feminineE} de la {depute.circo_number}
-        <sup>{getOrdinalSuffixFeminine(depute.circo_number)}</sup>{' '}
-        circonscription {addPrefixToCirconscription(depute.circo_departement)}
+        {feminineE} de la {depute.circo_num}
+        <sup>
+          {getOrdinalSuffixFeminine(depute.circo_num)}
+        </sup> circonscription{' '}
+        {addPrefixToCirconscription(depute.circo_dpt_name)}
       </h1>{' '}
       <div className="py-4">
         <ul className="list-none">
           <li>{age} ans</li>
           <li>
             Groupe
-            <GroupeBadgeWithFonction
-              groupe={depute.latestGroup}
-              fullName
-              bold
-            />
+            <GroupeBadgeWithFonction groupe={groupe} fullName bold />
           </li>
         </ul>
       </div>
-      <MandatsBlock {...{ depute, legislatureDates }} />
+      <MandatsBlock {...{ deputeData }} />
       <LegislaturesBlock {...props} />
     </div>
   )

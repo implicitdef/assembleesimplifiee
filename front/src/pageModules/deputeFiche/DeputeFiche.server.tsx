@@ -1,7 +1,6 @@
 import { sql } from 'kysely'
 import mapValues from 'lodash/mapValues'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { addLatestGroupToDepute } from '../../lib/addLatestGroup'
 import { dbReleve } from '../../lib/dbReleve'
 import { LATEST_LEGISLATURE } from '../../lib/hardcodedData'
 import { readLegislatureFromContext } from '../../lib/routingUtils'
@@ -10,7 +9,7 @@ import * as types from './DeputeFiche.types'
 async function queryStats(
   uid: string,
   legislature: number,
-): Promise<types.Depute['stats']> {
+): Promise<types.DeputeData['stats']> {
   const row = await dbReleve
     .selectFrom('nosdeputes_deputes_weekly_stats')
     .where('uid', '=', uid)
@@ -31,7 +30,7 @@ async function queryStats(
 
 async function queryLegislatures(
   deputeUid: string,
-): Promise<types.Depute['legislatures']> {
+): Promise<types.DeputeData['legislatures']> {
   return (
     await dbReleve
       .selectFrom('deputes_in_legislatures')
@@ -41,30 +40,16 @@ async function queryLegislatures(
   ).map(_ => _.legislature)
 }
 
-async function queryMandatsOfDeputesInLegislature(
+async function queryMandats(
   deputeUid: string,
   legislature: number,
 ): Promise<types.Mandat[]> {
-  return (
-    await sql<types.Mandat>`
-SELECT
-  mandats.uid,
-  mandats.data->'election'->>'causeMandat' AS cause_mandat,
-  mandats.data->'mandature'->>'causeFin' AS cause_fin,
-  mandats.data->'mandature'->>'datePriseFonction' AS date_debut,
-  mandats.data->>'dateFin' AS date_fin
-FROM acteurs
-INNER JOIN mandats
-  ON mandats.acteur_uid = acteurs.uid
-INNER JOIN organes
-  ON organes.uid = ANY(mandats.organes_uids)
-WHERE
-  organes.data->>'codeType' = 'ASSEMBLEE'
-  AND organes.data->>'legislature' = ${legislature}
-  AND acteurs.uid = ${deputeUid}
-  ORDER BY date_debut
-    `.execute(dbReleve)
-  ).rows
+  return dbReleve
+    .selectFrom('mandats_deputes')
+    .where('depute_uid', '=', deputeUid)
+    .where('legislature', '=', legislature)
+    .select(['mandat_uid', 'date_debut', 'date_fin'])
+    .execute()
 }
 
 export const getStaticPathsOlderLegislatures: GetStaticPaths<
@@ -113,6 +98,17 @@ export const getStaticPathsLatestLegislatures: GetStaticPaths<
   }
 }
 
+function queryDatesLegislature(
+  legislature: number,
+): Promise<{ date_debut: string; date_fin: string | null }> {
+  return dbReleve
+    .selectFrom('legislatures')
+    .where('legislature', '=', legislature)
+    .select('date_debut')
+    .select('date_fin')
+    .executeTakeFirstOrThrow()
+}
+
 export const getStaticProps: GetStaticProps<
   types.Props,
   types.Params
@@ -123,69 +119,17 @@ export const getStaticProps: GetStaticProps<
   const slug = context.params.slug
   const legislature = readLegislatureFromContext(context)
 
-  const depute =
-    (
-      await sql<{
-        uid: string
-        full_name: string
-        date_of_birth: string
-        gender: 'H' | 'F'
-        circo_departement: string
-        circo_number: number
-        legislature_date_debut: string
-        legislature_date_fin: string | null
-      }>`
-SELECT
-  acteurs.uid AS uid,
-  CONCAT(
-  	acteurs.data->'etatCivil'->'ident'->>'prenom',
-  	' ',
-  	acteurs.data->'etatCivil'->'ident'->>'nom'
-  ) AS full_name,
-  acteurs.data->'etatCivil'->'infoNaissance'->>'dateNais' AS date_of_birth,
-  CASE
-    WHEN acteurs.data->'etatCivil'->'ident'->>'civ' = 'M.' THEN 'H'
-    ELSE 'F'
-  END as gender,
-  mandats.data->'election'->'lieu'->>'departement' AS circo_departement,
-  (mandats.data->'election'->'lieu'->>'numCirco')::int AS circo_number,
-  organes.data->'viMoDe'->>'dateDebut' AS legislature_date_debut,
-  organes.data->'viMoDe'->>'dateFin' AS legislature_date_fin
-FROM acteurs
-INNER JOIN nosdeputes_deputes
-  ON nosdeputes_deputes.uid = acteurs.uid
-INNER JOIN mandats
-  ON mandats.acteur_uid = acteurs.uid
-INNER JOIN organes
-  ON organes.uid = ANY(mandats.organes_uids)
-WHERE
-  organes.data->>'codeType' = 'ASSEMBLEE'
-  AND organes.data->>'legislature' = ${legislature}
-  AND slug = ${slug}
-`.execute(dbReleve)
-    ).rows[0] ?? null
+  const depute = await dbReleve
+    .selectFrom('deputes_in_legislatures')
+    .where('slug', '=', slug)
+    .where('legislature', '=', legislature)
+    .selectAll()
+    .executeTakeFirst()
   if (!depute) {
     return {
       notFound: true,
     }
   }
-
-  const { legislature_date_debut, legislature_date_fin, ...restOfDepute } =
-    depute
-
-  const deputeWithLatestGroup = await addLatestGroupToDepute(
-    restOfDepute,
-    legislature,
-  )
-
-  const mandats_this_legislature = await queryMandatsOfDeputesInLegislature(
-    depute.uid,
-    legislature,
-  )
-  const lastMandat =
-    mandats_this_legislature.length > 0
-      ? mandats_this_legislature[mandats_this_legislature.length - 1]
-      : null
   const legislatures = await queryLegislatures(depute.uid)
   const legislatureNavigationUrls = legislatures.map(l => {
     const tuple: [number, string] = [
@@ -195,26 +139,21 @@ WHERE
     return tuple
   })
 
+  const legislatureDates = await queryDatesLegislature(legislature)
+  const mandats_this_legislature = await queryMandats(depute.uid, legislature)
   const stats = await queryStats(depute.uid, legislature)
-  const returnedDepute: types.Depute = {
-    slug,
-    mandats_this_legislature,
-    legislatures,
-    stats,
-    ...deputeWithLatestGroup,
-  }
-
-  const legislatureDates = {
-    date_debut: legislature_date_debut,
-    date_fin: legislature_date_fin,
-  }
 
   return {
     props: {
       legislature,
       legislatureNavigationUrls,
-      depute: returnedDepute,
-      legislatureDates,
+      deputeData: {
+        depute,
+        mandats_this_legislature,
+        legislatures,
+        stats,
+        legislatureDates,
+      },
     },
   }
 }
