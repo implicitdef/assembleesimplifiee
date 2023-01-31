@@ -2,10 +2,9 @@ name: run_db_cli
 
 on:
   workflow_dispatch:
-    # schedule:
-    #   - cron: "0 3 * * *" # every day at 3h
+  schedule:
+    - cron: "30 4,10,16,20 * * *" # every day at 4h30, 10h30, 16h30, 20h30
 
-# https://stackoverflow.com/questions/57806624/github-actions-how-to-build-project-in-sub-directory
 defaults:
   run:
     working-directory: db_cli
@@ -31,3 +30,6 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PWD: ${{ secrets.DB_PWD }}
           DB_NAME: ${{ secrets.DB_NAME }}
+      - run: curl -X POST $URL
+        env:
+          URL: ${{ secrets.HOOK_VERCEL_DEPLOY_MASTER }}
