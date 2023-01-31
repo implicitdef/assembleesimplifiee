@@ -54,7 +54,7 @@ export async function insertDerivedDeputesMandats() {
       num_circo: firstMandat.election.lieu.numCirco,
       region: '', // TODO remove this field, useless
       region_type: '', // TODO remove this field, useless
-      ref_circo: firstMandat.election.lieu.refCirconscription,
+      ref_circo: firstMandat.election.refCirconscription,
     }
 
     const mandatsWithCorrectCauses = mandatsForCircoSorted.map((row, idx) => {

@@ -40,7 +40,7 @@ export function readAllDeputesAndMap<A>(
     const deputeJson = readFileAsJson(path.join(dir, filename)) as ActeurJson
     if (deputeJson.mandats.some(isMandatAssemblee)) {
       // it is a depute
-      mapFunction(deputeJson)
+      res.push(mapFunction(deputeJson))
     }
   })
   return res
@@ -72,10 +72,10 @@ export type MandatAssemblee = {
       departement: string
       numDepartement: string
       numCirco: string
-      // id qui change à chaque législature
-      refCirconscription: string
     }
     causeMandat: CauseMandatRaw
+    // cette id change à chaque législature
+    refCirconscription: string
   }
   suppleant?: {
     suppleantRef: string
