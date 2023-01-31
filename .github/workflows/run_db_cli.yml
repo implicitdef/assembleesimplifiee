@@ -1,0 +1,26 @@
+name: run_db_cli
+
+on:
+  workflow_dispatch:
+    # schedule:
+    #   - cron: "0 3 * * *" # every day at 3h
+
+# https://stackoverflow.com/questions/57806624/github-actions-how-to-build-project-in-sub-directory
+defaults:
+  run:
+    working-directory: db_cli
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - run: node --version
+      - run: yarn --version
+      - run: yarn install --frozen-lockfile
+      - run: yarn start --all
