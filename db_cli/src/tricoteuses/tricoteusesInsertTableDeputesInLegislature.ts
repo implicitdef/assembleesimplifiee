@@ -27,6 +27,7 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
     group_acronym TEXT,
     group_fonction TEXT,
     group_color TEXT,
+    group_pos TEXT CHECK (group_pos IN ('maj', 'min', 'opp')),   
     com_perm_uid TEXT,
     com_perm_name TEXT,
     com_perm_fonction TEXT,
@@ -101,6 +102,14 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
           group_acronym: groupe?.libelleAbrev ?? null,
           group_fonction: groupeFonction ?? null,
           group_color: groupe?.couleurAssociee ?? null,
+          group_pos:
+            groupe?.positionPolitique === 'Majoritaire'
+              ? 'maj'
+              : groupe?.positionPolitique === 'Minoritaire'
+              ? 'min'
+              : groupe?.positionPolitique === 'Opposition'
+              ? 'opp'
+              : null,
           com_perm_uid: comPerm?.uid ?? null,
           com_perm_name: comPerm?.libelleAbrev ?? null,
           com_perm_fonction: comPermFonction ?? null,
@@ -230,6 +239,7 @@ type OrganeGroupe = {
   legislature: string
   libelleAbrev: string
   couleurAssociee?: string
+  positionPolitique?: 'Majoritaire' | 'Minoritaire' | 'Opposition'
 }
 
 type OrganeComPerm = {
