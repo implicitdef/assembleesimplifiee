@@ -1,8 +1,8 @@
-import { insertTableDeputesInLegislature } from './tricoteuses/tricoteusesInsertNewDeputesTable'
+import { tricoteusesInsertTableDeputesInLegislature } from './tricoteuses/tricoteusesInsertTableDeputesInLegislature'
 import { CliArgs } from './utils/cli'
 
 export async function sandbox(args: CliArgs) {
-  await insertTableDeputesInLegislature()
+  await tricoteusesInsertTableDeputesInLegislature()
 
   //   const rows = (
   //     await sql<any>`

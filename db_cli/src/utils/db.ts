@@ -19,7 +19,7 @@ export function getDb(): Kysely<NosDeputesDatabase> {
           database: readFromEnv('DB_NAME'),
         }),
       }),
-      // log: ["query"],
+      // log: ['query'],
     })
   }
   return pool

@@ -22,7 +22,7 @@ async function start() {
     }
     if (args.tricoteusesClone) {
       console.log('--- Cloning datasets from Les Tricoteuses')
-      tricoteusesClone(args)
+      tricoteusesClone()
     }
     if (args.tricoteusesInsert) {
       console.log(
@@ -32,11 +32,11 @@ async function start() {
     }
     if (args.autoarchiveClone) {
       console.log('--- Cloning data from the "auto archive"')
-      await autoarchiveClone(args)
+      await autoarchiveClone()
     }
     if (args.autoarchiveInsert) {
       console.log('--- Inserting data from the "auto archive" into the tables')
-      await autoarchiveInsert(args)
+      await autoarchiveInsert()
     }
     if (args.anFetch) {
       console.log('--- Downloading data from AN open data')
