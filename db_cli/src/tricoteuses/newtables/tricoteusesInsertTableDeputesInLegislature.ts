@@ -85,7 +85,7 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
         legislature: toInt(legislatureStr),
         uid,
         slug: slugs.find(_ => _.uid === uid)?.slug ?? null,
-        full_name: `${deputeJson.etatCivil.ident.prenom}_${deputeJson.etatCivil.ident.nom}`,
+        full_name: `${deputeJson.etatCivil.ident.prenom} ${deputeJson.etatCivil.ident.nom}`,
         gender,
         circo_dpt_name: lastMandat.election.lieu.departement,
         circo_dpt_num: lastMandat.election.lieu.numDepartement,

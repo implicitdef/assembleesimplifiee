@@ -105,6 +105,17 @@ export interface NosDeputesDatabase {
     date_fin: string | null
     ongoing: boolean
   }
+  mandats_deputes: {
+    mandat_uid: string
+    legislature: number
+    depute_uid: string
+    full_name: string
+    circo_dpt_name: string
+    circo_dpt_num: string
+    circo_num: number
+    date_debut: string
+    date_fin: string | null
+  }
 }
 
 export async function releaseDb() {

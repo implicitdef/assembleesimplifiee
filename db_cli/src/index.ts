@@ -12,6 +12,7 @@ import { reshapeDossiers } from './derived/reshapeDossiers/reshapeDossiers'
 import { tricoteusesInsertTableMandatsByCirco } from './tricoteuses/newtables/tricoteusesInsertTableMandatsByCirco'
 import { tricoteusesInsertTableDeputesInLegislature } from './tricoteuses/newtables/tricoteusesInsertTableDeputesInLegislature'
 import { createTables } from './createtables'
+import { tricoteusesInsertTableMandatsDeputes } from './tricoteuses/newtables/tricoteusesInsertTableMandatsDeputes'
 
 async function start() {
   const args = parseAndCheckArguments()
@@ -51,6 +52,7 @@ async function start() {
       console.log('--- Sandbox')
       await sandbox(args)
       await tricoteusesInsertTableDeputesInLegislature()
+      await tricoteusesInsertTableMandatsDeputes()
       await tricoteusesInsertTableMandatsByCirco()
     }
     if (args.derivedInsert) {
