@@ -30,8 +30,6 @@ export type Depute = WithLatestGroupOrNull<{
 
 export type Mandat = {
   uid: string
-  cause_mandat: string
-  cause_fin: string | null
   date_debut: string
   date_fin: string | null
 }

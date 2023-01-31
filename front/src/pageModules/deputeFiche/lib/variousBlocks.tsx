@@ -103,14 +103,6 @@ export function MandatsBlock({
   const { date_debut: date_debut_legislature, date_fin: date_fin_legislature } =
     legislatureDates
 
-  const dateFinIsFinLegislature =
-    date_fin_legislature !== null && date_fin === date_fin_legislature
-
-  const labelDateFin = date_fin
-    ? dateFinIsFinLegislature
-      ? `jusqu'à la fin de la législature (${f(date_fin)})`
-      : `au ${f(date_fin)}`
-    : null
   const feminine = depute.gender === 'F'
   const feminineE = feminine ? 'e' : ''
   // Note : pour voir un cas d'un député avec 3 mandats dans la même législature :

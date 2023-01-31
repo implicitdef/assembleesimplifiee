@@ -7,8 +7,7 @@ import { StatsGraph } from './lib/StatsGraph'
 import { InformationsBlock } from './lib/variousBlocks'
 
 export function Page(props: types.Props) {
-  const { depute, legislature, legislatureNavigationUrls, legislatureDates } =
-    props
+  const { depute, legislature, legislatureNavigationUrls } = props
 
   return (
     <div className="">
