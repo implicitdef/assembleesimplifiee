@@ -72,12 +72,14 @@ export interface NosDeputesDatabase {
     uid: string
     slug: string
   }
+  // new tables
+  //------------
   nosdeputes_deputes_weekly_stats: {
     uid: string
     legislature: number
     data: unknown
   }
-  derived_deputes_mandats: {
+  mandats_by_circo: {
     legislature: number
     circo_uid: string
     nb_mandats: number

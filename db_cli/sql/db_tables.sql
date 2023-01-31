@@ -79,14 +79,3 @@ CREATE TABLE nosdeputes_deputes_weekly_stats (
     UNIQUE (uid, legislature)
 );
 
--- table dérivée
--- ce sont pour chaque legislature et chaque circonscriptions, les differents mandats de députés qu'il y a eu
--- (car dans une même legislature il peut y en avoir plusieurs successifs, à cause des remplacements, élections partielles, etc.)
-DROP TABLE IF EXISTS derived_deputes_mandats;
-CREATE TABLE derived_deputes_mandats (
-    legislature INTEGER NOT NULL,
-    circo_uid TEXT NOT NULL,
-    data jsonb NOT NULL,
-    nb_mandats INTEGER NOT NULL,
-    UNIQUE (circo_uid, legislature)
-);

@@ -1,7 +1,6 @@
 import * as dotenv from 'dotenv'
 import { parseAndCheckArgs as parseAndCheckArguments } from './utils/cli'
 import { tricoteusesClone } from './tricoteuses/tricoteusesClone'
-import { createTables } from './createTables'
 import { releaseDb } from './utils/db'
 import { tricoteusesInsert } from './tricoteuses/tricoteusesInsert'
 import { sandbox } from './sandbox'
@@ -10,7 +9,9 @@ import { autoarchiveInsert } from './autoarchive/autoarchiveInsert'
 import { anFetch } from './an/anFetch'
 import { anInsert } from './an/anInsert'
 import { reshapeDossiers } from './derived/reshapeDossiers/reshapeDossiers'
-import { insertDerivedDeputesMandats } from './derived/insertDerivedDeputesMandats'
+import { tricoteusesInsertTableMandatsByCirco } from './tricoteuses/newtables/tricoteusesInsertTableMandatsByCirco'
+import { tricoteusesInsertTableDeputesInLegislature } from './tricoteuses/newtables/tricoteusesInsertTableDeputesInLegislature'
+import { createTables } from './createtables'
 
 async function start() {
   const args = parseAndCheckArguments()
@@ -49,11 +50,12 @@ async function start() {
     if (args.sandbox) {
       console.log('--- Sandbox')
       await sandbox(args)
+      await tricoteusesInsertTableDeputesInLegislature()
+      await tricoteusesInsertTableMandatsByCirco()
     }
     if (args.derivedInsert) {
       console.log('--- Insert derived data')
       await reshapeDossiers()
-      await insertDerivedDeputesMandats()
     }
     await releaseDb()
   }

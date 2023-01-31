@@ -1,7 +1,7 @@
 import lo from 'lodash'
 import path from 'path'
-import { readAutoarchiveSlugs } from '../autoarchive/autoarchiveInsert'
-import { getDb, NosDeputesDatabase } from '../utils/db'
+import { readAutoarchiveSlugs } from '../../autoarchive/autoarchiveInsert'
+import { getDb, NosDeputesDatabase } from '../../utils/db'
 import {
   ActeurJson,
   isMandatAssemblee,
@@ -12,15 +12,15 @@ import {
   readAllComPerm,
   readAllDeputesAndMap,
   readAllGroupeParlementaires,
-} from '../utils/readFromTricoteuses'
-import { AM030 } from '../utils/tricoteusesDatasets'
+} from '../../utils/readFromTricoteuses'
+import { AM030 } from '../../utils/tricoteusesDatasets'
 import {
   createTable,
   dropTable,
   readFilesInSubdir,
   toInt,
   WORKDIR,
-} from '../utils/utils'
+} from '../../utils/utils'
 
 export async function tricoteusesInsertTableDeputesInLegislature() {
   const tableName = 'deputes_in_legislatures'

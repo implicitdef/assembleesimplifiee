@@ -1,5 +1,5 @@
 import path from 'path'
-import { CauseMandatRaw } from '../derived/insertDerivedDeputesMandats'
+import { CauseMandatRaw } from '../tricoteuses/newtables/tricoteusesInsertTableMandatsByCirco'
 import { AM030 } from './tricoteusesDatasets'
 import { readFileAsJson, readFilesInSubdir, WORKDIR } from './utils'
 
