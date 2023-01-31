@@ -62,12 +62,14 @@ export function DeputeItem({
           fullName
         )}
       </>
-      {latestComPerm && latestComPerm.fonction !== 'Membre' && (
-        <span className="font-extrabold uppercase italic">
-          {' '}
-          {latestComPerm.fonction}
-        </span>
-      )}
+      {latestComPerm &&
+        latestComPerm.fonction !== 'Membre' &&
+        latestComPerm.name_short && (
+          <span className="font-extrabold uppercase italic">
+            {' '}
+            {latestComPerm.fonction} {latestComPerm.name_short}
+          </span>
+        )}
       {displayCirco && (
         <span className="bg-blue cursor-pointer text-slate-400">
           {' '}
