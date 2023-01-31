@@ -90,6 +90,7 @@ export interface NosDeputesDatabase {
     legislature: number
     slug: string | null
     full_name: string
+    date_birth: string
     gender: 'F' | 'M'
     circo_dpt_name: string
     circo_dpt_num: string
@@ -113,6 +114,12 @@ export interface NosDeputesDatabase {
     circo_dpt_name: string
     circo_dpt_num: string
     circo_num: number
+    date_debut: string
+    date_fin: string | null
+  }
+  legislatures: {
+    organe_uid: string
+    legislature: number
     date_debut: string
     date_fin: string | null
   }

@@ -61,12 +61,14 @@ export interface ReleveTables {
     uid: string
     slug: string
   }
+  // new tables
+  //------------
   nosdeputes_deputes_weekly_stats: {
     uid: string
     legislature: number
     data: unknown
   }
-  derived_deputes_mandats: {
+  mandats_by_circo: {
     legislature: number
     circo_uid: string
     nb_mandats: number
@@ -83,14 +85,31 @@ export interface ReleveTables {
     circo_num: number
     group_uid: string | null
     group_acronym: string | null
-    group_fonction: FonctionInGroupe | null
+    group_fonction: string | null
     group_color: string | null
     group_pos: 'maj' | 'min' | 'opp' | null
     com_perm_uid: string | null
     com_perm_name: string | null
-    com_perm_fonction: FonctionInCom | null
+    com_perm_fonction: string | null
     date_fin: string | null
     ongoing: boolean
+  }
+  mandats_deputes: {
+    mandat_uid: string
+    legislature: number
+    depute_uid: string
+    full_name: string
+    circo_dpt_name: string
+    circo_dpt_num: string
+    circo_num: number
+    date_debut: string
+    date_fin: string | null
+  }
+  legislatures: {
+    organe_uid: string
+    legislature: number
+    date_debut: string
+    date_fin: string | null
   }
 }
 

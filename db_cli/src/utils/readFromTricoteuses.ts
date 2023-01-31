@@ -50,8 +50,12 @@ export type ActeurJson = {
   uid: string
   etatCivil: {
     ident: { civ: 'M.' | 'Mme'; nom: string; prenom: string }
+    infoNaissance: {
+      dateNais: '1949-06-02T01:00:00.000+01:00'
+    }
   }
   mandats: Mandat[]
+
   // there are other fields
 }
 
@@ -142,7 +146,7 @@ export type OrganeAssemblee = {
   uid: string
   codeType: 'ASSEMBLEE'
   legislature: string
-  viMoDe: { dateFin?: string }
+  viMoDe: { dateDebut: string; dateFin?: string }
 }
 
 export type OrganeGroupe = {

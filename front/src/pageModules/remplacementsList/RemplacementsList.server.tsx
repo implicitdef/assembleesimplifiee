@@ -28,7 +28,7 @@ export const getStaticProps: GetStaticProps<
 
   const rows = (
     await dbReleve
-      .selectFrom('derived_deputes_mandats')
+      .selectFrom('mandats_by_circo')
       .where('legislature', '=', legislature)
       .where('nb_mandats', '>', 1)
       .select('data')
