@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { NewDeputeItem } from '../../../components/DeputeItem'
 import { GroupeBadge } from '../../../components/GroupeBadge'
 
 import { MapDepartement } from '../../../components/MapDepartement'
@@ -76,7 +77,7 @@ export default function Page(
 
   const onCirconscriptionClick = (circonscriptionId: string) => {
     const depute = deputes.find(
-      depute => depute.circo_number === parseInt(circonscriptionId),
+      depute => depute.circo_num === parseInt(circonscriptionId),
     )
     if (depute) {
       router.push(`/${depute.slug}`)
@@ -93,7 +94,7 @@ export default function Page(
     )
   }
   const onDeputeHover = (depute: DeputeInDepartement) => {
-    setCirconscription(depute.circo_number.toString())
+    setCirconscription(depute.circo_num.toString())
   }
   const onDeputeMouseOut = (depute: DeputeInDepartement) => {
     setCirconscription(null)
@@ -124,10 +125,11 @@ export default function Page(
                 display: 'inline-block',
                 listStyleType: 'none',
                 padding: 5,
-                background: isCurrentCirconscription(depute.circo_number)
+                background: isCurrentCirconscription(depute.circo_num)
                   ? '#d1ea7499'
                   : 'initial',
               }}
+              className="w-full"
             >
               <Image
                 width={40}
@@ -144,16 +146,11 @@ export default function Page(
                   marginLeft: 10,
                 }}
               >
-                <Link
-                  style={{ textDecoration: 'underline' }}
-                  href={`/${depute.slug}`}
-                >
-                  {depute.full_name}
-                </Link>{' '}
-                - {beautifyNumeroCirconsription(depute.circo_number)}{' '}
-                circonscription
-                <br />
-                député(e) <GroupeBadge groupe={depute.latestGroup} />
+                <NewDeputeItem
+                  {...{ depute }}
+                  legislature={LATEST_LEGISLATURE}
+                />
+                {beautifyNumeroCirconsription(depute.circo_num)} circonscription
               </div>
             </li>
           )
