@@ -12,6 +12,7 @@ import {
   listFilesRecursively,
   readFileAsJson,
   truncateTable,
+  WORKDIR,
 } from '../utils/utils'
 
 export async function insertFromScrutins(args: CliArgs) {
@@ -31,7 +32,7 @@ export async function insertFromScrutins(args: CliArgs) {
   const uidsInsertedSoFar: string[] = []
 
   for (const [dataset, legislature] of datasetsAndLegislature) {
-    const datasetPath = path.join(args.workdir, 'tricoteuses', dataset)
+    const datasetPath = path.join(WORKDIR, 'tricoteuses', dataset)
     const files = listFilesRecursively(datasetPath)
     console.log(`Inserting these into table ${table}`)
     for (const chunkOfFiles of lo.chunk(files, 300)) {

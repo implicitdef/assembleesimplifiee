@@ -7,6 +7,7 @@ import {
   readFilesInSubdir,
   truncateTable,
   withChunkFactor,
+  WORKDIR,
 } from '../utils/utils'
 
 type NosDeputesJsonFile = {
@@ -50,9 +51,9 @@ async function autoarchiveInsertSlugs(args: CliArgs) {
   console.log('Done')
 }
 
-function readDeputesFile({ workdir }: CliArgs) {
+function readDeputesFile() {
   const filepath = path.join(
-    workdir,
+    WORKDIR,
     'autoarchive',
     'data',
     'nosdeputes',
@@ -64,11 +65,11 @@ function readDeputesFile({ workdir }: CliArgs) {
   return deputes
 }
 
-async function autoarchiveInsertStats(args: CliArgs) {
+async function autoarchiveInsertStats() {
   const table = 'nosdeputes_deputes_weekly_stats'
   await truncateTable(table)
   const statsDir = path.join(
-    args.workdir,
+    WORKDIR,
     'autoarchive',
     'data',
     'nosdeputes',

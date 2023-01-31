@@ -1,13 +1,12 @@
 import path from 'path'
-import { CliArgs } from '../utils/cli'
 import { datasetsToClone } from '../utils/tricoteusesDatasets'
-import { rmDirIfExists, runCmd } from '../utils/utils'
+import { rmDirIfExists, runCmd, WORKDIR } from '../utils/utils'
 
-export function tricoteusesClone({ workdir }: CliArgs) {
+export function tricoteusesClone() {
   const datasets = datasetsToClone
-  console.log(`Cloning ${datasets.length} dataset(s) into ${workdir}`)
+  console.log(`Cloning ${datasets.length} dataset(s) into ${WORKDIR}`)
   datasets.forEach(name => {
-    const targetDir = path.join(workdir, 'tricoteuses', name)
+    const targetDir = path.join(WORKDIR, 'tricoteuses', name)
     rmDirIfExists(targetDir)
     runCmd(
       `git clone https://git.en-root.org/tricoteuses/data/assemblee-nettoye/${name}_nettoye.git ${targetDir}`,

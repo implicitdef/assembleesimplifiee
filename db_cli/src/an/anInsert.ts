@@ -6,6 +6,7 @@ import {
   listFilesRecursively,
   readFileAsXml,
   truncateTable,
+  WORKDIR,
 } from '../utils/utils'
 export async function anInsert(args: CliArgs) {
   const table = 'comptesrendus'
@@ -14,7 +15,7 @@ export async function anInsert(args: CliArgs) {
   const datasets = ['debats16', 'debats15'] as const
 
   for (const dataset of datasets) {
-    const datasetPath = path.join(args.workdir, 'an', dataset)
+    const datasetPath = path.join(WORKDIR, 'an', dataset)
     const files = listFilesRecursively(datasetPath)
     console.log(`Inserting these into table ${table}`)
 

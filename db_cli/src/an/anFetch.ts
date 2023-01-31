@@ -3,11 +3,12 @@ import { CliArgs } from '../utils/cli'
 import {
   downloadZipIntoFileAndUnzipIntoFolder,
   mkDirIfNeeded,
+  WORKDIR,
 } from '../utils/utils'
 
 // explore the Debats dataset
 export async function anFetch(args: CliArgs) {
-  const anDir = path.join(args.workdir, 'an')
+  const anDir = path.join(WORKDIR, 'an')
   mkDirIfNeeded(anDir)
   const legislatureWithDebatsDatasets = [15, 16]
   for (const legislature of legislatureWithDebatsDatasets) {

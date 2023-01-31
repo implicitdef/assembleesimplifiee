@@ -12,6 +12,7 @@ import {
   listFilesRecursively,
   readFileAsJson,
   truncateTable,
+  WORKDIR,
 } from '../utils/utils'
 
 export async function insertFromDossiers(args: CliArgs) {
@@ -30,7 +31,7 @@ export async function insertFromDossiers(args: CliArgs) {
 
   for (const [dataset, legislature] of datasetsAndLegislature) {
     const datasetPath = path.join(
-      args.workdir,
+      WORKDIR,
       'tricoteuses',
       dataset,
       // there two subfolders : dossiers and documents

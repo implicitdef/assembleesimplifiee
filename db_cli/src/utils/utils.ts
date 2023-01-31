@@ -8,6 +8,8 @@ import fetch, { Response } from 'node-fetch'
 import StreamZip from 'node-stream-zip'
 import { XMLParser } from 'fast-xml-parser'
 
+export const WORKDIR = 'tmp'
+
 export function readFromEnv(name: string): string {
   const value = process.env[name]
   if (value === undefined) {
@@ -85,6 +87,15 @@ export function readFilesInSubdir(subDir: string): string[] {
 export async function truncateTable(tableName: string) {
   console.log(`Emptying ${tableName} table`)
   await sql`TRUNCATE TABLE ${sql.raw(tableName)}`.execute(getDb())
+}
+
+export async function dropTable(tableName: string) {
+  console.log(`Dropping table ${tableName} if it exists`)
+  await sql`DROP TABLE ${sql.raw(tableName)} IF EXISTS`.execute(getDb())
+}
+export async function createTable(tableName: string, script: string) {
+  console.log(`Creating table ${tableName}`)
+  await sql.raw(script).execute(getDb())
 }
 
 // The returned file paths will be relative to the current working directory

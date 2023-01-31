@@ -2,7 +2,6 @@ import commandLineArgs, { CommandLineOptions } from 'command-line-args'
 import commandLineUsage, { Section, OptionDefinition } from 'command-line-usage'
 
 export type CliArgs = {
-  workdir: string
   createTables: boolean
   tricoteusesClone: boolean
   tricoteusesInsert: boolean
@@ -15,13 +14,6 @@ export type CliArgs = {
 }
 
 const optionDefinitions: OptionDefinition[] = [
-  {
-    name: 'workdir',
-    type: String,
-    defaultValue: './tmp',
-    description:
-      'Relative path to a directory where the data will be downloaded then read. Defaults to ./tmp',
-  },
   {
     name: 'createTables',
     type: Boolean,
@@ -143,13 +135,7 @@ export function parseAndCheckArgs(): CliArgs | null {
     console.log(commandLineUsage(sections))
     return null
   } else {
-    const { workdir } = args
-    if (!workdir || typeof workdir !== 'string') {
-      console.error(errorMessage)
-      return null
-    }
     return {
-      workdir,
       createTables: args.all ?? args.createTables ?? false,
       tricoteusesClone: args.all ?? args.tricoteusesClone ?? false,
       tricoteusesInsert: args.all ?? args.tricoteusesInsert ?? false,

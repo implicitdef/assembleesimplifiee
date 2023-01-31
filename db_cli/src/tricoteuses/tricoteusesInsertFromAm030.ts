@@ -9,6 +9,7 @@ import {
   readFilesInSubdir,
   truncateTable,
   withChunkFactor,
+  WORKDIR,
 } from '../utils/utils'
 
 export async function insertAllActeursOfAm030(args: CliArgs) {
@@ -83,5 +84,5 @@ export async function insertAllMandatsOfAm030(args: CliArgs) {
 }
 
 function getAm030Path(args: CliArgs) {
-  return path.join(args.workdir, 'tricoteuses', AM030)
+  return path.join(WORKDIR, 'tricoteuses', AM030)
 }
