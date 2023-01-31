@@ -95,13 +95,13 @@ export interface ReleveTables {
   }
 }
 
-type FonctionInGroupe =
+export type FonctionInGroupe =
   | 'Président'
   | 'Membre apparenté'
   | 'Membre'
   | 'Député non-inscrit'
 
-type FonctionInCom =
+export type FonctionInCom =
   | 'Président'
   | 'Membre'
   | 'Rapporteur général'

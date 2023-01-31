@@ -1,7 +1,7 @@
 import groupBy from 'lodash/groupBy'
 import sortBy from 'lodash/sortBy'
 import { Fragment } from 'react'
-import { DeputeItem } from '../../components/DeputeItem'
+import { NewDeputeItem } from '../../components/DeputeItem'
 import { LegislatureNavigation } from '../../components/LegislatureNavigation'
 import * as types from './ComPermList.types'
 
@@ -15,7 +15,7 @@ export function ChunkOfDeputes({
   if (deputes.length === 0) return null
 
   const deputesSorted = sortBy(deputes, _ => {
-    const fonction = _.latestComPerm !== null && _.latestComPerm.fonction
+    const fonction = _.com_perm_fonction
     const score =
       fonction === 'Président'
         ? 1
@@ -28,7 +28,7 @@ export function ChunkOfDeputes({
         : fonction === 'Membre'
         ? 5
         : 10
-    return `${score}_${_.latestGroup?.acronym}`
+    return `${score}_${_.group_acronym}`
   })
 
   return (
@@ -36,10 +36,9 @@ export function ChunkOfDeputes({
       <div className="my-4 flex flex-wrap gap-2">
         {deputesSorted.map(depute => {
           return (
-            <DeputeItem
+            <NewDeputeItem
               key={depute.uid}
-              depute={{ ...depute, mandat_ongoing: true }}
-              {...{ legislature }}
+              {...{ legislature, depute }}
               className="grow"
             />
           )
@@ -56,7 +55,7 @@ export function Page({
   legislatureNavigationUrls,
 }: types.Props) {
   const deputesWithComGroupedByCom = Object.values(
-    groupBy(deputesWithCom, _ => _.latestComPerm.name_short),
+    groupBy(deputesWithCom, _ => _.com_perm_name),
   )
 
   return (
@@ -69,10 +68,10 @@ export function Page({
 
       <p>Petit texte d'explication des commissions permanentes</p>
       {deputesWithComGroupedByCom.map(deputesSameCom => {
-        const com = deputesSameCom[0].latestComPerm
+        const comName = deputesSameCom[0].com_perm_name
         return (
-          <Fragment key={com?.name_short ?? 'none'}>
-            <h2 className="m-2 text-4xl font-extrabold">{com.name_long}</h2>
+          <Fragment key={comName ?? 'none'}>
+            <h2 className="m-2 text-4xl font-extrabold">{comName}</h2>
             <ChunkOfDeputes deputes={deputesSameCom} {...{ legislature }} />
           </Fragment>
         )

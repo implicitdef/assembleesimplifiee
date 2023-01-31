@@ -1,10 +1,8 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { NewDeputeItem } from '../../../components/DeputeItem'
-import { GroupeBadge } from '../../../components/GroupeBadge'
 
 import { MapDepartement } from '../../../components/MapDepartement'
 import {

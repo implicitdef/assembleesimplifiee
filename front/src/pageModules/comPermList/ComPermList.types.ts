@@ -1,5 +1,4 @@
-import { WithLatestComPerm } from '../../lib/addLatestComPerm'
-import { WithLatestGroupOrNull } from '../../lib/addLatestGroup'
+import type { FonctionInCom, ReleveTables } from '../../lib/dbReleve'
 
 export type Params = {
   legislature?: string
@@ -10,24 +9,17 @@ export type Props = {
   legislature: number
   legislatureNavigationUrls: [number, string][]
 }
-export type DeputeWithCom = WithLatestComPerm<
-  WithLatestGroupOrNull<DeputeSimple>
->
-export type DeputeWithoutCom = WithLatestGroupOrNull<DeputeSimple> & {
-  // we add the field just ease the JSX
-  latestComPerm: null
+
+export type Depute = ReleveTables['deputes_in_legislatures']
+
+export type DeputeWithCom = Depute & {
+  com_perm_uid: string
+  com_perm_name: string
+  com_perm_fonction: FonctionInCom
 }
 
-export type DeputeSimple = {
-  uid: string
-  slug: string | null
-  circo_departement: string
-  fullName: string
-}
-
-export type DeputeRawFromDb = {
-  uid: string
-  slug: string | null
-  full_name: string
-  circo_departement: string
+export type DeputeWithoutCom = Depute & {
+  com_perm_uid: null
+  com_perm_name: null
+  com_perm_fonction: null
 }
