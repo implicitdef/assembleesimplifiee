@@ -9,13 +9,7 @@ import {
 } from '../utils/utils'
 import lo from 'lodash'
 import { getDb, NosDeputesDatabase } from '../utils/db'
-export const legislatures = [
-  { id: 'PO230434', num: 12 },
-  { id: 'PO384266', num: 13 },
-  { id: 'PO644420', num: 14 },
-  { id: 'PO717460', num: 15 },
-  { id: 'PO791932', num: 16 },
-]
+import { readAutoarchiveSlugs } from '../autoarchive/autoarchiveInsert'
 
 export async function tricoteusesInsertTableDeputesInLegislature() {
   const tableName = 'deputes_in_legislatures'
@@ -42,6 +36,8 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
   const dir = path.join(WORKDIR, 'tricoteuses', AM030, 'acteurs')
   const filenames = readFilesInSubdir(dir)
 
+  const slugs = await readAutoarchiveSlugs()
+
   const rows = filenames.flatMap(filename => {
     const deputeJson = readFileAsJson(path.join(dir, filename)) as ActeurJson
 
@@ -65,10 +61,11 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
     const rows = Object.entries(lastMandatByLegislature).map(
       ([legislatureStr, lastMandat]) => {
         const gender = deputeJson.etatCivil.ident.civ === 'Mme' ? 'F' : 'M'
+        const uid = deputeJson.uid
         const row: NosDeputesDatabase['deputes_in_legislatures'] = {
           legislature: toInt(legislatureStr),
-          uid: deputeJson.uid,
-          slug: null,
+          uid,
+          slug: slugs.find(_ => _.uid === uid)?.slug ?? null,
           full_name: `${deputeJson.etatCivil.ident.prenom}_${deputeJson.etatCivil.ident.nom}`,
           gender,
           circo_dpt_name: lastMandat.election.lieu.departement,

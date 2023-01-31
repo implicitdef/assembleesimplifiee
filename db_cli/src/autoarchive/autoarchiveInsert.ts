@@ -1,6 +1,5 @@
 import lo from 'lodash'
 import path from 'path'
-import { CliArgs } from '../utils/cli'
 import { getDb } from '../utils/db'
 import {
   readFileAsJson,
@@ -23,32 +22,34 @@ export async function autoarchiveInsert() {
 }
 
 async function autoarchiveInsertSlugs() {
-  const deputes = readDeputesFile()
   const table = 'nosdeputes_deputes'
   await truncateTable(table)
-  console.log(`Inserting ${deputes.length} rows into ${table}`)
-  for (const versionsOfSameDepute of Object.values(
-    lo.groupBy(deputes, d => d.id_an),
-  )) {
-    // In NosDeputes, the same depute can exist in different legislatures
-    // and have different slugs
-    // Exemple : yannick-favennec => became yannick-favennec-becot
-    // Exemple : christine-cloarec => became christine-le-nabour
-    // For these cases we will always prefer the most recent slug
-    const latestVersion = lo.sortBy(
-      versionsOfSameDepute,
-      d => -d.legislature,
-    )[0]
-    const { slug, id_an } = latestVersion
-    await getDb()
-      .insertInto(table)
-      .values({
-        uid: id_an,
-        slug,
-      })
-      .execute()
-  }
+  const rows = await readAutoarchiveSlugs()
+  console.log(`Inserting ${rows.length} rows into ${table}`)
+  await getDb().insertInto(table).values(rows).execute()
   console.log('Done')
+}
+
+export async function readAutoarchiveSlugs() {
+  const deputes = readDeputesFile()
+
+  const slugsWithUid = Object.values(lo.groupBy(deputes, d => d.id_an)).map(
+    versionsOfSameDepute => {
+      // In NosDeputes, the same depute can exist in different legislatures
+      // and have different slugs
+      // Exemple : yannick-favennec => became yannick-favennec-becot
+      // Exemple : christine-cloarec => became christine-le-nabour
+      // For these cases we will always prefer the most recent slug
+      const latestVersion = lo.sortBy(
+        versionsOfSameDepute,
+        d => -d.legislature,
+      )[0]
+      const { slug, id_an } = latestVersion
+      return { slug, uid: id_an }
+    },
+  )
+
+  return slugsWithUid
 }
 
 function readDeputesFile() {
