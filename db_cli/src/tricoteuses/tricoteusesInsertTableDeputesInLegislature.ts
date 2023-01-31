@@ -18,6 +18,7 @@ import {
   createTable,
   dropTable,
   readFilesInSubdir,
+  toInt,
   WORKDIR,
 } from '../utils/utils'
 
@@ -158,8 +159,4 @@ function readDeputesEachLegislatureAndMap<A>(
 // An undefined value for dateFin is considered as the latest
 function takeLatest<A extends { dateFin?: string }>(arr: A[]): A | undefined {
   return lo.last(lo.sortBy(arr, _ => _.dateFin))
-}
-
-function toInt(s: string) {
-  return parseInt(s, 10)
 }

@@ -1,4 +1,5 @@
 import path from 'path'
+import { CauseMandatRaw } from '../derived/insertDerivedDeputesMandats'
 import { AM030 } from './tricoteusesDatasets'
 import { readFileAsJson, readFilesInSubdir, WORKDIR } from './utils'
 
@@ -64,15 +65,24 @@ export type Mandat =
 
 export type MandatAssemblee = {
   typeOrgane: 'ASSEMBLEE'
+  uid: string
   legislature: string
   election: {
     lieu: {
       departement: string
       numDepartement: string
       numCirco: string
+      // id qui change à chaque législature
+      refCirconscription: string
     }
+    causeMandat: CauseMandatRaw
+  }
+  suppleant?: {
+    suppleantRef: string
   }
   dateFin?: string
+  // c'est la date de debut
+  mandature: { datePriseFonction: string }
 }
 
 export type MandatGroupe = {

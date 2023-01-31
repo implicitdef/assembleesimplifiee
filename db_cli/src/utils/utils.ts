@@ -158,3 +158,7 @@ export async function downloadZipIntoFileAndUnzipIntoFolder({
   console.log(`Extracted ${extractedEntries} entries into ${extractionFolder}`)
   await streamZip.close()
 }
+
+export function toInt(s: string) {
+  return parseInt(s, 10)
+}

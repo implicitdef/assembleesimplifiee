@@ -1,9 +1,107 @@
 import { sql } from 'kysely'
 import { getDb } from '../utils/db'
-import { truncateTable } from '../utils/utils'
+import { createTable, dropTable, toInt, truncateTable } from '../utils/utils'
 import * as lo from 'lodash'
+import {
+  isMandatAssemblee,
+  readAllDeputesAndMap,
+} from '../utils/readFromTricoteuses'
 
 export async function insertDerivedDeputesMandats() {
+  const table = 'derived_deputes_mandats'
+  await truncateTable(table)
+  const createTableSql = `CREATE TABLE ${table} (
+    legislature INTEGER NOT NULL,
+    circo_uid TEXT NOT NULL,
+    data jsonb NOT NULL,
+    nb_mandats INTEGER NOT NULL,
+    UNIQUE (circo_uid, legislature)
+)`
+  await dropTable(table)
+  await createTable(table, createTableSql)
+
+  const allMandatsOfDeputes = readAllDeputesAndMap(deputeJson => {
+    const { mandats, ...restOfDeputeJson } = deputeJson
+    const mandatsAssemblee = mandats.filter(isMandatAssemblee)
+    return mandatsAssemblee.map(mandat => {
+      return {
+        depute: restOfDeputeJson,
+        mandat,
+      }
+    })
+  }).flat()
+
+  const finalRows = Object.values(
+    lo.groupBy(
+      allMandatsOfDeputes,
+      _ =>
+        _.mandat.legislature +
+        '-' +
+        _.mandat.election.lieu.numDepartement +
+        '-' +
+        _.mandat.election.lieu.numCirco,
+    ),
+  ).map(mandatsForCircoRaw => {
+    const mandatsForCircoSorted = lo.sortBy(
+      mandatsForCircoRaw,
+      _ => _.mandat.mandature.datePriseFonction,
+    )
+    const firstMandat = mandatsForCircoSorted[0].mandat
+    const legislature = toInt(firstMandat.legislature)
+    const circo = {
+      name_dpt: firstMandat.election.lieu.departement,
+      num_dpt: firstMandat.election.lieu.numDepartement,
+      num_circo: firstMandat.election.lieu.numCirco,
+      region: '', // TODO remove this field, useless
+      region_type: '', // TODO remove this field, useless
+      ref_circo: firstMandat.election.lieu.refCirconscription,
+    }
+
+    const mandatsWithCorrectCauses = mandatsForCircoSorted.map((row, idx) => {
+      const { mandat, depute } = row
+      const nextRow = mandatsForCircoSorted[idx + 1] ?? null
+      const cause_fin = nextRow
+        ? mapCauseMandat(nextRow.mandat.election.causeMandat)
+        : null
+      return {
+        acteur_uid: depute.uid,
+        cause_debut: mapCauseMandat(mandat.election.causeMandat),
+        ...(cause_fin ? { cause_fin } : null),
+        date_debut_mandat: mandat.mandature.datePriseFonction,
+        date_fin_mandat: mandat.dateFin ?? null,
+        full_name: `${depute.etatCivil.ident.prenom} ${depute.etatCivil.ident.nom}`,
+        suppleant_ref: mandat.suppleant?.suppleantRef ?? null,
+        mandat_uid: mandat.uid,
+      }
+    })
+
+    const nb_mandats = mandatsWithCorrectCauses.length
+    const mandatsPartitionByElectionsPartielles =
+      partitionByElectionsPartielles(mandatsWithCorrectCauses)
+
+    const data: DerivedDeputesMandats = {
+      legislature,
+      circo,
+      mandats: mandatsPartitionByElectionsPartielles,
+      nb_mandats,
+    }
+    return {
+      legislature,
+      circo_uid: circo.ref_circo,
+      nb_mandats,
+      data,
+    }
+  })
+
+  console.log(`Found ${finalRows.length} rows to insert into ${table}`)
+  for (const chunkOfRows of lo.chunk(finalRows, 1000)) {
+    console.log(`Inserting a chunk of ${chunkOfRows.length}`)
+    await getDb().insertInto(table).values(chunkOfRows).execute()
+  }
+  console.log('Done')
+}
+
+export async function insertDerivedDeputesMandatsOLD() {
   const table = 'derived_deputes_mandats'
   await truncateTable(table)
 
@@ -196,7 +294,7 @@ const cause_mandat_raw = [
   "élection partielle, suite à l'annulation de l'élection d'un député",
   'élections générales',
 ] as const
-type CauseMandatRaw = typeof cause_mandat_raw[number]
+export type CauseMandatRaw = typeof cause_mandat_raw[number]
 
 function mapCauseMandat(cause_mandat: CauseMandatRaw): CauseChangement {
   switch (cause_mandat) {
