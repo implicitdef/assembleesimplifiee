@@ -24,13 +24,13 @@ export async function autoarchiveInsert() {
 async function autoarchiveInsertSlugs() {
   const table = 'nosdeputes_deputes'
   await truncateTable(table)
-  const rows = await readAutoarchiveSlugs()
+  const rows = readAutoarchiveSlugs()
   console.log(`Inserting ${rows.length} rows into ${table}`)
   await getDb().insertInto(table).values(rows).execute()
   console.log('Done')
 }
 
-export async function readAutoarchiveSlugs() {
+export function readAutoarchiveSlugs() {
   const deputes = readDeputesFile()
 
   const slugsWithUid = Object.values(lo.groupBy(deputes, d => d.id_an)).map(
