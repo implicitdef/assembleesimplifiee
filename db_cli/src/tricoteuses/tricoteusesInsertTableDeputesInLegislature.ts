@@ -19,7 +19,7 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
     UNIQUE (uid, legislature),
     slug TEXT,
     full_name TEXT NOT NULL,
-    gender TEXT NOT NULL CHECK (gender IN ('M', 'F')), d   
+    gender TEXT NOT NULL CHECK (gender IN ('M', 'F')),   
     circo_dpt_name TEXT NOT NULL,
     circo_dpt_num TEXT NOT NULL,
     circo_num TEXT NOT NULL,
@@ -103,7 +103,7 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
           group_color: groupe?.couleurAssociee ?? null,
           com_perm_uid: comPerm?.uid ?? null,
           com_perm_name: comPerm?.libelleAbrev ?? null,
-          com_perm_fonction: null,
+          com_perm_fonction: comPermFonction ?? null,
         }
         return row
       },
