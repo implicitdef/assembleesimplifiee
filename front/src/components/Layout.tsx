@@ -12,16 +12,18 @@ function MenuLink({
   label,
   className,
   wip = false,
+  smaller = false,
 }: {
   to: string
   label?: string
   className?: string
   wip?: boolean
+  smaller?: boolean
 }) {
   return (
     <MyLink
       href={to}
-      className={`block py-4 text-lg ${wip ? 'text-sm' : ''} ${className}`}
+      className={`block py-4 text-lg ${smaller ? 'text-sm' : ''} ${className}`}
       textColorClassOverride="text-slate-700"
     >
       {label ?? to}
@@ -85,22 +87,22 @@ function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
           to="/historique-remplacements"
           label="Historique des départs et remplacements"
         />
-      </Division>
-      <Division>
         <MenuLink to="/circonscription" label="Les circonscriptions" wip />
         <MenuLink
           to="/commissions-permanentes"
           label="Les commissions permanentes"
           wip
         />
-        <MenuLink to="/seances" label="Les séances en hémicycle" wip />
-        <MenuLink to="/sessions" label="Les sessions parlementaires" wip />
-        <MenuLink to="/dossiers" label="Les dossiers législatifs" wip />
-        <MenuLink to="/scrutins" label="Les scrutins" wip />
       </Division>
       <Division>
-        <MenuLink to="/long" label="Page avec beaucoup de contenu" wip />
-        <MenuLink to="/short" label="Page avec très peu de contenu" wip />
+        {/* <MenuLink to="/seances" label="Les séances en hémicycle" wip />
+        <MenuLink to="/sessions" label="Les sessions parlementaires" wip />
+        <MenuLink to="/dossiers" label="Les dossiers législatifs" wip />
+        <MenuLink to="/scrutins" label="Les scrutins" wip /> */}
+      </Division>
+      <Division>
+        <MenuLink to="/long" label="Page avec beaucoup de contenu" smaller />
+        <MenuLink to="/short" label="Page avec très peu de contenu" smaller />
       </Division>
     </nav>
   )

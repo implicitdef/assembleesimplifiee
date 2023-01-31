@@ -57,14 +57,6 @@ export async function addLatestGroupToDeputes<D extends { uid: string }>(
     }
   })
 }
-
-// We often want to filter out the few deputes without a group
-// (only happens in rare cases where the deputes resigned on their first day)
-export function latestGroupIsNotNull<D>(
-  depute: WithLatestGroupOrNull<D>,
-): depute is WithLatestGroup<D> {
-  return depute.latestGroup !== null
-}
 async function fetchLatestGroupsForDeputeIds(
   deputeUids: string[],
   legislature: number,
