@@ -3,6 +3,7 @@ import { MyLink } from './MyLink'
 import { FonctionInGroupe } from '../lib/addLatestGroup'
 import { LATEST_LEGISLATURE } from '../lib/hardcodedData'
 import { FonctionInCom } from '../lib/addLatestComPerm'
+import type { ReleveTables } from '../lib/dbReleve'
 
 type Props = {
   depute: {
@@ -74,5 +75,53 @@ export function DeputeItem({
         </span>
       )}
     </div>
+  )
+}
+
+export type NewDeputeItemProps = {
+  depute: ReleveTables['deputes_in_legislatures']
+  legislature: number
+  displayCirco?: boolean
+  className?: string
+}
+
+export function NewDeputeItem({
+  depute,
+  legislature,
+  displayCirco,
+  className,
+}: NewDeputeItemProps) {
+  const latestGroup =
+    depute.group_acronym && depute.group_fonction
+      ? {
+          nom: 'Nom du groupe', // TODO this should not be needed
+          acronym: depute.group_acronym,
+          color: depute.group_color ?? 'white',
+          fonction: depute.group_fonction,
+        }
+      : null
+  const latestComPerm =
+    depute.com_perm_fonction && depute.com_perm_name
+      ? {
+          fonction: depute.com_perm_fonction,
+          name_short: depute.com_perm_name,
+          name_long: depute.com_perm_name,
+        }
+      : null
+  const deputeOldShape: Props['depute'] = {
+    uid: depute.uid,
+    fullName: depute.full_name,
+    circo_departement: depute.circo_dpt_name,
+    slug: depute.slug,
+    mandat_ongoing: depute.ongoing,
+    latestGroup,
+    latestComPerm,
+  }
+
+  return (
+    <DeputeItem
+      {...{ legislature, displayCirco, className }}
+      depute={deputeOldShape}
+    />
   )
 }

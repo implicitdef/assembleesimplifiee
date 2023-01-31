@@ -1,9 +1,9 @@
 import sortBy from 'lodash/sortBy'
 import uniq from 'lodash/uniq'
 import { BigTitle } from '../../components/BigTitle'
-import { DeputeItem } from '../../components/DeputeItem'
+import { DeputeItem, NewDeputeItem } from '../../components/DeputeItem'
 import { LegislatureNavigation } from '../../components/LegislatureNavigation'
-import { partitionDeputesByGroup } from '../../lib/utils'
+import { newPartitionDeputesByGroup } from '../../lib/utils'
 import * as types from './DeputeList.types'
 
 export function ChunkOfDeputes({
@@ -19,11 +19,10 @@ export function ChunkOfDeputes({
 }) {
   if (deputes.length === 0) return null
 
-  const allInSameGroupe =
-    uniq(deputes.map(_ => _.latestGroup?.acronym)).length === 1
+  const allInSameGroupe = uniq(deputes.map(_ => _.group_acronym)).length === 1
   const deputesSorted = allInSameGroupe
     ? sortBy(deputes, _ => {
-        const fonction = _.latestGroup?.fonction
+        const fonction = _.group_fonction
         const score =
           fonction === 'Président' ? 100 : fonction === 'Membre' ? 50 : 10
         return -score
@@ -38,7 +37,7 @@ export function ChunkOfDeputes({
       <div className="my-4 flex flex-wrap gap-2">
         {deputesSorted.map(depute => {
           return (
-            <DeputeItem
+            <NewDeputeItem
               key={depute.uid}
               {...{ depute, legislature }}
               displayCirco
@@ -59,12 +58,12 @@ export function DeputesByGroup({
   legislature: number
 }) {
   if (deputes.length === 0) return null
-  const deputesByGroup = partitionDeputesByGroup(deputes)
+  const deputesByGroup = newPartitionDeputesByGroup(deputes)
 
   return (
     <>
       {deputesByGroup.map(deputesOfOneGroupe => {
-        const acronym = deputesOfOneGroupe[0].latestGroup?.acronym ?? ''
+        const acronym = deputesOfOneGroupe[0].group_acronym ?? ''
         return (
           <ChunkOfDeputes
             key={acronym}
@@ -135,13 +134,13 @@ function DeputesLeftOver({
       <ChunkOfDeputes
         title={`Députés "non-inscrits"`}
         explanation={`Ils ne peuvent pas ou ne souhaitent pas rejoindre un autre groupe, ou en ont été exclus.`}
-        deputes={deputesCurrent.filter(_ => _.latestGroup?.acronym === 'NI')}
+        deputes={deputesCurrent.filter(_ => _.group_acronym === 'NI')}
         {...{ legislature }}
       />
       <ChunkOfDeputes
         title="Anciens députés sans groupe"
         explanation={`Ils n'ont jamais été rattachés à un groupe, même pas le groupe des «Non-inscrits». En général c'est qu'ils ont été techniquement députés pendant très peu de temps (quelques heures)`}
-        deputes={deputesFormer.filter(_ => _.latestGroup === null)}
+        deputes={deputesFormer.filter(_ => _.group_acronym === null)}
         {...{ legislature }}
       />
       <ChunkOfDeputes
@@ -163,15 +162,9 @@ function DeputeListIfPositionPolitiqueAvailable({
   deputesFormer: types.Depute[]
   legislature: number
 }) {
-  const deputesMajoritaire = deputesCurrent.filter(
-    _ => _.latestGroup?.position_politique === 'Majoritaire',
-  )
-  const deputesMinoritaire = deputesCurrent.filter(
-    _ => _.latestGroup?.position_politique === 'Minoritaire',
-  )
-  const deputesOpposition = deputesCurrent.filter(
-    _ => _.latestGroup?.position_politique === 'Opposition',
-  )
+  const deputesMajoritaire = deputesCurrent.filter(_ => _.group_pos === 'maj')
+  const deputesMinoritaire = deputesCurrent.filter(_ => _.group_pos === 'min')
+  const deputesOpposition = deputesCurrent.filter(_ => _.group_pos === 'opp')
 
   return (
     <>
@@ -200,7 +193,7 @@ function DeputeListIfPositionPolitiqueNotAvailable({
   legislature: number
 }) {
   const deputesCurrentWithGroup = deputesCurrent.filter(
-    _ => _.latestGroup !== null && _.latestGroup.acronym !== 'NI',
+    _ => _.group_acronym !== null && _.group_acronym !== 'NI',
   )
   return (
     <>
@@ -226,8 +219,8 @@ export function Page({
     return _.group_pos !== null || _.group_acronym === 'NI'
   })
 
-  const deputesCurrent = deputes.filter(_ => _.mandat_ongoing)
-  const deputesFormer = deputes.filter(_ => !_.mandat_ongoing)
+  const deputesCurrent = deputes.filter(_ => _.ongoing)
+  const deputesFormer = deputes.filter(_ => !_.ongoing)
 
   return (
     <div>
@@ -236,8 +229,6 @@ export function Page({
         currentLegislature={legislature}
         urlsByLegislature={legislatureNavigationUrls}
       />
-
-      {/* <GrapheRepartitionGroupes {...{ groupesData }} /> */}
 
       {positionPolitiquesAreAvailable ? (
         <DeputeListIfPositionPolitiqueAvailable

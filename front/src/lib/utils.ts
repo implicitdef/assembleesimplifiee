@@ -206,6 +206,15 @@ export function partitionDeputesByGroup<D>(
   )
 }
 
+export function newPartitionDeputesByGroup<
+  D extends { group_acronym: string | null },
+>(deputes: D[]): D[][] {
+  return sortBy(
+    Object.values(groupBy(deputes, _ => _.group_acronym)),
+    _ => -_.length,
+  )
+}
+
 export function dateDiffInDays(first: string, second: string) {
   return Math.round(
     (new Date(second).getTime() - new Date(first).getTime()) /

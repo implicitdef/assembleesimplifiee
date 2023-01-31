@@ -31,6 +31,9 @@ export const getStaticProps: GetStaticProps<
     .selectAll()
     .execute()
 
+  console.log(deputes.map(_ => _.date_fin))  
+
+
   return {
     props: {
       legislature,

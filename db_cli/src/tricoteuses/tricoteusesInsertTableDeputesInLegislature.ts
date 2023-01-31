@@ -31,7 +31,7 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
     com_perm_uid TEXT,
     com_perm_name TEXT,
     com_perm_fonction TEXT,
-    date_fin TIMESTAMP WITH TIME ZONE,
+    date_fin TEXT,
     ongoing BOOLEAN NOT NULL
 )`
   await dropTable(tableName)
