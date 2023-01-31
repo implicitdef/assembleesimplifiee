@@ -1,10 +1,10 @@
 import * as lo from 'lodash'
-import { getDb } from '../../utils/db'
+import { getDb } from '../utils/db'
 import {
   isMandatAssemblee,
   readAllDeputesAndMap,
-} from '../../utils/readFromTricoteuses'
-import { createTable, dropTable, toInt } from '../../utils/utils'
+} from '../utils/readFromTricoteuses'
+import { createTable, dropTable, toInt } from '../utils/utils'
 
 // Construit pour chaque legislature et chaque circonscriptions, les differents mandats de députés qu'il y a eu
 // (car dans une même legislature il peut y en avoir plusieurs successifs, à cause des remplacements, élections partielles, etc.)

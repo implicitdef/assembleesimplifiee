@@ -1,9 +1,9 @@
 import { sql } from 'kysely'
-import { CliArgs } from './utils/cli'
-import { getDb } from './utils/db'
+import { CliArgs } from '../utils/cli'
+import { getDb } from '../utils/db'
 import fs from 'fs'
 
-export async function createTables(args: CliArgs) {
+export async function createOldTables(args: CliArgs) {
   const sqlFile = './sql/db_tables.sql'
   console.log(`Running SQL file ${sqlFile}`)
   const sqlCommands = fs.readFileSync(sqlFile, {

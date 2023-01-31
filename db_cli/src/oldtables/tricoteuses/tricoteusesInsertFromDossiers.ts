@@ -1,19 +1,19 @@
 import lo from 'lodash'
 import path from 'path'
-import { CliArgs } from '../utils/cli'
+import { CliArgs } from '../../utils/cli'
 import {
   DOSSIERS_14,
   DOSSIERS_15,
   DOSSIERS_16,
-} from '../utils/tricoteusesDatasets'
-import { getDb } from '../utils/db'
+} from '../../utils/tricoteusesDatasets'
+import { getDb } from '../../utils/db'
 import {
   isNotNull,
   listFilesRecursively,
   readFileAsJson,
   truncateTable,
   WORKDIR,
-} from '../utils/utils'
+} from '../../utils/utils'
 
 export async function insertFromDossiers(args: CliArgs) {
   const table = 'dossiers'

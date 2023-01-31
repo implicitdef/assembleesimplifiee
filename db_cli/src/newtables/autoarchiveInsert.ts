@@ -2,9 +2,10 @@ import lo from 'lodash'
 import path from 'path'
 import { getDb } from '../utils/db'
 import {
+  createTable,
+  dropTable,
   readFileAsJson,
   readFilesInSubdir,
-  truncateTable,
   withChunkFactor,
   WORKDIR,
 } from '../utils/utils'
@@ -17,22 +18,11 @@ type NosDeputesJsonFile = {
 }[]
 
 export async function autoarchiveInsert() {
-  await autoarchiveInsertSlugs()
   await autoarchiveInsertStats()
-}
-
-async function autoarchiveInsertSlugs() {
-  const table = 'nosdeputes_deputes'
-  await truncateTable(table)
-  const rows = readAutoarchiveSlugs()
-  console.log(`Inserting ${rows.length} rows into ${table}`)
-  await getDb().insertInto(table).values(rows).execute()
-  console.log('Done')
 }
 
 export function readAutoarchiveSlugs() {
   const deputes = readDeputesFile()
-
   const slugsWithUid = Object.values(lo.groupBy(deputes, d => d.id_an)).map(
     versionsOfSameDepute => {
       // In NosDeputes, the same depute can exist in different legislatures
@@ -48,7 +38,6 @@ export function readAutoarchiveSlugs() {
       return { slug, uid: id_an }
     },
   )
-
   return slugsWithUid
 }
 
@@ -68,7 +57,15 @@ function readDeputesFile() {
 
 async function autoarchiveInsertStats() {
   const table = 'nosdeputes_deputes_weekly_stats'
-  await truncateTable(table)
+  const createTableSql = `CREATE TABLE ${table} (
+    uid text NOT NULL,
+    legislature INTEGER NOT NULL,
+    data jsonb NOT NULL,
+    UNIQUE (uid, legislature)
+)`
+  await dropTable(table)
+  await createTable(table, createTableSql)
+
   const statsDir = path.join(
     WORKDIR,
     'autoarchive',

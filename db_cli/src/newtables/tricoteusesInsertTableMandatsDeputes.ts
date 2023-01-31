@@ -1,10 +1,10 @@
 import * as lo from 'lodash'
-import { getDb } from '../../utils/db'
+import { getDb } from '../utils/db'
 import {
   isMandatAssemblee,
   readAllDeputesAndMap,
-} from '../../utils/readFromTricoteuses'
-import { createTable, dropTable, toInt } from '../../utils/utils'
+} from '../utils/readFromTricoteuses'
+import { createTable, dropTable, toInt } from '../utils/utils'
 
 // Liste simplement tous les mandats de députés (une ligne par mandat)
 // avec les dates de début/fin

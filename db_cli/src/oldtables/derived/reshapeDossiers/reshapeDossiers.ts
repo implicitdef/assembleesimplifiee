@@ -1,5 +1,5 @@
-import { getDb } from '../../utils/db'
-import { truncateTable } from '../../utils/utils'
+import { getDb } from '../../../utils/db'
+import { truncateTable } from '../../../utils/utils'
 import * as dossierTypes from './types/dossier'
 import { NewSimpleDossier } from './types/newSimpleDossier'
 import * as lo from 'lodash'

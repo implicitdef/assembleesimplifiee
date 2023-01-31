@@ -1,4 +1,4 @@
-import { CliArgs } from '../utils/cli'
+import { CliArgs } from '../../utils/cli'
 import {
   insertReunions,
   insertSessionsUsingReunions,

@@ -1,10 +1,10 @@
 import path from 'path'
-import { CliArgs } from '../utils/cli'
+import { CliArgs } from '../../utils/cli'
 import {
   downloadZipIntoFileAndUnzipIntoFolder,
   mkDirIfNeeded,
   WORKDIR,
-} from '../utils/utils'
+} from '../../utils/utils'
 
 // explore the Debats dataset
 export async function anFetch(args: CliArgs) {

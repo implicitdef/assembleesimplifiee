@@ -1,14 +1,18 @@
 import { sql } from 'kysely'
 import lo from 'lodash'
 import path from 'path'
-import { CliArgs } from '../utils/cli'
-import { AGENDA_14, AGENDA_15, AGENDA_16 } from '../utils/tricoteusesDatasets'
+import { CliArgs } from '../../utils/cli'
+import {
+  AGENDA_14,
+  AGENDA_15,
+  AGENDA_16,
+} from '../../utils/tricoteusesDatasets'
 import {
   areRangesOverlapping,
   DateRange,
   getDateRangeInsideRatio,
-} from '../utils/dateRanges'
-import { getDb } from '../utils/db'
+} from '../../utils/dateRanges'
+import { getDb } from '../../utils/db'
 import {
   getPossiblePairs,
   isNotNull,
@@ -17,7 +21,7 @@ import {
   truncateTable,
   withChunkFactor,
   WORKDIR,
-} from '../utils/utils'
+} from '../../utils/utils'
 
 export async function insertReunions(args: CliArgs) {
   const table = 'reunions'

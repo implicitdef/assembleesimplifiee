@@ -1,6 +1,6 @@
-import { getDb } from '../../utils/db'
-import { readAllAssemblees } from '../../utils/readFromTricoteuses'
-import { createTable, dropTable, toInt } from '../../utils/utils'
+import { getDb } from '../utils/db'
+import { readAllAssemblees } from '../utils/readFromTricoteuses'
+import { createTable, dropTable, toInt } from '../utils/utils'
 
 export async function tricoteusesInsertTableLegislatures() {
   const table = 'legislatures'

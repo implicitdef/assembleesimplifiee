@@ -1,16 +1,16 @@
 import lo from 'lodash'
 import path from 'path'
-import { rewriteAdresses } from '../utils/rewriteAdresses'
-import { CliArgs } from '../utils/cli'
-import { AM030 } from '../utils/tricoteusesDatasets'
-import { getDb } from '../utils/db'
+import { rewriteAdresses } from '../../utils/rewriteAdresses'
+import { CliArgs } from '../../utils/cli'
+import { AM030 } from '../../utils/tricoteusesDatasets'
+import { getDb } from '../../utils/db'
 import {
   readFileAsJson,
   readFilesInSubdir,
   truncateTable,
   withChunkFactor,
   WORKDIR,
-} from '../utils/utils'
+} from '../../utils/utils'
 
 export async function insertAllActeursOfAm030(args: CliArgs) {
   const kind = 'acteurs'

@@ -57,10 +57,6 @@ export interface ReleveTables {
     start_date: Date
     end_date: Date
   }
-  nosdeputes_deputes: {
-    uid: string
-    slug: string
-  }
   // new tables
   //------------
   nosdeputes_deputes_weekly_stats: {

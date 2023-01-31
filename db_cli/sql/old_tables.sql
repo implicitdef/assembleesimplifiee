@@ -1,3 +1,8 @@
+-- script de créations d'anciennes tables
+-- pour les nouvelles tables, on met le SQL de création de la table directement dans le code typescript
+
+
+
 DROP TABLE IF EXISTS acteurs;
 CREATE TABLE acteurs (
     uid text PRIMARY KEY NOT NULL,
@@ -18,8 +23,6 @@ CREATE TABLE mandats (
     acteur_uid TEXT NOT NULL,
     organes_uids TEXT[] NOT NULL
 );
-
-
 
 -- dataset agenda : réunions de commissions, séance, réunions qconques entre parlementaires, etc.
 DROP TABLE IF EXISTS reunions;
@@ -65,17 +68,4 @@ CREATE TABLE comptesrendus (
     data jsonb NOT NULL
 );
 
-DROP TABLE IF EXISTS nosdeputes_deputes;
-CREATE TABLE nosdeputes_deputes (
-    uid text PRIMARY KEY NOT NULL,
-    slug text NOT NULL UNIQUE
-);
-
-DROP TABLE IF EXISTS nosdeputes_deputes_weekly_stats;
-CREATE TABLE nosdeputes_deputes_weekly_stats (
-    uid text NOT NULL,
-    legislature INTEGER NOT NULL,
-    data jsonb NOT NULL,
-    UNIQUE (uid, legislature)
-);
 

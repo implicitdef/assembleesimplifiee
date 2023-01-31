@@ -14,22 +14,7 @@ export default async function sandbox(
       uid: string
       data: any
     }>`
-SELECT DISTINCT ON (acteur_uid)
-  acteurs.uid,
-  nosdeputes_deputes.slug,
-  CONCAT(acteurs.data->'etatCivil'->'ident'->>'prenom', ' ', acteurs.data->'etatCivil'->'ident'->>'nom') AS full_name,
-  CONCAT(mandats.data->'election'->'lieu'->>'departement', '-', mandats.data->'election'->'lieu'->>'numCirco') AS circo_name,
-  mandats.data->'election'->>'refCirconscription' AS circo_uid,
-  mandats.data->'election'->>'causeMandat' AS cause_mandat,
-  mandats.data->'election' AS election
-FROM acteurs
-INNER JOIN mandats ON acteurs.uid = mandats.acteur_uid
-INNER JOIN organes ON organes.uid = ANY(mandats.organes_uids)
-LEFT JOIN nosdeputes_deputes ON nosdeputes_deputes.uid = acteurs.uid
-WHERE
-  organes.data->>'codeType' = 'ASSEMBLEE'
-  AND organes.data->>'legislature' = '16'
-  `.execute(dbReleve)
+SELECT FROM ......`.execute(dbReleve)
   ).rows
 
   const acc: string[] = []

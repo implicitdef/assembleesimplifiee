@@ -1,13 +1,13 @@
 import lo from 'lodash'
 import path from 'path'
-import { CliArgs } from '../utils/cli'
-import { getDb } from '../utils/db'
+import { CliArgs } from '../../utils/cli'
+import { getDb } from '../../utils/db'
 import {
   listFilesRecursively,
   readFileAsXml,
   truncateTable,
   WORKDIR,
-} from '../utils/utils'
+} from '../../utils/utils'
 export async function anInsert(args: CliArgs) {
   const table = 'comptesrendus'
   await truncateTable(table)

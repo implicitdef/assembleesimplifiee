@@ -1,4 +1,4 @@
-import { tricoteusesInsertTableDeputesInLegislature } from './tricoteuses/newtables/tricoteusesInsertTableDeputesInLegislature'
+import { tricoteusesInsertTableDeputesInLegislature } from './newtables/tricoteusesInsertTableDeputesInLegislature'
 import { CliArgs } from './utils/cli'
 
 export async function sandbox(args: CliArgs) {
