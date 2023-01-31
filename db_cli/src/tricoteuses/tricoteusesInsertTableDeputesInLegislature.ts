@@ -1,15 +1,7 @@
-import path from 'path'
-import { AM030 } from '../utils/tricoteusesDatasets'
-import {
-  createTable,
-  dropTable,
-  readFileAsJson,
-  readFilesInSubdir,
-  WORKDIR,
-} from '../utils/utils'
 import lo from 'lodash'
-import { getDb, NosDeputesDatabase } from '../utils/db'
+import path from 'path'
 import { readAutoarchiveSlugs } from '../autoarchive/autoarchiveInsert'
+import { getDb, NosDeputesDatabase } from '../utils/db'
 import {
   ActeurJson,
   isMandatAssemblee,
@@ -18,8 +10,16 @@ import {
   MandatAssemblee,
   readAllAssemblees,
   readAllComPerm,
+  readAllDeputesAndMap,
   readAllGroupeParlementaires,
 } from '../utils/readFromTricoteuses'
+import { AM030 } from '../utils/tricoteusesDatasets'
+import {
+  createTable,
+  dropTable,
+  readFilesInSubdir,
+  WORKDIR,
+} from '../utils/utils'
 
 export async function tricoteusesInsertTableDeputesInLegislature() {
   const tableName = 'deputes_in_legislatures'
@@ -129,16 +129,11 @@ function readDeputesEachLegislatureAndMap<A>(
   const filenames = readFilesInSubdir(dir)
 
   const rows: A[] = []
-  filenames.flatMap(filename => {
-    const deputeJson = readFileAsJson(path.join(dir, filename)) as ActeurJson
+  readAllDeputesAndMap(deputeJson => {
     const mandatsAssembleeByLegislature = lo.groupBy(
       deputeJson.mandats.filter(isMandatAssemblee),
       _ => _.legislature,
     )
-    if (Object.keys(mandatsAssembleeByLegislature).length === 0) {
-      // is not a depute
-      return []
-    }
     const lastMandatByLegislature = lo.mapValues(
       mandatsAssembleeByLegislature,
       mandats => {

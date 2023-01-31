@@ -29,6 +29,22 @@ export function readAllComPerm(): OrganeComPerm[] {
   return readOrganesAndFilter(isOrganeComPerm)
 }
 
+export function readAllDeputesAndMap<A>(
+  mapFunction: (depute: ActeurJson) => A,
+): A[] {
+  const dir = path.join(WORKDIR, 'tricoteuses', AM030, 'acteurs')
+  const filenames = readFilesInSubdir(dir)
+  const res: A[] = []
+  filenames.flatMap(filename => {
+    const deputeJson = readFileAsJson(path.join(dir, filename)) as ActeurJson
+    if (deputeJson.mandats.some(isMandatAssemblee)) {
+      // it is a depute
+      mapFunction(deputeJson)
+    }
+  })
+  return res
+}
+
 export type ActeurJson = {
   uid: string
   etatCivil: {
