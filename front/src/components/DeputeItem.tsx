@@ -2,8 +2,7 @@ import { GroupeBadgeWithFonction } from './GroupeBadge'
 import { MyLink } from './MyLink'
 import { FonctionInGroupe } from '../lib/addLatestGroup'
 import { LATEST_LEGISLATURE } from '../lib/hardcodedData'
-import { FonctionInCom } from '../lib/addLatestComPerm'
-import type { ReleveTables } from '../lib/dbReleve'
+import type { ReleveTables, FonctionInCom } from '../lib/dbReleve'
 
 type Props = {
   depute: {
