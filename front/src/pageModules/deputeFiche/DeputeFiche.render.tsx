@@ -1,23 +1,14 @@
 import Image from 'next/image'
 
 import { LegislatureNavigation } from '../../components/LegislatureNavigation'
-import { Todo } from '../../components/Todo'
 import { LATEST_LEGISLATURE } from '../../lib/hardcodedData'
-import { formatDate, getAge } from '../../lib/utils'
 import * as types from './DeputeFiche.types'
-import { ContactBlock } from './lib/ContactsBlock'
 import { StatsGraph } from './lib/StatsGraph'
-import {
-  Amendements,
-  InformationsBlock,
-  Responsabilites,
-  Votes,
-} from './lib/variousBlocks'
+import { InformationsBlock } from './lib/variousBlocks'
 
 export function Page(props: types.Props) {
   const { depute, legislature, legislatureNavigationUrls, legislatureDates } =
     props
-  // console.log('@@@@ depute', depute)
 
   return (
     <div className="">
@@ -55,8 +46,6 @@ export function Page(props: types.Props) {
           <StatsGraph stats={depute.stats} />
         </div>
       )}
-      <ContactBlock {...{ depute }} />
-      {/* <Responsabilites {...{ depute }} /> */}
     </div>
   )
 }

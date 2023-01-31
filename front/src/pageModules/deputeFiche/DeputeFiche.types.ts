@@ -1,7 +1,4 @@
 import { WithLatestGroupOrNull } from '../../lib/addLatestGroup'
-import { AmendementsDeputeSummary } from '../../lib/queryDeputeAmendementsSummary'
-import { DeputeResponsabilites } from '../../lib/queryDeputeResponsabilites'
-import { DeputeVotes } from '../../lib/queryDeputeVotes'
 
 export type Params = {
   slug: string
@@ -28,14 +25,8 @@ export type Depute = WithLatestGroupOrNull<{
   date_of_birth: string
   mandats_this_legislature: Mandat[]
   legislatures: number[]
-  collaborateurs: Collaborateur[]
-  adresses: Adresses
-  amendements: AmendementsDeputeSummary
-  responsabilites: DeputeResponsabilites
-  votes: DeputeVotes
   stats: WeeklyStats<StatsFinal> | null
 }>
-export type Collaborateur = { full_name: string }
 
 export type Mandat = {
   uid: string
@@ -43,28 +34,6 @@ export type Mandat = {
   cause_fin: string | null
   date_debut: string
   date_fin: string | null
-}
-
-export type Adresses = {
-  emails: string[]
-  facebook: string[]
-  linkedin: string[]
-  instagram: string[]
-  twitter: string[]
-  sites_internet: string[]
-  adresses_postales: {
-    uid: string
-    typeLibelle:
-      | 'Adresse officielle'
-      | 'Adresse publiée de circonscription'
-      | 'Adresse publiée pour Paris ou sa région'
-    ville?: string
-    nomRue?: string | null
-    numeroRue?: string
-    codePostal?: string
-    intitule?: string | null
-    complementAdresse?: string | null
-  }[]
 }
 
 export type WeeklyStats<A> = { [weekMonday: string]: A }

@@ -1,14 +1,8 @@
-import { MyLink } from '../../../components/MyLink'
 import {
   GroupeBadge,
   GroupeBadgeWithFonction,
 } from '../../../components/GroupeBadge'
-import { Todo } from '../../../components/Todo'
-import {
-  addPrefixToCirconscription,
-  isCommissionPermanente,
-} from '../../../lib/hardcodedData'
-import { DeputeResponsabilite } from '../../../lib/queryDeputeResponsabilites'
+import { addPrefixToCirconscription } from '../../../lib/hardcodedData'
 import {
   formatDate,
   getAge,
@@ -207,135 +201,6 @@ export function InformationsBlock(props: types.Props) {
       </div>
       <MandatsBlock {...{ depute, legislatureDates }} />
       <LegislaturesBlock {...props} />
-    </div>
-  )
-}
-
-export function Amendements({ depute }: { depute: types.Depute }) {
-  return (
-    <div className="bg-slate-200 px-8 py-4 shadow-md">
-      <h2 className="font-bold">Ses amendements</h2>
-      <div className="py-4">
-        <table className="table-auto">
-          <thead>
-            <tr>
-              <th>-</th>
-              <th>Proposés</th>
-              <th>Signés</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.keys(depute.amendements).map(key => (
-              <tr key={key}>
-                <td>{key}</td>
-                <td align="center">{depute.amendements[key].proposes}</td>
-                <td align="center">{depute.amendements[key].signes}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <br />
-        <MyLink
-          href={`https://www.assemblee-nationale.fr/dyn/16/amendements?auteur=${depute.uid}`}
-          targetBlank
-        >
-          Consulter tous ses amendements
-        </MyLink>
-      </div>
-    </div>
-  )
-}
-
-function VotePosition({
-  position,
-}: {
-  position: types.Depute['votes'][number]['position']
-}) {
-  const color =
-    position === 'pour'
-      ? 'text-green-700'
-      : position === 'contre'
-      ? 'text-red-700'
-      : 'text-inherit'
-
-  return <span className={`font-bold ${color}`}>{position}</span>
-}
-
-export function Votes({ depute }: { depute: types.Depute }) {
-  const votes = depute.votes || []
-  return (
-    <div className="bg-slate-200 px-8 py-4 shadow-md">
-      <h2 className="font-bold">Votes</h2>
-      <div className="py-4"></div>
-      {(votes.length && (
-        <ul className="list-none">
-          <b>Ses derniers votes:</b>
-          <br />
-          {votes.map(vote => (
-            <li key={vote.scrutin_id}>
-              {formatDate(vote.date)} :{' '}
-              <VotePosition position={vote.position} />{' '}
-              <MyLink href="#">{vote.titre}</MyLink>
-            </li>
-          ))}
-        </ul>
-      )) ||
-        null}
-    </div>
-  )
-}
-
-const isResponsabiliteParlementaire = (responsabilite: DeputeResponsabilite) =>
-  responsabilite.type === 'parlementaire'
-
-export function Responsabilites({ depute }: { depute: types.Depute }) {
-  const sections = [
-    {
-      title: 'Commission permanente',
-      filter: (responsabilite: DeputeResponsabilite) =>
-        isResponsabiliteParlementaire(responsabilite) &&
-        isCommissionPermanente(responsabilite.slug),
-    },
-    {
-      title: 'Missions parlementaires',
-      filter: (responsabilite: DeputeResponsabilite) =>
-        isResponsabiliteParlementaire(responsabilite) &&
-        !isCommissionPermanente(responsabilite.slug),
-    },
-    {
-      title: 'Fonctions judiciaires, internationales ou extra-parlementaires',
-      filter: (responsabilite: DeputeResponsabilite) =>
-        responsabilite.type === 'extra',
-    },
-    {
-      title: "Groupes d'études et d'amitié",
-      filter: (responsabilite: DeputeResponsabilite) =>
-        responsabilite.type === 'groupes',
-    },
-  ]
-  return (
-    <div className="bg-slate-200 px-8 py-4 shadow-md">
-      <h2 className="font-bold">Responsabilités</h2>
-      <div className="py-4"></div>
-      {sections.map(section => {
-        const rows = depute.responsabilites.filter(section.filter)
-        return (
-          (rows.length && (
-            <ul className="list-none" key={section.title}>
-              <b>{section.title} :</b>
-              <br />
-              {rows.map(row => (
-                <li key={row.slug}>
-                  <MyLink href={`/organisme/${row.slug}`}>
-                    {row.nom} {row.fonction && `(${row.fonction})`}
-                  </MyLink>
-                </li>
-              ))}
-            </ul>
-          )) ||
-          null
-        )
-      })}
     </div>
   )
 }
