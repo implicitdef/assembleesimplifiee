@@ -33,20 +33,12 @@ async function queryLegislatures(
   deputeUid: string,
 ): Promise<types.Depute['legislatures']> {
   return (
-    await sql<{ legislature: number }>`
-SELECT DISTINCT 
-  (organes.data->>'legislature')::int AS legislature
-FROM acteurs
-INNER JOIN mandats
-  ON mandats.acteur_uid = acteurs.uid
-INNER JOIN organes
-  ON organes.uid = ANY(mandats.organes_uids)
-WHERE
-  organes.data->>'codeType' = 'ASSEMBLEE'
-  AND acteurs.uid = ${deputeUid}
-ORDER BY legislature
-  `.execute(dbReleve)
-  ).rows.map(_ => _.legislature)
+    await dbReleve
+      .selectFrom('deputes_in_legislatures')
+      .where('uid', '=', deputeUid)
+      .select('legislature')
+      .execute()
+  ).map(_ => _.legislature)
 }
 
 async function queryMandatsOfDeputesInLegislature(
@@ -78,28 +70,20 @@ WHERE
 export const getStaticPathsOlderLegislatures: GetStaticPaths<
   types.Params
 > = async () => {
-  const deputes = (
-    await sql<{ slug: string; legislature: string }>`
-    SELECT DISTINCT
-      nosdeputes_deputes.slug,
-      organes.data->>'legislature' AS legislature
-  FROM acteurs
-  INNER JOIN mandats ON acteurs.uid = mandats.acteur_uid
-  INNER JOIN organes ON organes.uid = ANY(mandats.organes_uids)
-  LEFT JOIN nosdeputes_deputes ON nosdeputes_deputes.uid = acteurs.uid
-  WHERE organes.data->>'codeType' = 'ASSEMBLEE'
-  AND organes.data->>'legislature' != ${LATEST_LEGISLATURE.toString()}
-  AND nosdeputes_deputes.slug IS NOT NULL
-    `.execute(dbReleve)
-  ).rows
-
+  const rows = await dbReleve
+    .selectFrom('deputes_in_legislatures')
+    .where('legislature', '!=', LATEST_LEGISLATURE)
+    .where('slug', 'is not', null)
+    .select('legislature')
+    .select(sql<string>`slug`.as('slug'))
+    .execute()
   return {
-    paths: deputes.map(_ => {
+    paths: rows.map(_ => {
       const { slug, legislature } = _
       return {
         params: {
           slug,
-          legislature,
+          legislature: legislature.toString(),
         },
       }
     }),
@@ -110,22 +94,14 @@ export const getStaticPathsOlderLegislatures: GetStaticPaths<
 export const getStaticPathsLatestLegislatures: GetStaticPaths<
   types.Params
 > = async () => {
-  const deputes = (
-    await sql<{ slug: string }>`
-    SELECT DISTINCT
-      nosdeputes_deputes.slug
-  FROM acteurs
-  INNER JOIN mandats ON acteurs.uid = mandats.acteur_uid
-  INNER JOIN organes ON organes.uid = ANY(mandats.organes_uids)
-  LEFT JOIN nosdeputes_deputes ON nosdeputes_deputes.uid = acteurs.uid
-  WHERE organes.data->>'codeType' = 'ASSEMBLEE'
-  AND organes.data->>'legislature' = ${LATEST_LEGISLATURE.toString()}
-  AND nosdeputes_deputes.slug IS NOT NULL
-    `.execute(dbReleve)
-  ).rows
-
+  const rows = await dbReleve
+    .selectFrom('deputes_in_legislatures')
+    .where('legislature', '=', LATEST_LEGISLATURE)
+    .where('slug', 'is not', null)
+    .select(sql<string>`slug`.as('slug'))
+    .execute()
   return {
-    paths: deputes.map(_ => {
+    paths: rows.map(_ => {
       const { slug } = _
       return {
         params: {
