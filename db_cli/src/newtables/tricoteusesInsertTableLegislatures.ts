@@ -11,7 +11,8 @@ export async function tricoteusesInsertTableLegislatures() {
     date_fin TEXT,
     UNIQUE (legislature),
     UNIQUE (date_debut)
-)`
+);
+`
   await dropTable(table)
   await createTable(table, createTableSql)
 

@@ -62,7 +62,9 @@ async function autoarchiveInsertStats() {
     legislature INTEGER NOT NULL,
     data jsonb NOT NULL,
     UNIQUE (uid, legislature)
-)`
+);
+CREATE INDEX ON ${table} (legislature);
+`
   await dropTable(table)
   await createTable(table, createTableSql)
 

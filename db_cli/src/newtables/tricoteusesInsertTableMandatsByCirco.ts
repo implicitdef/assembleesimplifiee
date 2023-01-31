@@ -16,7 +16,10 @@ export async function tricoteusesInsertTableMandatsByCirco() {
     data jsonb NOT NULL,
     nb_mandats INTEGER NOT NULL,
     UNIQUE (circo_uid, legislature)
-)`
+);
+CREATE INDEX ON ${table} (legislature);
+CREATE INDEX ON ${table} (nb_mandats);
+`
   await dropTable(table)
   await createTable(table, createTableSql)
 

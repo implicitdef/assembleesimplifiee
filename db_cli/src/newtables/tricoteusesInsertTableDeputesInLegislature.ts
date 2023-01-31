@@ -23,8 +23,8 @@ import {
 } from '../utils/utils'
 
 export async function tricoteusesInsertTableDeputesInLegislature() {
-  const tableName = 'deputes_in_legislatures'
-  const createTableSql = `CREATE TABLE ${tableName} (
+  const table = 'deputes_in_legislatures'
+  const createTableSql = `CREATE TABLE ${table} (
     uid TEXT NOT NULL,
     legislature INTEGER NOT NULL,
     UNIQUE (uid, legislature),
@@ -45,9 +45,14 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
     com_perm_fonction TEXT,
     date_fin TEXT,
     ongoing BOOLEAN NOT NULL
-)`
-  await dropTable(tableName)
-  await createTable(tableName, createTableSql)
+);
+CREATE INDEX ON ${table} (legislature);
+CREATE INDEX ON ${table} (ongoing);
+CREATE INDEX ON ${table} (circo_dpt_name);
+CREATE INDEX ON ${table} (slug);
+`
+  await dropTable(table)
+  await createTable(table, createTableSql)
 
   const slugs = readAutoarchiveSlugs()
   const assemblees = readAllAssemblees()
@@ -118,7 +123,7 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
     },
   )
   console.log(`Inserting ${rows.length} rows`)
-  await getDb().insertInto(tableName).values(rows).execute()
+  await getDb().insertInto(table).values(rows).execute()
 }
 
 function readDeputesEachLegislatureAndMap<A>(

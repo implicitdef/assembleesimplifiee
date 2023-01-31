@@ -23,7 +23,9 @@ export async function tricoteusesInsertTableMandatsDeputes() {
     date_fin TEXT,
     UNIQUE (legislature, depute_uid, date_debut),
     UNIQUE (legislature, circo_dpt_num, circo_num, date_debut)
-)`
+);
+CREATE INDEX ON ${table} (depute_uid);
+`
   await dropTable(table)
   await createTable(table, createTableSql)
 
