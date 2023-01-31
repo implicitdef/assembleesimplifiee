@@ -92,10 +92,12 @@ export interface NosDeputesDatabase {
     circo_dpt_name: string
     circo_dpt_num: string
     circo_num: number
+    group_uid: string | null
     group_acronym: string | null
     group_fonction: string | null
     group_color: string | null
-    com_perm: string | null
+    com_perm_uid: string | null
+    com_perm_name: string | null
     com_perm_fonction: string | null
     date_fin: string | null
   }
