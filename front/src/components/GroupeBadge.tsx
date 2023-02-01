@@ -90,17 +90,19 @@ function BaseGroupeBadge({
       textColorClassOverride={pickTextColor(color)}
     >
       <div className="flex h-full items-center justify-center">
-        <span className={bold ? 'font-bold' : ''}>
-          {fullName ? nom : acronym === 'NI' ? 'Non-inscrit' : acronym}
-        </span>
-        {fonctionLabel ? (
-          <>
-            {' '}
-            <span className={`italic ${pickTextColor(color, true)}`}>
-              ({fonctionLabel})
-            </span>
-          </>
-        ) : null}
+        <p>
+          <span className={bold ? 'font-bold' : ''}>
+            {fullName ? nom : acronym}
+          </span>
+          {fonctionLabel ? (
+            <>
+              {' '}
+              <span className={`italic ${pickTextColor(color, true)}`}>
+                ({fonctionLabel})
+              </span>
+            </>
+          ) : null}
+        </p>
       </div>
     </MyLink>
   )

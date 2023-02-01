@@ -47,13 +47,18 @@ export function DeputeItem({
 }: Props) {
   const bg = mandatOngoing ? 'bg-slate-100' : 'bg-slate-200'
   const borderSize = latestGroup ? `border-2 ` : ''
+
+  const displayComPerm =
+    latestComPerm &&
+    latestComPerm.fonction !== 'Membre' &&
+    latestComPerm.name_short
   return (
     <div
       className={`flex min-h-[52px] flex-row rounded border-slate-400 drop-shadow ${borderSize} ${bg} ${className}`}
       // style={latestGroup ? { borderColor: 'latestGroup.color' } : {}}
     >
       <GroupeBadgeWithFonction groupe={latestGroup} marginLeft={false} />
-      <div className="flex h-full w-full flex-col items-start justify-center">
+      <div className={`flex h-full w-full flex-col items-start ${displayComPerm ? 'justify-between': 'justify-center'}`}>
         <div className="px-2">
           {slug ? (
             <MyLink
@@ -78,15 +83,13 @@ export function DeputeItem({
           )}
         </div>
 
-        {latestComPerm &&
-          latestComPerm.fonction !== 'Membre' &&
-          latestComPerm.name_short && (
-            <div className="h-1/2 w-full bg-slate-300 px-2 italic text-slate-600">
-              {' '}
-              {latestComPerm.fonction} com.{' '}
-              {getComPermNameWithPrefix(latestComPerm.name_short)}
-            </div>
-          )}
+        {displayComPerm && (
+          <div className="h-1/2 w-full bg-slate-300 px-2 italic text-slate-600">
+            {' '}
+            {latestComPerm.fonction} com.{' '}
+            {getComPermNameWithPrefix(latestComPerm.name_short)}
+          </div>
+        )}
       </div>
     </div>
   )
