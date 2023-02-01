@@ -17,26 +17,27 @@ function DepartementList({
   onMouseOut: Function
 }) {
   return (
-    <>
+    <div className="mx-2 mt-4 grid grid-flow-row grid-cols-2 gap-y-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
       {departements.map(([nom, id]: [nom: string, id: string]) => (
-        <li
+        <div
           key={id}
           style={{
-            background: selected === id ? '#deecbd' : 'inherit',
-            listStyleType: 'none',
+            background: selected === id ? '#deecbd' : '',
             textDecoration: 'underline',
           }}
           onMouseOver={() => onHover(id)}
           onMouseOut={() => onMouseOut(id)}
+          className="flex items-center justify-start "
         >
           <Link
             href={`/circonscription/departement/${encodeURIComponent(nom)}`}
+            className="overflow-hidden text-ellipsis whitespace-nowrap"
           >
-            {id}-{nom}
+            {nom} ({id})
           </Link>
-        </li>
+        </div>
       ))}
-    </>
+    </div>
   )
 }
 
@@ -54,47 +55,25 @@ export default function Page() {
   }
   return (
     <>
-      <div className="mx-auto my-4 w-[52rem] rounded-xl bg-slate-200 p-5">
-        <h1 className="text-center text-4xl font-extrabold">
-          Toutes les circonscriptions par département
-        </h1>
-      </div>
+      <h1 className="my-4 text-center text-4xl font-extrabold">
+        Toutes les circonscriptions par département
+      </h1>
 
-      <div className="mt-20">
-        <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-6">
-            <MapFrance
-              onHover={onHover}
-              onMouseOut={onMouseOut}
-              onClick={onClick}
-              selected={departement}
-            />
-          </div>
-          <div className="col-span-2">
-            <DepartementList
-              selected={departement}
-              departements={departementsEntries.slice(0, 37)}
-              onHover={onHover}
-              onMouseOut={onMouseOut}
-            />
-          </div>
-          <div className="col-span-2">
-            <DepartementList
-              selected={departement}
-              departements={departementsEntries.slice(37, 74)}
-              onHover={onHover}
-              onMouseOut={onMouseOut}
-            />
-          </div>
-          <div className="col-span-2">
-            <DepartementList
-              selected={departement}
-              departements={departementsEntries.slice(74)}
-              onHover={onHover}
-              onMouseOut={onMouseOut}
-            />
-          </div>
+      <div className="mt-10 flex flex-col items-center">
+        <div className="w-full max-w-[800px]  ">
+          <MapFrance
+            onHover={onHover}
+            onMouseOut={onMouseOut}
+            onClick={onClick}
+            selected={departement}
+          />
         </div>
+        <DepartementList
+          selected={departement}
+          departements={departementsEntries}
+          onHover={onHover}
+          onMouseOut={onMouseOut}
+        />
       </div>
     </>
   )

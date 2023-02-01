@@ -1,7 +1,6 @@
 import useMouse from '@react-hook/mouse-position'
-import { SvgLoader, SvgProxy } from 'react-svgmt'
 import { useRef, useState } from 'react'
-import { departements } from '../lib/hardcodedData'
+import { SvgLoader, SvgProxy } from 'react-svgmt'
 
 export function MapFrance({
   onHover,
@@ -51,8 +50,8 @@ export function MapFrance({
   return (
     <div ref={ref}>
       <SvgLoader
-        width="400"
-        height="400"
+        // width="400"
+        // height="400"
         path={'/circonscriptions/2012/departements.svg'}
         style={{
           width: '100%',
