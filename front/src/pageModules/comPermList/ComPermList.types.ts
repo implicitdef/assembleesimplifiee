@@ -1,4 +1,5 @@
 import type { FonctionInCom, ReleveTables } from '../../lib/dbReleve'
+import { ComPermAcronym } from '../../lib/hardcodedData'
 
 export type Params = {
   legislature?: string
@@ -14,7 +15,7 @@ export type Depute = ReleveTables['deputes_in_legislatures']
 
 export type DeputeWithCom = Depute & {
   com_perm_uid: string
-  com_perm_name: string
+  com_perm_name: ComPermAcronym
   com_perm_fonction: FonctionInCom
 }
 

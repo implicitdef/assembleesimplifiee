@@ -3,6 +3,7 @@ import sortBy from 'lodash/sortBy'
 import { Fragment } from 'react'
 import { NewDeputeItem } from '../../components/DeputeItem'
 import { LegislatureNavigation } from '../../components/LegislatureNavigation'
+import { getComPermFullName } from '../../lib/hardcodedData'
 import * as types from './ComPermList.types'
 
 export function ChunkOfDeputes({
@@ -71,15 +72,26 @@ export function Page({
         const comName = deputesSameCom[0].com_perm_name
         return (
           <Fragment key={comName ?? 'none'}>
-            <h2 className="m-2 text-4xl font-extrabold">{comName}</h2>
+            <h2 className="m-2 text-4xl font-extrabold">
+              {getComPermFullName(comName)}
+            </h2>
             <ChunkOfDeputes deputes={deputesSameCom} {...{ legislature }} />
           </Fragment>
         )
       })}
-      <h2 className="m-2 text-4xl font-extrabold">
-        Députés sans commissions (??)
-      </h2>
-      <ChunkOfDeputes deputes={deputesWithoutCom} {...{ legislature }} />
+      {deputesWithoutCom.length > 0 && (
+        <>
+          <h2 className="m-2 text-2xl font-extrabold">
+            Députés sans commission permanente
+          </h2>
+          <p>
+            Parfois certains députés n'ont pas de commission permanente
+            attribuée. Il s'agit généralement d'une situation temporaire, par
+            exemple pour les nouveaux arrivants.
+          </p>
+          <ChunkOfDeputes deputes={deputesWithoutCom} {...{ legislature }} />
+        </>
+      )}
     </div>
   )
 }

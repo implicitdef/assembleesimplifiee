@@ -1,5 +1,6 @@
 import { Kysely, PostgresDialect } from 'kysely'
 import { Pool } from 'pg'
+import { ComPermAcronym } from './hardcodedData'
 import { readFromEnv, readIntFromEnv } from './utils'
 
 console.log('Starting releve DB connection pool')
@@ -86,7 +87,7 @@ export interface ReleveTables {
     group_color: string | null
     group_pos: 'maj' | 'min' | 'opp' | null
     com_perm_uid: string | null
-    com_perm_name: string | null
+    com_perm_name: ComPermAcronym | null
     com_perm_fonction: FonctionInCom | null
     date_fin: string | null
     ongoing: boolean

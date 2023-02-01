@@ -92,17 +92,34 @@ export const colorsForGroupsOldLegislatures: { [acronym: string]: string } = {
   NI: '#8D949A',
 }
 
-export function isCommissionPermanente(slug: string) {
-  return [
-    'commission-des-lois-constitutionnelles-de-la-legislation-et-de-l-administration-generale-de-la-republique',
-    'commission-des-finances-de-l-economie-generale-et-du-controle-budgetaire',
-    'commission-des-affaires-economiques',
-    'commission-des-affaires-sociales',
-    'commission-des-affaires-culturelles-et-de-l-education',
-    'commission-des-affaires-etrangeres',
-    'commission-du-developpement-durable-et-de-l-amenagement-du-territoire',
-    'commission-de-la-defense-nationale-et-des-forces-armees',
-  ].includes(slug)
+const commissionsPermanentes = {
+  'CION-CEDU': 'affaires culturelles',
+  CION_LOIS: 'lois',
+  'CION-DVP': 'développement durable',
+  CION_AFETR: 'affaires étrangères',
+  'CION-ECO': 'affaires économiques',
+  'CION-SOC': 'affaires sociales',
+  CION_FIN: 'finances',
+  CION_DEF: 'défense',
+  // old ones before 2008 reform
+  CION_CULT: 'affaires culturelles',
+  CION_AFECO: 'affaires économiques',
+} as const
+export type ComPermAcronym = keyof typeof commissionsPermanentes
+
+export function getComPermName(comPermAcronym: ComPermAcronym): string {
+  return commissionsPermanentes[comPermAcronym]
+}
+export function getComPermFullName(comPermAcronym: ComPermAcronym): string {
+  const name = getComPermName(comPermAcronym)
+  const firstWord = name.split(' ')[0]
+  const preposition =
+    firstWord === 'défense'
+      ? 'de la'
+      : firstWord === 'développement'
+      ? 'du'
+      : 'des'
+  return `Commission ${preposition} ${name}`
 }
 
 export function simplifyCommissionName(commissionFullName: string) {
@@ -169,10 +186,6 @@ function rgbToHex(r: number, g: number, b: number) {
     return hex.length == 1 ? 0 + hex : hex
   }
   return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b)
-}
-
-export function getColorForGroupeAcronym(acronym: string) {
-  return GroupeColorsByAcronyme[acronym] ?? 'black'
 }
 
 export function addPrefixToCirconscription(nomDepartement: string) {
@@ -415,43 +428,3 @@ export function getNomDepartement(idDepartement: string) {
   )
   return found && found[0][0]
 }
-
-export type FonctionInOrganisme =
-  keyof typeof fonctionsInOrganismeWithFeminineVersion
-
-export const fonctionsInOrganismeWithFeminineVersion = {
-  'président délégué': 'présidente délégué',
-  'président de droit': 'présidente de droit',
-  président: 'présidente',
-  'co-président': 'co-présidente',
-  'vice-président': 'vice-présidente',
-  'deuxième vice-président': 'deuxième vice-présidente',
-  questeur: 'questeure',
-  secrétaire: null,
-  'rapporteur général': 'rapporteure générale',
-  rapporteur: 'rapporteure',
-  'co-rapporteur': 'co-rapporteure',
-  'chargé de mission': 'chargée de mission',
-  'membre du bureau': null,
-  'membre avec voix délibérative': null,
-  'membre avec voix consultative': null,
-  'membre de droit': null,
-  'membre titulaire': null,
-  'membre nommé': 'membre nommée',
-  membre: null,
-  'membre suppléant': 'membre suppléante',
-  apparenté: 'apparentée',
-} as const
-
-// sorts des amendements
-const amendementsSorts = [
-  'Adopté',
-  'Indéfini',
-  'Irrecevable',
-  'Non soutenu',
-  'Rejeté',
-  'Retiré',
-  'Retiré avant séance',
-  'Tombe',
-]
-export type AmendementsSort = typeof amendementsSorts[number]
