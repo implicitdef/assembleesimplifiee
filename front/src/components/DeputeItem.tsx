@@ -46,9 +46,11 @@ export function DeputeItem({
   className,
 }: Props) {
   const bg = mandatOngoing ? 'bg-slate-100' : 'bg-slate-200'
+  const borderSize = latestGroup ? `border-2 ` : ''
   return (
     <div
-      className={`flex flex-row rounded drop-shadow ${bg} pr-2 ${className}`}
+      className={`flex flex-row rounded drop-shadow ${borderSize} ${bg} pr-2 ${className}`}
+      style={latestGroup ? { borderColor: latestGroup.color } : {}}
     >
       <GroupeBadgeWithFonction groupe={latestGroup} marginLeft={false} />
       <div>

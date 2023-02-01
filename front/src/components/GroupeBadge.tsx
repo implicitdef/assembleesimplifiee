@@ -25,6 +25,7 @@ export function GroupeBadgeWithFonction({
         nom={groupe.nom}
         fonction={groupe.fonction}
         color={groupe.color}
+        rounded={false}
         {...{ marginLeft, bold, fullName }}
       />
     )
@@ -60,6 +61,7 @@ function BaseGroupeBadge({
   fonction,
   color,
   marginLeft = true,
+  rounded = true,
   fullName = false,
   bold = false,
 }: {
@@ -68,6 +70,7 @@ function BaseGroupeBadge({
   fonction?: FonctionInGroupe
   color: string
   marginLeft?: boolean
+  rounded?: boolean
   fullName?: boolean
   bold?: boolean
 }) {
@@ -80,9 +83,9 @@ function BaseGroupeBadge({
   return (
     <MyLink
       href={`/groupe/${acronym}`}
-      className={`${
-        marginLeft ? 'ml-2 ' : ''
-      } mr-2 inline-block rounded-l py-1 px-2 `}
+      className={`${marginLeft ? 'ml-2 ' : ''} ${
+        rounded ? 'rounded-l ' : ''
+      } mr-2 inline-block py-1 px-2 `}
       style={{ background: color }}
       textColorClassOverride={pickTextColor(color)}
     >
