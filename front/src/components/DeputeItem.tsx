@@ -81,7 +81,7 @@ export function DeputeItem({
         {latestComPerm &&
           latestComPerm.fonction !== 'Membre' &&
           latestComPerm.name_short && (
-            <div className="h-1/2 w-full bg-slate-400 px-2 italic text-slate-200">
+            <div className=" mx-1 mb-1  bg-slate-400 px-1 italic text-slate-200">
               {' '}
               {latestComPerm.fonction} com.{' '}
               {getComPermNameWithPrefix(latestComPerm.name_short)}
