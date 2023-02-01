@@ -49,12 +49,12 @@ export function DeputeItem({
   const borderSize = latestGroup ? `border-2 ` : ''
   return (
     <div
-      className={`flex min-h-[52px] flex-row rounded drop-shadow ${borderSize} ${bg} pr-2 ${className}`}
+      className={`flex min-h-[52px] flex-row rounded drop-shadow ${borderSize} ${bg} ${className}`}
       style={latestGroup ? { borderColor: latestGroup.color } : {}}
     >
       <GroupeBadgeWithFonction groupe={latestGroup} marginLeft={false} />
-      <div className="flex h-full flex-col items-start justify-center">
-        <div>
+      <div className="flex h-full w-full flex-col items-start justify-center">
+        <div className="px-2">
           {slug ? (
             <MyLink
               href={`/${slug}${
@@ -81,7 +81,7 @@ export function DeputeItem({
         {latestComPerm &&
           latestComPerm.fonction !== 'Membre' &&
           latestComPerm.name_short && (
-            <div className="min-h-[20px] font-bold italic text-slate-700">
+            <div className="h-1/2 w-full bg-slate-400 px-2 italic text-slate-200">
               {' '}
               {latestComPerm.fonction} com.{' '}
               {getComPermNameWithPrefix(latestComPerm.name_short)}
