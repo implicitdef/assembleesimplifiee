@@ -26,6 +26,7 @@ type Props = {
       name_short: ComPermAcronym
       name_long: string
     } | null
+    gender: 'M' | 'F'
   }
   legislature: number
   displayCirco?: boolean
@@ -40,6 +41,7 @@ export function DeputeItem({
     fullName,
     circo_departement: circoDepartement,
     mandat_ongoing: mandatOngoing,
+    gender,
   },
   legislature,
   displayCirco,
@@ -58,7 +60,11 @@ export function DeputeItem({
       // style={latestGroup ? { borderColor: 'latestGroup.color' } : {}}
     >
       <GroupeBadgeWithFonction groupe={latestGroup} marginLeft={false} />
-      <div className={`flex h-full w-full flex-col items-start ${displayComPerm ? 'justify-between': 'justify-center'}`}>
+      <div
+        className={`flex h-full w-full flex-col items-start ${
+          displayComPerm ? 'justify-between' : 'justify-center'
+        }`}
+      >
         <div className="px-2">
           {slug ? (
             <MyLink
@@ -86,13 +92,33 @@ export function DeputeItem({
         {displayComPerm && (
           <div className="h-1/2 w-full bg-slate-300 px-2 italic text-slate-600">
             {' '}
-            {latestComPerm.fonction} com.{' '}
-            {getComPermNameWithPrefix(latestComPerm.name_short)}
+            {translateFonctionInCom(latestComPerm.fonction, gender)} Com.{' '}
+            {getComPermNameWithPrefix(latestComPerm.name_short).replace(
+              'développement',
+              'dév.',
+            )}
           </div>
         )}
       </div>
     </div>
   )
+}
+
+function translateFonctionInCom(
+  fonction: FonctionInCom,
+  gender: ReleveTables['deputes_in_legislatures']['gender'],
+) {
+  const femE = gender === 'F' ? 'e' : ''
+  switch (fonction) {
+    case 'Vice-Président':
+      return 'VP'
+    case 'Président':
+      return 'Président' + femE
+    case 'Rapporteur général':
+      return `Rapporteur${femE} gén.`
+    default:
+      return fonction
+  }
 }
 
 export type NewDeputeItemProps = {
@@ -133,6 +159,7 @@ export function NewDeputeItem({
     mandat_ongoing: depute.ongoing,
     latestGroup,
     latestComPerm,
+    gender: depute.gender,
   }
 
   return (
