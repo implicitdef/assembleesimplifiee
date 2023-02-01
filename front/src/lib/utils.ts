@@ -206,6 +206,7 @@ export function partitionDeputesByGroup<D>(
   )
 }
 
+// Parition a bunch of deputes by their group. Groups with most members are returned first.
 export function newPartitionDeputesByGroup<
   D extends { group_acronym: string | null },
 >(deputes: D[]): D[][] {

@@ -4,9 +4,10 @@ import { Fragment } from 'react'
 import { NewDeputeItem } from '../../components/DeputeItem'
 import { LegislatureNavigation } from '../../components/LegislatureNavigation'
 import { getComPermFullName } from '../../lib/hardcodedData'
+import { newPartitionDeputesByGroup } from '../../lib/utils'
 import * as types from './ComPermList.types'
 
-export function ChunkOfDeputes({
+function ChunkOfDeputes({
   deputes,
   legislature,
 }: {
@@ -15,32 +16,16 @@ export function ChunkOfDeputes({
 }) {
   if (deputes.length === 0) return null
 
-  const deputesSorted = sortBy(deputes, _ => {
-    const fonction = _.com_perm_fonction
-    const score =
-      fonction === 'Président'
-        ? 1
-        : fonction === 'Vice-Président'
-        ? 2
-        : fonction === 'Rapporteur général'
-        ? 3
-        : fonction === 'Secrétaire'
-        ? 4
-        : fonction === 'Membre'
-        ? 5
-        : 10
-    return `${score}_${_.group_acronym}`
-  })
-
   return (
     <>
       <div className="my-4 flex flex-wrap gap-2">
-        {deputesSorted.map(depute => {
+        {deputes.map(depute => {
           return (
             <NewDeputeItem
               key={depute.uid}
               {...{ legislature, depute }}
               className="grow"
+              displayCirco
             />
           )
         })}
@@ -72,26 +57,83 @@ export function Page({
           Pour travailler plus efficacement, les députés sont partagés en huit
           groupes de travail principaux, appelés "commissions permanentes", qui
           vont dégrossir les projets et propositions de loi avant qu'ils
-          n'arrivent devant tout l'hémicycle.
+          n'arrivent devant l'ensemble des députés en hémicycle.
         </p>
         <p>
           Chaque député appartient à une et une seule commission permanente.
         </p>
         <p>
           La proportion de députés de chaque groupe dans l'hémicycle est
-          reproduite dans chaque commission. Les commissions sont donc des
-          versions miniatures de l'hémicycle, avec les mêmes rapports de force
-          et les mêmes alliances.
+          reproduite dans chaque commission. Les commissions sont des versions
+          miniatures de l'hémicycle, avec les mêmes rapports de force et les
+          mêmes alliances.
         </p>
       </div>
       {deputesWithComGroupedByCom.map(deputesSameCom => {
         const comName = deputesSameCom[0].com_perm_name
+
+        const deputesImportants = deputesSameCom.filter(
+          _ => _.com_perm_fonction !== 'Membre',
+        )
+
+        const deputesImportantsSorted = sortBy(deputesImportants, _ => {
+          const fonction = _.com_perm_fonction
+          const score =
+            fonction === 'Président'
+              ? 1
+              : fonction === 'Vice-Président'
+              ? 2
+              : fonction === 'Rapporteur général'
+              ? 3
+              : fonction === 'Secrétaire'
+              ? 4
+              : fonction === 'Membre'
+              ? 5
+              : 10
+          return `${score}_${_.group_acronym}`
+        })
+
+        const deputeImportantsIds = deputesImportants.map(_ => _.uid)
+        const membres = deputesSameCom.filter(
+          _ => !deputeImportantsIds.includes(_.uid),
+        )
+
+        const deputesMaj = membres.filter(
+          _ => _.group_pos === 'maj' || _.group_pos === 'min',
+        )
+        const deputesOpp = membres.filter(_ => _.group_pos === 'opp')
+        const deputesWithoutPos = membres.filter(_ => !_.group_pos)
+
+        const res = [deputesMaj, deputesOpp, deputesWithoutPos]
+          .map(newPartitionDeputesByGroup)
+          .map(_ =>
+            _.map(_ =>
+              sortBy(_, _ => {
+                const fonction = _.group_fonction
+                const score =
+                  fonction === 'Président'
+                    ? 100
+                    : fonction === 'Membre'
+                    ? 50
+                    : 10
+                return -score
+              }),
+            ),
+          )
+          .map(_ => _.flat())
+          .flat()
+
         return (
           <Fragment key={comName ?? 'none'}>
             <h2 className="m-2 text-4xl font-extrabold">
               {getComPermFullName(comName)}
             </h2>
-            <ChunkOfDeputes deputes={deputesSameCom} {...{ legislature }} />
+            <ChunkOfDeputes
+              deputes={deputesImportantsSorted}
+              {...{ legislature }}
+            />
+
+            <ChunkOfDeputes deputes={res} {...{ legislature }} />
           </Fragment>
         )
       })}
