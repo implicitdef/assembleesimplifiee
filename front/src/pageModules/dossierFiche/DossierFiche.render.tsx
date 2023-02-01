@@ -261,6 +261,7 @@ function Rapporteurs({
                             circo_departement: '',
                             slug: '',
                             mandat_ongoing: true,
+                            gender: 'M',
                           }}
                           legislature={LATEST_LEGISLATURE}
                           className="grow"
