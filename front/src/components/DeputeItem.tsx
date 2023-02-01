@@ -1,7 +1,11 @@
 import { GroupeBadgeWithFonction } from './GroupeBadge'
 import { MyLink } from './MyLink'
 import { FonctionInGroupe } from '../lib/addLatestGroup'
-import { LATEST_LEGISLATURE } from '../lib/hardcodedData'
+import {
+  ComPermAcronym,
+  getComPermNameWithPrefix,
+  LATEST_LEGISLATURE,
+} from '../lib/hardcodedData'
 import type { ReleveTables, FonctionInCom } from '../lib/dbReleve'
 
 type Props = {
@@ -19,7 +23,7 @@ type Props = {
     } | null
     latestComPerm?: {
       fonction: FonctionInCom
-      name_short: string
+      name_short: ComPermAcronym
       name_long: string
     } | null
   }
@@ -43,38 +47,47 @@ export function DeputeItem({
 }: Props) {
   const bg = mandatOngoing ? 'bg-slate-100' : 'bg-slate-200'
   return (
-    <div className={`rounded drop-shadow ${bg} pr-2 ${className}`}>
+    <div
+      className={`flex flex-row rounded drop-shadow ${bg} pr-2 ${className}`}
+    >
       <GroupeBadgeWithFonction groupe={latestGroup} marginLeft={false} />
-      <>
-        {slug ? (
-          <MyLink
-            href={`/${slug}${
-              legislature !== LATEST_LEGISLATURE ? `/${legislature}` : ''
-            }`}
-            textColorClassOverride={
-              mandatOngoing ? undefined : 'text-slate-500'
-            }
-          >
-            {fullName}
-          </MyLink>
-        ) : (
-          fullName
-        )}
-      </>
-      {latestComPerm &&
-        latestComPerm.fonction !== 'Membre' &&
-        latestComPerm.name_short && (
-          <span className="font-extrabold uppercase italic">
+      <div>
+        <>
+          {slug ? (
+            <MyLink
+              href={`/${slug}${
+                legislature !== LATEST_LEGISLATURE ? `/${legislature}` : ''
+              }`}
+              textColorClassOverride={
+                mandatOngoing ? undefined : 'text-slate-500'
+              }
+            >
+              {fullName}
+            </MyLink>
+          ) : (
+            fullName
+          )}
+        </>
+
+        {displayCirco && (
+          <span className="bg-blue cursor-pointer text-slate-400">
             {' '}
-            {latestComPerm.fonction} {latestComPerm.name_short}
+            {circoDepartement}
           </span>
         )}
-      {displayCirco && (
-        <span className="bg-blue cursor-pointer text-slate-400">
-          {' '}
-          {circoDepartement}
-        </span>
-      )}
+
+        <div className="min-h-[20px] font-bold italic text-slate-700">
+          {latestComPerm &&
+            latestComPerm.fonction !== 'Membre' &&
+            latestComPerm.name_short && (
+              <span>
+                {' '}
+                {latestComPerm.fonction} com.{' '}
+                {getComPermNameWithPrefix(latestComPerm.name_short)}
+              </span>
+            )}
+        </div>
+      </div>
     </div>
   )
 }

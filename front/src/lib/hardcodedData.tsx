@@ -110,7 +110,7 @@ export type ComPermAcronym = keyof typeof commissionsPermanentes
 export function getComPermName(comPermAcronym: ComPermAcronym): string {
   return commissionsPermanentes[comPermAcronym]
 }
-export function getComPermFullName(comPermAcronym: ComPermAcronym): string {
+export function getComPermNameWithPrefix(comPermAcronym: ComPermAcronym): string {
   const name = getComPermName(comPermAcronym)
   const firstWord = name.split(' ')[0]
   const preposition =
@@ -119,7 +119,11 @@ export function getComPermFullName(comPermAcronym: ComPermAcronym): string {
       : firstWord === 'développement'
       ? 'du'
       : 'des'
-  return `Commission ${preposition} ${name}`
+  return `${preposition} ${name}`
+}
+
+export function getComPermFullName(comPermAcronym: ComPermAcronym): string {
+  return `Commission ${getComPermNameWithPrefix(comPermAcronym)}`
 }
 
 export function simplifyCommissionName(commissionFullName: string) {
