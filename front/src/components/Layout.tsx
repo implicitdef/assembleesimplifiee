@@ -82,28 +82,27 @@ function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
         <Logo />
       </Division>
       <Division>
-        <MenuLink to="/deputes" label="Les députés" />
+        <MenuLink to="/deputes" label="Liste des députés" />
+        <MenuLink to="/circonscription" label="Les circonscriptions" />
+        <MenuLink
+          to="/commissions-permanentes"
+          label="Les commissions permanentes"
+        />
         <MenuLink
           to="/historique-remplacements"
           label="Historique des départs et remplacements"
         />
-        <MenuLink to="/circonscription" label="Les circonscriptions" wip />
-        <MenuLink
-          to="/commissions-permanentes"
-          label="Les commissions permanentes"
-          wip
-        />
       </Division>
-      <Division>
-        {/* <MenuLink to="/seances" label="Les séances en hémicycle" wip />
+      {/* <Division>
+        <MenuLink to="/seances" label="Les séances en hémicycle" wip />
         <MenuLink to="/sessions" label="Les sessions parlementaires" wip />
         <MenuLink to="/dossiers" label="Les dossiers législatifs" wip />
-        <MenuLink to="/scrutins" label="Les scrutins" wip /> */}
-      </Division>
-      <Division>
+        <MenuLink to="/scrutins" label="Les scrutins" wip />
+      </Division> */}
+      {/* <Division>
         <MenuLink to="/long" label="Page avec beaucoup de contenu" smaller />
         <MenuLink to="/short" label="Page avec très peu de contenu" smaller />
-      </Division>
+      </Division> */}
     </nav>
   )
 }
