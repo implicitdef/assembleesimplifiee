@@ -67,7 +67,23 @@ export function Page({
         urlsByLegislature={legislatureNavigationUrls}
       />
 
-      <p>Petit texte d'explication des commissions permanentes</p>
+      <div className="mx-2 max-w-4xl  italic">
+        <p>
+          Pour travailler plus efficacement, les députés sont partagés en huit
+          groupes de travail principaux, appelés "commissions permanentes", qui
+          vont dégrossir les projets et propositions de loi avant qu'ils
+          n'arrivent devant tout l'hémicycle.
+        </p>
+        <p>
+          Chaque député appartient à une et une seule commission permanente.
+        </p>
+        <p>
+          La proportion de députés de chaque groupe dans l'hémicycle est
+          reproduite dans chaque commission. Les commissions sont donc des
+          versions miniatures de l'hémicycle, avec les mêmes rapports de force
+          et les mêmes alliances.
+        </p>
+      </div>
       {deputesWithComGroupedByCom.map(deputesSameCom => {
         const comName = deputesSameCom[0].com_perm_name
         return (
