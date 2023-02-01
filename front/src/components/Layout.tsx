@@ -32,25 +32,20 @@ function MenuLink({
   )
 }
 
+const LOGO_TEXT = 'AssembleeSimplifiee.fr'
+
 function Logo() {
   return (
-    <MyLink href={'/'} className={`block items-center py-2  uppercase`}>
-      <p className="text-2xl text-slate-700">NosDéputés.fr</p>{' '}
-      <p className="text-md text-slate-500 ">(relève)</p>
+    <MyLink href={'/'} className={`block items-center py-2 `}>
+      <p className="text-xl font-bold text-slate-700">{LOGO_TEXT}</p>{' '}
     </MyLink>
   )
 }
 
 function LogoMobile() {
   return (
-    <MyLink
-      href={'/'}
-      className={`flex items-center justify-center px-2 uppercase`}
-    >
-      <p>
-        <span className="text-xl text-slate-700">NosDéputés.fr</span>{' '}
-        <span className="text-slate-500 ">(relève)</span>
-      </p>
+    <MyLink href={'/'} className={`flex items-center justify-center px-2`}>
+      <p className="text-xl font-bold text-slate-700">{LOGO_TEXT}</p>{' '}
     </MyLink>
   )
 }
