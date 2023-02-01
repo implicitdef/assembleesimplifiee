@@ -34,7 +34,7 @@ export function ChunkOfDeputes({
       {title && explanation && (
         <SmallTitle label={title} secondLabel={explanation} />
       )}
-      <div className="my-4 flex flex-wrap gap-x-4 gap-y-2">
+      <div className="my-4 flex flex-wrap gap-x-2 gap-y-2">
         {deputesSorted.map(depute => {
           return (
             <NewDeputeItem

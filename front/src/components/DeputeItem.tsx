@@ -49,8 +49,8 @@ export function DeputeItem({
   const borderSize = latestGroup ? `border-2 ` : ''
   return (
     <div
-      className={`flex min-h-[52px] flex-row rounded drop-shadow ${borderSize} ${bg} ${className}`}
-      style={latestGroup ? { borderColor: latestGroup.color } : {}}
+      className={`flex min-h-[52px] flex-row rounded border-slate-400 drop-shadow ${borderSize} ${bg} ${className}`}
+      // style={latestGroup ? { borderColor: 'latestGroup.color' } : {}}
     >
       <GroupeBadgeWithFonction groupe={latestGroup} marginLeft={false} />
       <div className="flex h-full w-full flex-col items-start justify-center">
