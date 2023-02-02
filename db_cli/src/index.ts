@@ -11,6 +11,7 @@ import { anInsert } from './oldtables/an/anInsert'
 import { createOldTables } from './oldtables/createOldTables'
 import { reshapeDossiers } from './oldtables/derived/reshapeDossiers/reshapeDossiers'
 import { tricoteusesInsert } from './oldtables/tricoteuses/tricoteusesInsert'
+import { sandbox } from './sandbox'
 import { parseAndCheckArgs as parseAndCheckArguments } from './utils/cli'
 import { releaseDb } from './utils/db'
 
@@ -38,6 +39,9 @@ async function start() {
       await anInsert(args)
       await tricoteusesInsert(args)
       await reshapeDossiers()
+    }
+    if (args.sandbox) {
+      await sandbox()
     }
     await releaseDb()
   }
