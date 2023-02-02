@@ -33,13 +33,17 @@ export const hardcodedAdditionalColors: {
   // centre droit, jean louis borloo
   UDI: '#94B7E1', // 14, same as UDI-I in 15
   'UDI-AGIR': '#46678f', // 15. Overlap with UDI-I, so we darken it
+
+  // Nouveau Centre. centre droit, allié de sarkozy
+  NC: '#1eb4ff', // 13. Light blue from nosdeputes
+
+  UDF: '#F26D22', // 12. Same in DEM/MODEM in 15
+
+  // TODO CR 12
 }
 
-// UDF 12 ?
-
-// NC 13 ?
-
-// CR 12 ?
+// TODO
+// CR 12 ? ??
 
 export async function sandbox() {
   console.log('@@@ sandbox')
