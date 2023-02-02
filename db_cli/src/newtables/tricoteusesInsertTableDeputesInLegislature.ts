@@ -21,6 +21,7 @@ import {
   toInt,
   WORKDIR,
 } from '../utils/utils'
+import { hardcodedAdditionalColors } from '../sandbox'
 
 export async function tricoteusesInsertTableDeputesInLegislature() {
   const table = 'deputes_in_legislatures'
@@ -87,6 +88,9 @@ CREATE INDEX ON ${table} (slug);
       const comPermUid = lastMandatComPerm?.organesRefs[0]
       const comPerm = comPerms.find(_ => _.uid === comPermUid)
 
+      const group_acronym = groupe?.libelleAbrev ?? null
+      const group_color =
+        groupe?.couleurAssociee ?? pickFallbackColor(group_acronym, legislature)
       const row: NosDeputesDatabase['deputes_in_legislatures'] = {
         legislature: toInt(legislatureStr),
         uid,
@@ -99,9 +103,9 @@ CREATE INDEX ON ${table} (slug);
         circo_num: toInt(lastMandat.election.lieu.numCirco),
         date_fin: lastMandat.dateFin ?? null,
         group_uid: groupe?.uid ?? null,
-        group_acronym: groupe?.libelleAbrev ?? null,
+        group_acronym,
         group_fonction: groupeFonction ?? null,
-        group_color: groupe?.couleurAssociee ?? null,
+        group_color,
         group_pos:
           groupe?.positionPolitique === 'Majoritaire'
             ? 'maj'
@@ -124,6 +128,18 @@ CREATE INDEX ON ${table} (slug);
   )
   console.log(`Inserting ${rows.length} rows`)
   await getDb().insertInto(table).values(rows).execute()
+}
+
+function pickFallbackColor(
+  group_acronym: string | null,
+  legislature: number,
+): string | null {
+  if (!group_acronym) return null
+  const fallback = hardcodedAdditionalColors[group_acronym]
+  if (!fallback) return null
+  if (typeof fallback === 'string') return fallback
+  const fallback2 = fallback.find(_ => _[0] === legislature)?.[1]
+  return fallback2 ?? null
 }
 
 function readDeputesEachLegislatureAndMap<A>(

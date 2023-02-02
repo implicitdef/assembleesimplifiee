@@ -1,39 +1,45 @@
 import { getDb } from './utils/db'
 import lo from 'lodash'
 
-const additionalColors = {
+export const hardcodedAdditionalColors: {
+  [k: string]: string | [number, string][]
+} = {
+  // non inscrits
   NI: '#8D949A',
+
+  // Groupe socialiste principal
+  SOC: '#D46CA9', // in 12, same as SOC in 15
+  SER: '#D46CA9', // in 14, same as SOC in 15
+  'S.R.C.': '#D46CA9', // in 13, same as SOC in 15
+  SRC: '#a6678c', // in 14, there is a bit of overlap with SER so we darken S.R.C.
+  NG: '#785067', // in 15. Wiki says it was transformed into SOC during 15. So we use same as SOC but darken a bit.
+
+  // Groupe de droite principal
+  'LES-REP': '#1C2EFA', // in 14, same as LR in 15
+  UMP: [
+    // same as LR in 14
+    [12, '#1C2EFA'],
+    [13, '#1C2EFA'],
+    // but in 14 there is a bit of overlap, so we darken UMP
+    [14, '#414CBF'],
+  ],
+
+  // Centre gauche
+  RRDP: '#fac384', // in 13. We take this yellow from nosdeputes and their logo
+
+  // communistes
+  GDR: '#A41914', // 13 and 14, same as in 15
+
+  // centre droit, jean louis borloo
+  UDI: '#94B7E1', // 14, same as UDI-I in 15
+  'UDI-AGIR': '#46678f', // 15. Overlap with UDI-I, so we darken it
 }
-
-// UMP => couleur proche de LR. Pas identique car il y a UMP et LR en même temps dans la legislature 14
-
-// SER 14 => même chose que SOC ?? (n'est jamais en même temps que SOC)
-// quelle était le groupe socialiste sous la 13 ? ptêt S.R.C mais il existait encore sous la 14 (SRC)
-
-// SOC 12 => reprendre même couleur que SOC 15 (#D46CA9) ou SOC 16 (#DF84B5) ?
-
-// S.R.C 13 ??
-// et SRC 14 ?
-
-// LES-REP 14 ??
-
-// NI toujours mettre #8D949A    DONE
-
-// GDR 13 et 14 mettre meme chose que 15 #A41914 ?
-
-// UDI 14 ?
 
 // UDF 12 ?
 
 // NC 13 ?
 
 // CR 12 ?
-
-// RRDP 14 ?
-
-// UDI-AGIR 15 ?
-
-// NG 15 ?
 
 export async function sandbox() {
   console.log('@@@ sandbox')
