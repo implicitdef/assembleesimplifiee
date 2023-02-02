@@ -21,7 +21,7 @@ import {
   toInt,
   WORKDIR,
 } from '../utils/utils'
-import { hardcodedAdditionalColors } from '../sandbox'
+import { hardcodedAdditionalGroupColors } from '../utils/hardcodedGroupColors'
 
 export async function tricoteusesInsertTableDeputesInLegislature() {
   const table = 'deputes_in_legislatures'
@@ -135,7 +135,7 @@ function pickFallbackColor(
   legislature: number,
 ): string | null {
   if (!group_acronym) return null
-  const fallback = hardcodedAdditionalColors[group_acronym]
+  const fallback = hardcodedAdditionalGroupColors[group_acronym]
   if (!fallback) return null
   if (typeof fallback === 'string') return fallback
   const fallback2 = fallback.find(_ => _[0] === legislature)?.[1]
