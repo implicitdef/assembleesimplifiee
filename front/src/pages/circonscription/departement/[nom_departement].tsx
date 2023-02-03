@@ -108,12 +108,9 @@ export default function Page(
       </div>
 
       <div className="col-span-5 pl-10">
-        <div>
-          <b>{deputes.length} députés</b>
-        </div>
         {deputes.map(depute => {
           return (
-            <li
+            <div
               key={depute.uid}
               onMouseOver={e => onDeputeHover(depute)}
               onMouseOut={e => onDeputeMouseOut(depute)}
@@ -129,28 +126,13 @@ export default function Page(
               }}
               className="w-full"
             >
-              <Image
-                width={40}
-                height={60}
-                alt={`Photo de ${depute.full_name}`}
-                src={`/deputes/photos/${LATEST_LEGISLATURE}/${depute.uid.substring(
-                  2,
-                )}.jpg`}
-                style={{ display: 'inline-block', verticalAlign: 'top' }}
+              <NewDeputeItem
+                {...{ depute }}
+                legislature={LATEST_LEGISLATURE}
+                displayCirco
               />
-              <div
-                style={{
-                  display: 'inline-block',
-                  marginLeft: 10,
-                }}
-              >
-                <NewDeputeItem
-                  {...{ depute }}
-                  legislature={LATEST_LEGISLATURE}
-                />
-                {beautifyNumeroCirconsription(depute.circo_num)} circonscription
-              </div>
-            </li>
+              {beautifyNumeroCirconsription(depute.circo_num)} circonscription
+            </div>
           )
         })}
       </div>

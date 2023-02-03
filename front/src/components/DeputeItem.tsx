@@ -57,11 +57,10 @@ export function DeputeItem({
   return (
     <div
       className={`flex min-h-[52px] flex-row rounded border-slate-400 drop-shadow ${borderSize} ${bg} ${className}`}
-      // style={latestGroup ? { borderColor: 'latestGroup.color' } : {}}
     >
       <GroupeBadgeWithFonction groupe={latestGroup} marginLeft={false} />
       <div
-        className={`flex h-full w-full flex-col items-start ${
+        className={`flex w-full flex-col items-start ${
           displayComPerm ? 'justify-between' : 'justify-center'
         }`}
       >
