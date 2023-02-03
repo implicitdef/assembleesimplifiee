@@ -1,15 +1,15 @@
 /* script to extract departements from france.svg */
+import fs from 'fs'
+import { createSVGWindow } from 'svgdom'
+import { SVG, registerWindow } from '@svgdotjs/svg.js'
+import { SVGPathData } from 'svg-pathdata'
+import lo from 'lodash'
 
-const fs = require('fs')
-const { createSVGWindow } = require('svgdom')
-const { SVG, registerWindow } = require('@svgdotjs/svg.js')
-const { SVGPathData } = require('svg-pathdata')
-const lo = require('lodash')
 const window = createSVGWindow()
 const document = window.document
 registerWindow(window, document)
 
-const SVG_PATH = '../public/circonscriptions/2012'
+const SVG_PATH = './public/circonscriptions/2012'
 
 // loads france.svg
 const franceSvgStr = fs
@@ -38,7 +38,7 @@ zones.forEach(zone => {
   const bbox = tmpSvg.bbox()
   const outSvg = SVG()
 
-  tmpSvg.find('path.circo').forEach(circoSvg => {
+  tmpSvg.find('path.circo').forEach((circoSvg: any) => {
     const pathData = new SVGPathData(circoSvg.plot().toString())
     const pathTranslated = pathData
       .translate(-bbox.x, -bbox.y)

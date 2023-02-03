@@ -16,6 +16,7 @@
     "checkformat": "prettier --check .",
     "import-latest-dump": "ts-node ./scripts/import-latest-dump.ts",
     "analyze-nosdeputes-visits": "ts-node ./scripts/analyze-nosdeputes-visits.ts",
+    "extract-svg": "ts-node ./scripts/extract_svg.ts",
     "switch_server": "rm -f .env.local && cp .env.local.db_server .env.local",
     "switch_local": "rm -f .env.local && cp .env.local.db_local .env.local"
   },
