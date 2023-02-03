@@ -1,7 +1,7 @@
 /* script to extract departements from france.svg */
 import fs from 'fs'
 import { createSVGWindow } from 'svgdom'
-import { SVG, registerWindow } from '@svgdotjs/svg.js'
+import { SVG, registerWindow, Path, Rect } from '@svgdotjs/svg.js'
 import { SVGPathData } from 'svg-pathdata'
 import lo from 'lodash'
 
@@ -23,7 +23,7 @@ const zones = lo
   .uniq(
     franceSvg
       .find(`path.circo`)
-      .map(_ => _.attr('id'))
+      .map(_ => _.attr('id') as string)
       .map(_ => {
         return _.replace(matchRegexp, '$1')
       }),
@@ -31,40 +31,40 @@ const zones = lo
   .sort()
 
 // extract each zone and its circos into its own SVG
-zones.forEach(zone => {
-  const tmpSvg = SVG()
-  const circosSvg = franceSvg.find(`*[id^=${zone}-]`)
-  circosSvg.forEach(svg => tmpSvg.add(svg))
-  const bbox = tmpSvg.bbox()
-  const outSvg = SVG()
+zones
+  //.filter(_ => _ == '094')
+  .forEach(zone => {
+    const tmpSvg = SVG()
+    const circoPaths = franceSvg.find(`*[id^=${zone}-]`)
+    circoPaths.forEach(svg => tmpSvg.add(svg))
+    const bbox = tmpSvg.bbox()
+    const outSvg = SVG()
 
-  tmpSvg.find('path.circo').forEach((circoSvg: any) => {
-    const pathData = new SVGPathData(circoSvg.plot().toString())
-    const pathTranslated = pathData
-      .translate(-bbox.x, -bbox.y)
-      .scale(5) // make it big by default
-      .encode()
-    circoSvg.plot(pathTranslated)
+    tmpSvg.find('path.circo').forEach(pathRaw => {
+      const path = pathRaw as Path
+      const pathData = new SVGPathData(path.plot().toString())
+      const pathTranslated = pathData.translate(-bbox.x, -bbox.y).encode()
+      path.plot(pathTranslated)
+      // fix path ids to be SVG compatible. The id value must begin with a letter
+      path.attr('id', `id-${path.attr('id')}`)
+      outSvg.add(path)
+    })
 
-    // fix path ids to be SVG compatible ( The id value must begin with a letter ([A-Za-z]))
-    circoSvg.attr('id', `id-${circoSvg.attr('id')}`)
-    outSvg.add(circoSvg)
+    const bbox2 = outSvg.bbox()
+    // set the viewBox to the dimensions of the content
+    outSvg.viewbox(bbox2.x, bbox2.y, bbox2.width, bbox2.height)
+
+    // quick way to add a background color to the whole SVG to debug its size
+    // const bgRect = new Rect()
+    // bgRect.width('100%')
+    // bgRect.height('100%')
+    // bgRect.fill('lightblue')
+    // outSvg.add(bgRect)
+
+    const outSvgPath = `${SVG_PATH}/departements`
+    if (!fs.existsSync(outSvgPath)) {
+      fs.mkdirSync(outSvgPath)
+    }
+    fs.writeFileSync(`${outSvgPath}/${zone}.svg`, outSvg.svg())
+    console.info(`Wrote ${outSvgPath}/${zone}.svg`)
   })
-  const bbox2 = outSvg.bbox()
-  outSvg.size(bbox2.width, bbox2.height)
-
-  // make borders visible
-  outSvg
-    .fill('#eee')
-    .stroke('#ccc')
-    .attr(
-      'xmlns:sodipodi',
-      'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd',
-    )
-  const outSvgPath = `${SVG_PATH}/departements`
-  if (!fs.existsSync(outSvgPath)) {
-    fs.mkdirSync(outSvgPath)
-  }
-  fs.writeFileSync(`${outSvgPath}/${zone}.svg`, outSvg.svg())
-  console.info(`Wrote ${outSvgPath}/${zone}.svg`)
-})

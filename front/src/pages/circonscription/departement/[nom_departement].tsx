@@ -98,18 +98,20 @@ export default function Page(
       <h1 className="text-center text-4xl font-extrabold">
         {nom} ({id})
       </h1>
-      <div className="">
-        <div className="w-full max-w-[800px] bg-slate-200">
-          <MapDepartement
-            id={id}
-            circonscription={circonscription}
-            onHover={onCirconscriptionHover}
-            onClick={onCirconscriptionClick}
-            ouMouseOut={onCirconscriptionMouseOut}
-          />
+      <div className="mt-8">
+        <div className="flex items-center justify-center">
+          <div className="h-[350px]  w-[350px] md:h-[450px] md:w-[450px]  lg:h-[600px] lg:w-[600px]">
+            <MapDepartement
+              id={id}
+              circonscription={circonscription}
+              onHover={onCirconscriptionHover}
+              onClick={onCirconscriptionClick}
+              ouMouseOut={onCirconscriptionMouseOut}
+            />
+          </div>
         </div>
 
-        <div className="mt-8">
+        <div className="grid grid-cols-1 gap-y-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
           {deputesSorted.map(depute => {
             return (
               <div

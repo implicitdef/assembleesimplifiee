@@ -89,7 +89,7 @@ export function DeputeItem({
         </div>
 
         {displayComPerm && (
-          <div className="h-1/2 w-full bg-slate-300 px-2 italic text-slate-600">
+          <div className="block h-1/2 w-full overflow-hidden bg-slate-300 px-2 italic text-slate-600">
             {' '}
             {translateFonctionInCom(latestComPerm.fonction, gender)} Com.{' '}
             {getComPermNameWithPrefix(latestComPerm.name_short).replace(

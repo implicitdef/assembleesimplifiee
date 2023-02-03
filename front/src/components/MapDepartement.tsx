@@ -67,10 +67,8 @@ export function MapDepartement({
       <SvgLoader
         path={getSvgUrl(id)}
         style={{
-          width: '100%',
-          height: '100%',
-          strokeWidth: 3,
-          fill: '#bfbfbf',
+          strokeWidth: 0.5,
+          fill: 'rgb(55 73 92)',
           stroke: '#eeeeee',
           //'pointer-events': 'none',
         }}
