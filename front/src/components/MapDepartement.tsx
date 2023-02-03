@@ -63,10 +63,12 @@ export function MapDepartement({
     padding: 5,
   }
   return (
-    <div ref={ref}>
+    <div ref={ref} className="h-full w-full">
       <SvgLoader
         path={getSvgUrl(id)}
         style={{
+          width: '100%',
+          height: '100%',
           strokeWidth: 0.5,
           fill: 'rgb(55 73 92)',
           stroke: '#eeeeee',

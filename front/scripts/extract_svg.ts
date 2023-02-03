@@ -32,23 +32,11 @@ const zones = lo
 
 // extract each zone and its circos into its own SVG
 zones
-  //.filter(_ => _ == '094')
+  // .filter(_ => _ == '092')
   .forEach(zone => {
-    const tmpSvg = SVG()
     const circoPaths = franceSvg.find(`*[id^=${zone}-]`)
-    circoPaths.forEach(svg => tmpSvg.add(svg))
-    const bbox = tmpSvg.bbox()
     const outSvg = SVG()
-
-    tmpSvg.find('path.circo').forEach(pathRaw => {
-      const path = pathRaw as Path
-      const pathData = new SVGPathData(path.plot().toString())
-      const pathTranslated = pathData.translate(-bbox.x, -bbox.y).encode()
-      path.plot(pathTranslated)
-      // fix path ids to be SVG compatible. The id value must begin with a letter
-      path.attr('id', `id-${path.attr('id')}`)
-      outSvg.add(path)
-    })
+    circoPaths.forEach(svg => outSvg.add(svg))
 
     const bbox2 = outSvg.bbox()
     // set the viewBox to the dimensions of the content
