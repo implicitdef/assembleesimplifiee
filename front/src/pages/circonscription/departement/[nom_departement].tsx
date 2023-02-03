@@ -1,9 +1,7 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { NewDeputeItem } from '../../../components/DeputeItem'
-
 import { MapDepartement } from '../../../components/MapDepartement'
 import {
   departements,
@@ -14,7 +12,8 @@ import {
   DeputeInDepartement,
   queryDeputesForDepartement,
 } from '../../../lib/queryDeputesForDepartement'
-
+import { getOrdinalSuffixFeminine } from '../../../lib/utils'
+import sortBy from 'lodash/sortBy'
 type Params = {
   nom_departement: string
 }
@@ -52,11 +51,6 @@ export const getStaticProps: GetStaticProps<Props, Params> = async context => {
       },
     },
   }
-}
-
-const beautifyNumeroCirconsription = (num: number) => {
-  if (num === 1) return '1ère'
-  return `${num}ème`
 }
 
 export default function Page(
@@ -97,58 +91,57 @@ export default function Page(
   const onDeputeMouseOut = (depute: DeputeInDepartement) => {
     setCirconscription(null)
   }
-  return (
-    <div className="grid grid-cols-12 gap-4">
-      <div className="col-span-full text-center">
-        <div className="mx-auto my-4 w-[52rem] rounded-xl bg-slate-200 p-5">
-          <h1 className="text-center text-4xl font-extrabold">
-            {nom} ({id})
-          </h1>
-        </div>
-      </div>
 
-      <div className="col-span-5 pl-10">
-        {deputes.map(depute => {
-          return (
-            <div
-              key={depute.uid}
-              onMouseOver={e => onDeputeHover(depute)}
-              onMouseOut={e => onDeputeMouseOut(depute)}
-              style={{
-                cursor: 'pointer',
-                marginBottom: 5,
-                display: 'inline-block',
-                listStyleType: 'none',
-                padding: 5,
-                background: isCurrentCirconscription(depute.circo_num)
-                  ? '#d1ea7499'
-                  : 'initial',
-              }}
-              className="w-full"
-            >
-              <NewDeputeItem
-                {...{ depute }}
-                legislature={LATEST_LEGISLATURE}
-                displayCirco
-              />
-              {beautifyNumeroCirconsription(depute.circo_num)} circonscription
-            </div>
-          )
-        })}
-      </div>
-      <div className="col-span-7 ">
-        <div className="bg-slate-200  px-8 py-4 shadow-md">
-          <div className="py-4">
-            <MapDepartement
-              id={id}
-              circonscription={circonscription}
-              onHover={onCirconscriptionHover}
-              onClick={onCirconscriptionClick}
-              ouMouseOut={onCirconscriptionMouseOut}
-            />
-          </div>
+  const deputesSorted = sortBy(deputes, _ => _.circo_num)
+  return (
+    <>
+      <h1 className="text-center text-4xl font-extrabold">
+        {nom} ({id})
+      </h1>
+      <div className="">
+        <div className="w-full max-w-[800px] bg-slate-200">
+          <MapDepartement
+            id={id}
+            circonscription={circonscription}
+            onHover={onCirconscriptionHover}
+            onClick={onCirconscriptionClick}
+            ouMouseOut={onCirconscriptionMouseOut}
+          />
+        </div>
+
+        <div className="mt-8">
+          {deputesSorted.map(depute => {
+            return (
+              <div
+                key={depute.uid}
+                onMouseOver={e => onDeputeHover(depute)}
+                onMouseOut={e => onDeputeMouseOut(depute)}
+                style={{
+                  cursor: 'pointer',
+                  marginBottom: 5,
+                  display: 'inline-block',
+                  listStyleType: 'none',
+                  padding: 5,
+                  background: isCurrentCirconscription(depute.circo_num)
+                    ? '#d1ea7499'
+                    : 'initial',
+                }}
+                className="w-full"
+              >
+                <h3 className="font-bold">
+                  {depute.circo_num}
+                  {getOrdinalSuffixFeminine(depute.circo_num)} circonscription
+                </h3>
+                <NewDeputeItem
+                  {...{ depute }}
+                  legislature={LATEST_LEGISLATURE}
+                  displayCirco
+                />
+              </div>
+            )
+          })}
         </div>
       </div>
-    </div>
+    </>
   )
 }

@@ -65,8 +65,6 @@ export function MapDepartement({
   return (
     <div ref={ref}>
       <SvgLoader
-        width="400"
-        height="400"
         path={getSvgUrl(id)}
         style={{
           width: '100%',

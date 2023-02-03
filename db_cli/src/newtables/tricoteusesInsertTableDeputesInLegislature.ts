@@ -35,7 +35,7 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
     gender TEXT NOT NULL CHECK (gender IN ('M', 'F')),   
     circo_dpt_name TEXT NOT NULL,
     circo_dpt_num TEXT NOT NULL,
-    circo_num TEXT NOT NULL,
+    circo_num INTEGER NOT NULL,
     group_uid TEXT,
     group_acronym TEXT,
     group_fonction TEXT,
