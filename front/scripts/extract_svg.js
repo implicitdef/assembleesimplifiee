@@ -1,39 +1,39 @@
 /* script to extract departements from france.svg */
 
 const fs = require('fs')
-//@ts-ignore
 const { createSVGWindow } = require('svgdom')
+const { SVG, registerWindow } = require('@svgdotjs/svg.js')
+const { SVGPathData } = require('svg-pathdata')
+const lo = require('lodash')
 const window = createSVGWindow()
 const document = window.document
-const { SVG, registerWindow, Path } = require('@svgdotjs/svg.js')
-const { SVGPathData } = require('svg-pathdata')
-
-// register window and document
 registerWindow(window, document)
 
 const SVG_PATH = '../public/circonscriptions/2012'
 
 // loads france.svg
-const rawSvg = fs.readFileSync(`${SVG_PATH}/france.svg`).toString()
-const france = SVG().size(600, 600).svg(rawSvg)
+const franceSvgStr = fs
+  .readFileSync(`${SVG_PATH}/france.svg`, 'utf-8')
+  .toString()
+const franceSvg = SVG().size(600, 600).svg(franceSvgStr)
 
 // build list of uniques available zones in the SVG - "ab" if for "Corsica"
 const matchRegexp = new RegExp('^([\\dab]+)-\\d+$', 'i')
-const zones = Array.from(
-  new Set(
-    france
+const zones = lo
+  .uniq(
+    franceSvg
       .find(`path.circo`)
-      .filter(path => path.attr('id').match(matchRegexp))
-      .map(path => {
-        return path.attr('id').replace(matchRegexp, '$1')
+      .map(_ => _.attr('id'))
+      .map(_ => {
+        return _.replace(matchRegexp, '$1')
       }),
-  ),
-).sort()
+  )
+  .sort()
 
 // extract each zone and its circos into its own SVG
 zones.forEach(zone => {
   const tmpSvg = SVG()
-  const circosSvg = france.find(`*[id^=${zone}-]`)
+  const circosSvg = franceSvg.find(`*[id^=${zone}-]`)
   circosSvg.forEach(svg => tmpSvg.add(svg))
   const bbox = tmpSvg.bbox()
   const outSvg = SVG()
