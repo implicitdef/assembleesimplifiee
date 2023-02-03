@@ -11,7 +11,7 @@ const { SVGPathData } = require('svg-pathdata')
 // register window and document
 registerWindow(window, document)
 
-const SVG_PATH = './2012'
+const SVG_PATH = '../public/circonscriptions/2012'
 
 // loads france.svg
 const rawSvg = fs.readFileSync(`${SVG_PATH}/france.svg`).toString()
@@ -66,5 +66,5 @@ zones.forEach(zone => {
     fs.mkdirSync(outSvgPath)
   }
   fs.writeFileSync(`${outSvgPath}/${zone}.svg`, outSvg.svg())
-  console.info(`✅ Wrote ${outSvgPath}/${zone}.svg`)
+  console.info(`Wrote ${outSvgPath}/${zone}.svg`)
 })
