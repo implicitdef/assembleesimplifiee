@@ -109,7 +109,7 @@ export function Page({
         currentLegislature={legislature}
         urlsByLegislature={legislatureNavigationUrls}
       />
-      <div className="mt-12 italic">
+      <div className="mt-12">
         <p>
           Cette page recense tous les changements de députés en cours de
           législature : députés partis au gouvernement, démissions, élections
@@ -118,6 +118,16 @@ export function Page({
         Si une circonscription n'est pas listée, c'est que son député a gardé
         son siège pendant tout cette législature.
       </div>
+      <div className="my-2 mx-6 rounded-xl bg-yellow-100 py-2 px-6 italic">
+        Ces données viennent de l'Assemblée Nationale. Nous y avons détecté au
+        moins une erreur : un remplacement de député en 2020 est expliqué par
+        une élection partielle alors que c'était un simple remplacement par le
+        suppléant. Il semble que la raison des remplacements est une information
+        renseignée manuellement par les services de l'Assemblée, à prendre donc
+        avec prudence. Nous espérons trouver une source de données plus fiable
+        pour croiser les informations.
+      </div>
+
       <div className="">
         {dataByCirco.map(circoData => {
           const {
