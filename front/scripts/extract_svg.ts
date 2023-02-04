@@ -38,6 +38,12 @@ zones
     const outSvg = SVG()
     circoPaths.forEach(svg => outSvg.add(svg))
 
+    outSvg.find('path.circo').forEach(pathRaw => {
+      // fix path ids to be SVG compatible ( The id value must begin with a letter ([A-Za-z]))
+      pathRaw.attr('id', `id-${pathRaw.attr('id')}`)
+      // outSvg.add(pathRaw)
+    })
+
     const bbox2 = outSvg.bbox()
     // set the viewBox to the dimensions of the content
     outSvg.viewbox(bbox2.x, bbox2.y, bbox2.width, bbox2.height)
