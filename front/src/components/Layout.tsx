@@ -88,6 +88,9 @@ function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
           label="Historique des départs et remplacements"
         />
       </Division>
+      <Division>
+        <MenuLink to="/a-propos" label="À propos" />
+      </Division>
       {/* <Division>
         <MenuLink to="/seances" label="Les séances en hémicycle" wip />
         <MenuLink to="/sessions" label="Les sessions parlementaires" wip />
