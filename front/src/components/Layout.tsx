@@ -32,12 +32,12 @@ function MenuLink({
   )
 }
 
-const LOGO_TEXT = 'AssembleeSimplifiee.fr'
+const LOGO_TEXT = 'AssembleeSimplifiee.com'
 
 function Logo() {
   return (
     <MyLink href={'/'} className={`block items-center py-2 `}>
-      <p className="text-xl font-bold text-slate-700">{LOGO_TEXT}</p>{' '}
+      <p className="text-lg font-bold text-slate-700">{LOGO_TEXT}</p>{' '}
     </MyLink>
   )
 }
@@ -147,8 +147,8 @@ export function Layout({ children }: Props) {
     <>
       <Head>
         <title>
-          AssembleeSimplifiee.fr : site d'information et de vulgarisation sur le
-          fonctionnement de l'Assemblée Nationale
+          AssembleeSimplifiee.com : site d'information et de vulgarisation sur
+          le fonctionnement de l'Assemblée Nationale
         </title>
         {/* TODO il faudra repasser sur les métas, balises pour SEO, partage twitter, etc.
          */}
