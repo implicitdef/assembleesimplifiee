@@ -146,7 +146,6 @@ export function Layout({ children }: Props) {
   return (
     <>
       <Head>
-        
         <title>
           AssembleeSimplifiee.com : site d'information et de vulgarisation sur
           le fonctionnement de l'Assemblée Nationale

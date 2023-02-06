@@ -5,7 +5,7 @@ const Home: NextPage = () => {
   return (
     <div className="flex h-full items-center justify-center">
       <div className="m-4 max-w-4xl space-y-4 rounded-xl bg-slate-200 py-10 px-4 text-justify">
-        <h1 className="mb-4 text-center text-4xl font-extrabold">
+        <h1 className="mb-4 text-center  text-4xl font-extrabold ">
           AssembleeSimplifiee.com
         </h1>
         <p className="text-center">
@@ -87,7 +87,9 @@ const Home: NextPage = () => {
 }
 
 function Title({ children }: { children: ReactNode }) {
-  return <h2 className="m-4 text-center text-2xl font-extrabold">{children}</h2>
+  return (
+    <h2 className="font-display m-4 text-2xl font-extrabold">{children}</h2>
+  )
 }
 
 function Paragraph({ children }: { children: ReactNode }) {

@@ -9,7 +9,7 @@ module.exports = {
       // 'sans': ['ui-sans-serif', 'system-ui', ...],
       // 'serif': ['ui-serif', 'Georgia', ...],
       // 'mono': ['ui-monospace', 'SFMono-Regular', ...],
-      // 'display': ['Oswald', ...],
+      // display: ['Abril Fatface'],
       // 'body': ['"Open Sans"', ...],
     },
   },
