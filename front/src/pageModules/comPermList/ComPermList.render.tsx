@@ -125,7 +125,7 @@ export function Page({
 
         return (
           <Fragment key={comName ?? 'none'}>
-            <h2 className="m-2 text-4xl font-extrabold">
+            <h2 className="m-2 text-4xl font-bold">
               {getComPermFullName(comName)}
             </h2>
             <ChunkOfDeputes
@@ -139,7 +139,7 @@ export function Page({
       })}
       {deputesWithoutCom.length > 0 && (
         <>
-          <h2 className="m-2 text-2xl font-extrabold">
+          <h2 className="m-2 text-2xl font-bold">
             Députés sans commission permanente
           </h2>
           <p>

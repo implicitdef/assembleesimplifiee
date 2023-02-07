@@ -5,19 +5,17 @@ const Home: NextPage = () => {
   return (
     <div className="flex h-full items-center justify-center">
       <div className="m-4 max-w-2xl rounded-xl bg-slate-200">
-        <h1 className="m-4 text-center text-2xl  font-extrabold">À propos</h1>
+        <h1 className="m-4 text-center text-2xl  font-bold">À propos</h1>
         <p className="m-4">
           AssembleeSimplifiee.com est un site d'information et de vulgarisation
           sur le fonctionnement de l'Assemblée Nationale française.
         </p>
-        <h1 className="m-4 text-xl font-extrabold">Qui sommes-nous ?</h1>
+        <h1 className="m-4 text-xl font-bold">Qui sommes-nous ?</h1>
         <p className="m-4">
           Nous sommes des citoyens français bénévoles. Nous ne travaillons pas
           pour l'Assemblée et nous ne sommes pas rémunérés d'aucune façon.
         </p>
-        <h1 className="m-4 text-xl font-extrabold">
-          D'où viennent les données ?
-        </h1>
+        <h1 className="m-4 text-xl font-bold">D'où viennent les données ?</h1>
         <p className="m-4">
           La plupart des données (identité des députés, leurs rôles, les dates,
           etc.) viennent des données ouvertes publiées par l'Assemblée Nationale

@@ -95,7 +95,7 @@ export default function Page(
   const deputesSorted = sortBy(deputes, _ => _.circo_num)
   return (
     <>
-      <h1 className="text-center text-4xl font-extrabold">
+      <h1 className="text-center text-4xl font-bold">
         {nom} ({id})
       </h1>
       <div className="mt-8">

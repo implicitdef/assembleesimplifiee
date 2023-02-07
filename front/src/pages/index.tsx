@@ -4,14 +4,16 @@ import { ReactNode } from 'react'
 const Home: NextPage = () => {
   return (
     <div className="flex h-full items-center justify-center">
-      <div className="m-4 max-w-4xl space-y-4 rounded-xl bg-slate-200 py-10 px-4 text-justify">
-        <h1 className="mb-4 text-center  text-4xl font-extrabold ">
-          AssembleeSimplifiee.com
-        </h1>
-        <p className="text-center">
-          Site d'information et de vulgarisation sur le fonctionnement de
-          l'Assemblée Nationale.
-        </p>
+      <div className="m-4 max-w-4xl space-y-4  bg-slate-200 py-6 px-6 text-justify">
+        <div className="pb-6">
+          <h1 className="text-center  text-4xl font-bold ">
+            AssembleeSimplifiee.com
+          </h1>
+          <p className="text-center">
+            Site d'information et de vulgarisation sur le fonctionnement de
+            l'Assemblée Nationale.
+          </p>
+        </div>
         <Title>C'est quoi l'Assemblée ?</Title>
         <Paragraph>
           L'Assemblée Nationale, en France, est une institution qui écrit et
@@ -44,11 +46,11 @@ const Home: NextPage = () => {
         </Paragraph>
         <Title>Que font les députés ?</Title>
         <Paragraph>
-          En théorie, le rôle premier des députés est d'écrire les lois et de
-          contrôler ce que fait le gouvernement. Dans la pratique les députés
-          sont libres de faire ce qu'ils veulent pendant leur mandat. Ils ont
-          une enveloppe pour recruter une équipe de collaborateurs et un budget
-          de "frais de mandats" qu'ils peuvent utiliser très librement.
+          Le rôle premier des députés est d'écrire les lois et de contrôler ce
+          que fait le gouvernement. Dans la pratique les députés sont libres de
+          faire ce qu'ils veulent pendant leur mandat. Ils ont une enveloppe
+          pour recruter une équipe de collaborateurs et un budget de "frais de
+          mandats" qu'ils peuvent utiliser très librement.
         </Paragraph>{' '}
         <Paragraph>
           La plupart des députés font des allers-retours toutes les semaines
@@ -65,10 +67,10 @@ const Home: NextPage = () => {
           <span className="italic">groupes parlementaires</span>. Ce sont un peu
           comme des partis, mais internes à l'Assemblée.
         </Paragraph>
-        <Paragraph>
+        {/* <Paragraph>
           Ils n'ont pas forcément le même nom qu'un parti politique. Par exemple
           les députés .
-        </Paragraph>
+        </Paragraph> */}
         <Paragraph>
           Faire partie d'un groupe donne plusieurs avantages, notamment du temps
           de parole dans les débats. Les députés rejoignent presque tous un
@@ -87,9 +89,7 @@ const Home: NextPage = () => {
 }
 
 function Title({ children }: { children: ReactNode }) {
-  return (
-    <h2 className="font-display m-4 text-2xl font-extrabold">{children}</h2>
-  )
+  return <h2 className="font-display text-2xl font-bold">{children}</h2>
 }
 
 function Paragraph({ children }: { children: ReactNode }) {

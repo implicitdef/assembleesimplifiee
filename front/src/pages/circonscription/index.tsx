@@ -55,7 +55,7 @@ export default function Page() {
   }
   return (
     <>
-      <h1 className="my-4 text-center text-4xl font-extrabold">
+      <h1 className="my-4 text-center text-4xl font-bold">
         Toutes les circonscriptions par département
       </h1>
 
