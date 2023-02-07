@@ -24,7 +24,7 @@ function MenuLink({
     <MyLink
       href={to}
       className={`block py-4 text-lg ${smaller ? 'text-sm' : ''} ${className}`}
-      textColorClassOverride="text-slate-700"
+      textColorClassOverride=" text-slate-900"
     >
       {label ?? to}
       {wip ? <span className="text-amber-700"> (WIP)</span> : null}
@@ -36,8 +36,8 @@ const LOGO_TEXT = 'AssembleeSimplifiee.com'
 
 function Logo() {
   return (
-    <MyLink href={'/'} className={`block items-center py-2 `}>
-      <p className="text-lg font-bold text-slate-700">{LOGO_TEXT}</p>{' '}
+    <MyLink href={'/'} className={`block items-center  py-2`}>
+      <p className=" text-lg font-bold text-slate-900">{LOGO_TEXT}</p>{' '}
     </MyLink>
   )
 }
@@ -45,7 +45,7 @@ function Logo() {
 function LogoMobile() {
   return (
     <MyLink href={'/'} className={`flex items-center justify-center px-2`}>
-      <p className="text-xl font-bold text-slate-700">{LOGO_TEXT}</p>{' '}
+      <p className="text-xl font-bold text-slate-900 ">{LOGO_TEXT}</p>{' '}
     </MyLink>
   )
 }
@@ -58,9 +58,7 @@ function Division({
   children: ReactNode
 }) {
   return (
-    <div
-      className={`mx-4 border-b border-slate-400 last:border-b-0 ${classname}`}
-    >
+    <div className={`mx-4  border-slate-800 last:border-b-0 ${classname}`}>
       {children}
     </div>
   )
@@ -69,11 +67,11 @@ function Division({
 function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
   return (
     <nav
-      className={`fixed z-50 flex min-h-full w-screen flex-col border-r border-slate-400 bg-slate-300 text-center  lg:static lg:w-[250px] ${
+      className={`fixed z-50 flex min-h-full w-screen flex-col border-r border-slate-800 bg-slate-300 text-center  lg:static lg:w-[250px] ${
         mobileMenuFolded ? 'hidden lg:block' : ''
       }`}
     >
-      <Division classname="hidden lg:block">
+      <Division classname="hidden lg:block mx-0">
         <Logo />
       </Division>
       <Division>
@@ -107,7 +105,7 @@ function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
 
 function MobileTopBar({ toggleMobileMenu }: { toggleMobileMenu: () => void }) {
   return (
-    <div className="fixed z-50 flex h-11 w-full border-b-2 border-slate-400 bg-slate-300 lg:hidden">
+    <div className="fixed z-50 flex h-11 w-full border-b-2 border-dashed border-slate-400 bg-slate-300 lg:hidden">
       <button
         className="m-1  rounded  bg-slate-600 px-1 text-slate-300"
         onClick={toggleMobileMenu}
