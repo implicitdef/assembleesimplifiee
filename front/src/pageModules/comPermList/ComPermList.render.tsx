@@ -68,12 +68,17 @@ export function Page({
           rapport à d'autres commissions qui peuvent être créées ponctuellement
           pour un besoin précis.
         </p>
+
         <p>
-          Chaque député appartient à une et une seule commission permanente. Les
-          commissions sont des versions miniatures de l'hémicycle : la
+          Les commissions sont des versions miniatures de l'hémicycle : la
           proportion de députés de chaque groupe dans l'hémicycle est reproduite
           dans chaque commission. On retrouve la même majorité, la même
           opposition.
+        </p>
+        <p>
+          Chaque député appartient à une et une seule commission permanente.
+          Généralement ils essayent d'être dans une commission qui correspond à
+          leur centre d'intérêt ou à leur compétence.
         </p>
       </div>
       {deputesWithComGroupedByCom.map(deputesSameCom => {
