@@ -92,7 +92,7 @@ const Home: NextPage = () => {
 }
 
 function Title({ children }: { children: ReactNode }) {
-  return <h2 className="font-display text-2xl font-bold">{children}</h2>
+  return <h2 className="text-2xl font-bold">{children}</h2>
 }
 
 function Paragraph({ children }: { children: ReactNode }) {

@@ -52,21 +52,28 @@ export function Page({
         urlsByLegislature={legislatureNavigationUrls}
       />
 
-      <div className="mx-2 max-w-4xl  italic">
+      <div className="max-w-3xl space-y-2 text-justify">
+        <h2 className="text-2xl font-bold">
+          C'est quoi les commissions permanentes ?
+        </h2>
         <p>
           Pour travailler plus efficacement, les députés sont partagés en huit
-          groupes de travail principaux, appelés "commissions permanentes", qui
-          vont dégrossir les projets et propositions de loi avant qu'ils
-          n'arrivent devant l'ensemble des députés en hémicycle.
+          groupes de travail principaux, les{' '}
+          <span className="italic">commissions permanentes</span>, qui vont
+          dégrossir les projets et propositions de loi avant qu'ils n'arrivent
+          devant l'ensemble des députés en hémicycle.
         </p>
         <p>
-          Chaque député appartient à une et une seule commission permanente.
+          Elles sont dites <span className="italic">permanentes</span> par
+          rapport à d'autres commissions qui peuvent être créées ponctuellement
+          pour un besoin précis.
         </p>
         <p>
-          La proportion de députés de chaque groupe dans l'hémicycle est
-          reproduite dans chaque commission. Les commissions sont des versions
-          miniatures de l'hémicycle, avec les mêmes rapports de force et les
-          mêmes alliances.
+          Chaque député appartient à une et une seule commission permanente. Les
+          commissions sont des versions miniatures de l'hémicycle : la
+          proportion de députés de chaque groupe dans l'hémicycle est reproduite
+          dans chaque commission. On retrouve la même majorité, la même
+          opposition.
         </p>
       </div>
       {deputesWithComGroupedByCom.map(deputesSameCom => {
@@ -125,7 +132,7 @@ export function Page({
 
         return (
           <Fragment key={comName ?? 'none'}>
-            <h2 className="m-2 text-4xl font-bold">
+            <h2 className="mb-2 mt-6 text-2xl font-bold">
               {getComPermFullName(comName)}
             </h2>
             <ChunkOfDeputes
@@ -139,7 +146,7 @@ export function Page({
       })}
       {deputesWithoutCom.length > 0 && (
         <>
-          <h2 className="m-2 text-2xl font-bold">
+          <h2 className="my-2 text-2xl font-bold">
             Députés sans commission permanente
           </h2>
           <p>
