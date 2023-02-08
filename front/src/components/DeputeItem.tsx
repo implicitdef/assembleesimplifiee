@@ -48,7 +48,7 @@ export function DeputeItem({
   className,
 }: Props) {
   const bg = mandatOngoing ? 'bg-white' : 'bg-slate-200'
-  const borderSize = latestGroup ? `border ` : ''
+  const borderSize = latestGroup ? ` border-2 border-r-4` : ''
 
   const displayComPerm =
     latestComPerm &&
