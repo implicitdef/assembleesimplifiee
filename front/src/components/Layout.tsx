@@ -39,7 +39,9 @@ function Logo() {
   return (
     <MyLink
       href={'/'}
-      className={`block bg-black py-2 px-4  text-right uppercase text-white `}
+      className={`block bg-black py-2 px-4 text-right uppercase `}
+      textColorClassOverride="text-white"
+      underline={false}
     >
       <p className=" text-2xl font-bold leading-none ">ASSEMBLEE</p>
       <p className=" text-2xl font-bold leading-none ">SIMPLIFIEE.COM</p>
@@ -49,7 +51,11 @@ function Logo() {
 
 function LogoMobile() {
   return (
-    <MyLink href={'/'} className={`mx-4 flex items-center  justify-center`}>
+    <MyLink
+      href={'/'}
+      underline={false}
+      className={`mx-4 flex items-center  justify-center`}
+    >
       <p className="text-xl font-bold text-slate-900 ">{LOGO_TEXT}</p>{' '}
     </MyLink>
   )

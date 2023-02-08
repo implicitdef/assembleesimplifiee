@@ -70,9 +70,6 @@ export function DeputeItem({
               href={`/${slug}${
                 legislature !== LATEST_LEGISLATURE ? `/${legislature}` : ''
               }`}
-              textColorClassOverride={
-                mandatOngoing ? undefined : 'text-slate-500'
-              }
             >
               {fullName}
             </MyLink>
@@ -81,7 +78,7 @@ export function DeputeItem({
           )}
 
           {displayCirco && (
-            <span className="bg-blue cursor-pointer text-slate-400">
+            <span className="bg-blue cursor-default text-slate-400">
               {' '}
               {circoDepartement}
             </span>

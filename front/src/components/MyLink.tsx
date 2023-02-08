@@ -8,6 +8,7 @@ export function MyLink({
   style,
   targetBlank,
   textColorClassOverride,
+  underline = true,
 }: {
   href: string
   children: ReactNode
@@ -15,6 +16,7 @@ export function MyLink({
   targetBlank?: boolean
   style?: CSSProperties
   textColorClassOverride?: string
+  underline?: boolean
 }) {
   const targetAttributes = targetBlank
     ? {
@@ -26,8 +28,8 @@ export function MyLink({
     <Link
       {...{ href }}
       className={`${
-        textColorClassOverride ?? 'text-blue-800'
-      } underline-offset-4 hover:underline ${className ?? ''}`}
+        textColorClassOverride ?? 'text-black'
+      } underline-offset-4 ${underline ? 'underline' : ''} ${className ?? ''}`}
       {...{ style, ...targetAttributes }}
     >
       {children}

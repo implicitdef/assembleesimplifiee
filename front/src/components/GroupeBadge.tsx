@@ -1,5 +1,5 @@
 import { FonctionInGroupe } from '../lib/addLatestGroup'
-import { pickTextColor } from '../lib/utils'
+import { pickTextColor, pickTextColorForGroupeBadge } from '../lib/utils'
 import { MyLink } from './MyLink'
 
 export function GroupeBadgeWithFonction({
@@ -81,13 +81,11 @@ function BaseGroupeBadge({
       ? 'apparenté'
       : null
   return (
-    <MyLink
-      href={`/groupe/${acronym}`}
-      className={`${marginLeft ? 'ml-2 ' : ''} ${
+    <span
+      className={`cursor-default ${marginLeft ? 'ml-2 ' : ''} ${
         rounded ? 'rounded-l-lg ' : ''
-      } inline-block py-1 px-2 `}
+      } inline-block py-1 px-2 ${pickTextColorForGroupeBadge(color)}`}
       style={{ background: color }}
-      textColorClassOverride={pickTextColor(color)}
     >
       <div className="flex h-full items-center justify-center">
         <p>
@@ -97,13 +95,13 @@ function BaseGroupeBadge({
           {fonctionLabel ? (
             <>
               {' '}
-              <span className={`italic ${pickTextColor(color, true)}`}>
+              <span className={`italic ${pickTextColorForGroupeBadge(color)}`}>
                 ({fonctionLabel})
               </span>
             </>
           ) : null}
         </p>
       </div>
-    </MyLink>
+    </span>
   )
 }
