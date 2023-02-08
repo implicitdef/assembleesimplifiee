@@ -17,21 +17,7 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap"
             rel="stylesheet"
           />
-          {/* <!-- Matomo --> */}
-          <Script id="matomo">
-            {`var _paq = window._paq = window._paq || [];
-          /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-          _paq.push(['trackPageView']);
-          _paq.push(['enableLinkTracking']);
-          (function() {
-            var u="https://assembleesimplifiee.matomo.cloud/";
-            _paq.push(['setTrackerUrl', u+'matomo.php']);
-            _paq.push(['setSiteId', '1']);
-            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.async=true; g.src='//cdn.matomo.cloud/assembleesimplifiee.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
-          })();`}
-          </Script>
-          {/* <!-- End Matomo Code --> */}
+          
         </Head>
         <body>
           <Main />
