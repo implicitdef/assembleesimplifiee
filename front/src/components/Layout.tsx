@@ -33,19 +33,23 @@ function MenuLink({
   )
 }
 
-const LOGO_TEXT = 'AssembleeSimplifiee.com'
+const LOGO_TEXT = 'Assemblee Simplifiee.com'
 
 function Logo() {
   return (
-    <MyLink href={'/'} className={`block items-center  py-2`}>
-      <p className=" text-lg font-bold text-slate-900">{LOGO_TEXT}</p>{' '}
+    <MyLink
+      href={'/'}
+      className={`block bg-black py-2 px-4  text-right uppercase text-white `}
+    >
+      <p className=" text-2xl font-bold leading-none ">ASSEMBLEE</p>
+      <p className=" text-2xl font-bold leading-none ">SIMPLIFIEE.COM</p>
     </MyLink>
   )
 }
 
 function LogoMobile() {
   return (
-    <MyLink href={'/'} className={`flex items-center justify-center px-2`}>
+    <MyLink href={'/'} className={`mx-4 flex items-center  justify-center`}>
       <p className="text-xl font-bold text-slate-900 ">{LOGO_TEXT}</p>{' '}
     </MyLink>
   )
@@ -68,7 +72,7 @@ function Division({
 function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
   return (
     <nav
-      className={`fixed z-50 flex min-h-full w-screen flex-col border-r border-slate-800 bg-slate-300 text-center  lg:static lg:w-[250px] ${
+      className={`fixed z-50 flex min-h-full w-screen flex-col border-r border-slate-800 bg-slate-300 text-right lg:static lg:w-[250px] ${
         mobileMenuFolded ? 'hidden lg:block' : ''
       }`}
     >
