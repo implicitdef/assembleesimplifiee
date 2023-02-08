@@ -6,7 +6,7 @@ const Home: NextPage = () => {
   return (
     <div className="flex h-full items-center justify-center">
       <div className="m-4 max-w-4xl space-y-4   py-6 px-6 text-justify">
-        <div className="mb-10  border border-slate-800 pb-6 pt-5">
+        <div className="mb-10  rounded-2xl border-8 border-double border-slate-800 pb-6 pt-5">
           <div className="flex items-center justify-center">
             <h1 className="text-center text-4xl  font-bold">
               AssembleeSimplifiee.com

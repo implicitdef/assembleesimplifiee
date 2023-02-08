@@ -47,8 +47,8 @@ export function DeputeItem({
   displayCirco,
   className,
 }: Props) {
-  const bg = mandatOngoing ? 'bg-slate-100' : 'bg-slate-200'
-  const borderSize = latestGroup ? `border-2 ` : ''
+  const bg = mandatOngoing ? 'bg-white' : 'bg-slate-200'
+  const borderSize = latestGroup ? `border ` : ''
 
   const displayComPerm =
     latestComPerm &&
@@ -56,7 +56,7 @@ export function DeputeItem({
     latestComPerm.name_short
   return (
     <div
-      className={`flex min-h-[52px] flex-row rounded border-slate-400 drop-shadow ${borderSize} ${bg} ${className}`}
+      className={`border-3 flex min-h-[52px] flex-row  border-black ${borderSize} ${bg} ${className}`}
     >
       <GroupeBadgeWithFonction groupe={latestGroup} marginLeft={false} />
       <div

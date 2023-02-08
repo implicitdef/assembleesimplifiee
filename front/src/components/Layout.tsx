@@ -72,7 +72,7 @@ function Division({
 function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
   return (
     <nav
-      className={`fixed z-50 flex min-h-full w-screen flex-col border-r border-slate-800 bg-slate-300 text-right lg:static lg:w-[250px] ${
+      className={`fixed z-50 flex min-h-full w-screen flex-col border-r border-black bg-white text-right lg:static lg:w-[250px] ${
         mobileMenuFolded ? 'hidden lg:block' : ''
       }`}
     >
@@ -110,7 +110,7 @@ function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
 
 function MobileTopBar({ toggleMobileMenu }: { toggleMobileMenu: () => void }) {
   return (
-    <div className="fixed z-50 flex h-11 w-full border-b-2 border-dashed border-slate-400 bg-slate-300 lg:hidden">
+    <div className="fixed z-50 flex h-11 w-full border-b-2 border-dashed border-slate-400 bg-white lg:hidden">
       <button
         className="m-1  rounded  bg-slate-600 px-1 text-slate-300"
         onClick={toggleMobileMenu}
@@ -177,7 +177,7 @@ export function Layout({ children }: Props) {
         {/* favicon commenté pour le moment car il m'embrouille dans mes onglets */}
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
-      <div className="flex min-h-screen flex-col bg-slate-300 text-slate-700">
+      <div className="flex min-h-screen flex-col bg-white text-slate-700">
         <MobileTopBar
           toggleMobileMenu={() => {
             setMobileMenuFolded(v => !v)
