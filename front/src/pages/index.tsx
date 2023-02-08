@@ -8,11 +8,11 @@ const Home: NextPage = () => {
       <div className="m-4 max-w-4xl space-y-4   py-6 px-6 text-justify">
         <div className="mb-10  rounded-2xl border-8 border-double border-slate-800 pb-6 pt-5">
           <div className="flex items-center justify-center">
-            <h1 className="text-center text-4xl  font-bold">
-              AssembleeSimplifiee.com
+            <h1 className="text-right text-5xl font-bold  leading-none">
+              Assemblee Simplifiee.com{' '}
             </h1>
           </div>
-          <p className="text-center">
+          <p className=" text-center">
             Site d'information et de vulgarisation sur le fonctionnement de
             l'Assemblée Nationale.
           </p>
@@ -92,7 +92,7 @@ const Home: NextPage = () => {
 }
 
 function Title({ children }: { children: ReactNode }) {
-  return <h2 className="text-2xl font-bold">{children}</h2>
+  return <h2 className="text-3xl font-bold uppercase">{children}</h2>
 }
 
 function Paragraph({ children }: { children: ReactNode }) {
