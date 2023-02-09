@@ -70,7 +70,7 @@ export function MapDepartement({
           width: '100%',
           height: '100%',
           strokeWidth: 0.5,
-          fill: 'rgb(55 73 92)',
+          fill: 'black',
           stroke: '#eeeeee',
           //'pointer-events': 'none',
         }}

@@ -56,8 +56,9 @@ export function MapFrance({
         style={{
           width: '100%',
           height: '100%',
-          strokeWidth: 3,
+          // strokeWidth: 5,
           margin: '0 auto',
+          fill: 'black',
         }}
       >
         {titre && mouse && mouse.x && mouse.x > 0 && mouse.y && mouse.y > 0 && (
