@@ -26,7 +26,6 @@ function MenuLink({
     <MyLink
       href={to}
       className={`block py-4 text-lg ${smaller ? 'text-sm' : ''} ${className}`}
-      textColorClassOverride=" text-slate-900"
     >
       {label ?? to}
       {wip ? <span className="text-amber-700"> (WIP)</span> : null}
@@ -58,7 +57,7 @@ function LogoMobile() {
       className={`mx-4 flex items-center justify-center `}
       textColorClassOverride="text-white"
     >
-      <p className="text-xl font-bold">ASSEMBLEE SIMPLIFIEE.COM</p>{' '}
+      <p className="text-lg font-bold sm:text-xl">ASSEMBLEE SIMPLIFIEE.COM</p>{' '}
     </MyLink>
   )
 }
@@ -132,7 +131,7 @@ function MobileTopBar({ toggleMobileMenu }: { toggleMobileMenu: () => void }) {
 
 function RestOfPage({ children }: Props) {
   return (
-    <div className="grow">
+    <div className="grow px-1">
       <main className="z-0 mx-auto flex h-full w-full flex-col pt-2  pb-6 sm:w-[640px] md:w-[768px] xl:w-[1030px] 2xl:w-[1286px]">
         {children}
       </main>
@@ -185,7 +184,10 @@ export function Layout({ children }: Props) {
         {/* favicon commenté pour le moment car il m'embrouille dans mes onglets */}
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
-      <div className="flex min-h-screen flex-col bg-white text-slate-700">
+      <div
+        className="flex min-h-screen flex-col bg-white
+      "
+      >
         <MobileTopBar
           toggleMobileMenu={() => {
             setMobileMenuFolded(v => !v)
