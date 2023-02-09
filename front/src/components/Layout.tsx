@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { ReactNode, useEffect, useState } from 'react'
@@ -54,9 +55,10 @@ function LogoMobile() {
     <MyLink
       href={'/'}
       underline={false}
-      className={`mx-4 flex items-center  justify-center`}
+      className={`mx-4 flex items-center justify-center `}
+      textColorClassOverride="text-white"
     >
-      <p className="text-xl font-bold text-slate-900 ">{LOGO_TEXT}</p>{' '}
+      <p className="text-xl font-bold">ASSEMBLEE SIMPLIFIEE.COM</p>{' '}
     </MyLink>
   )
 }
@@ -116,9 +118,9 @@ function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
 
 function MobileTopBar({ toggleMobileMenu }: { toggleMobileMenu: () => void }) {
   return (
-    <div className="fixed z-50 flex h-11 w-full border-b-2 border-dashed border-slate-400 bg-white lg:hidden">
+    <div className="fixed z-50 flex h-11 w-full justify-between bg-black text-white lg:hidden">
       <button
-        className="m-1  rounded  bg-slate-600 px-1 text-slate-300"
+        className="my-2 flex w-fit items-center justify-center border-r border-white p-2 text-white "
         onClick={toggleMobileMenu}
       >
         menu

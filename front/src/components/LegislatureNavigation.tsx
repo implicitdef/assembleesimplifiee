@@ -82,7 +82,7 @@ export function LegislatureNavigation({
   return (
     <div className="mb-8 border-slate-500  ">
       <div className=" mx-auto mb-4  ">
-        <h1 className="mx-auto w-fit rounded-2xl border-8 border-double border-black px-14 py-4 text-center text-4xl font-bold uppercase">
+        <h1 className="mx-auto w-fit border-8 border-double border-black px-14 py-4 text-center text-4xl font-bold uppercase">
           {title}
         </h1>
         <div className="flex w-full">
