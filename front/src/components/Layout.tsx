@@ -80,7 +80,7 @@ function Division({
 function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
   return (
     <nav
-      className={`fixed z-50 flex min-h-full w-screen flex-col border-r border-black bg-white text-right lg:static lg:w-[250px] ${
+      className={`fixed z-50 flex min-h-full w-screen flex-col border-r border-black bg-white text-left lg:static lg:w-[250px] lg:text-right ${
         mobileMenuFolded ? 'hidden lg:block' : ''
       }`}
     >
