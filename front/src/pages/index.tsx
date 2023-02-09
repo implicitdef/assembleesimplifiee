@@ -4,10 +4,10 @@ import { ReactNode } from 'react'
 const Home: NextPage = () => {
   return (
     <div className="flex h-full items-center justify-center">
-      <div className="m-4 max-w-4xl space-y-4   py-6 px-6 text-justify">
-        <div className="mb-10 border-8 border-double border-slate-800 pb-6 pt-5">
+      <div className="bg-blXue-400 max-w-4xl  space-y-4 text-justify">
+        <div className="mb-10 border-8 border-double border-slate-800 px-1 pb-6 pt-5">
           <div className="flex items-center justify-center">
-            <h1 className="text-right text-5xl font-bold  leading-none">
+            <h1 className="text-right text-4xl font-bold leading-none  sm:text-5xl">
               Assemblee Simplifiee.com{' '}
             </h1>
           </div>
@@ -91,7 +91,7 @@ const Home: NextPage = () => {
 }
 
 function Title({ children }: { children: ReactNode }) {
-  return <h2 className="text-3xl font-bold uppercase">{children}</h2>
+  return <h2 className="text-left text-3xl font-bold uppercase">{children}</h2>
 }
 
 function Paragraph({ children }: { children: ReactNode }) {
