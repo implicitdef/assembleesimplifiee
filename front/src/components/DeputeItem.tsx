@@ -67,7 +67,7 @@ export function DeputeItem({
         <div className="px-2">
           {slug ? (
             <MyLink
-              href={`/${slug}${
+              href={`/depute/${slug}${
                 legislature !== LATEST_LEGISLATURE ? `/${legislature}` : ''
               }`}
             >

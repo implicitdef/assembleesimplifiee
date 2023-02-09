@@ -134,7 +134,7 @@ export const getStaticProps: GetStaticProps<
   const legislatureNavigationUrls = legislatures.map(l => {
     const tuple: [number, string] = [
       l,
-      `/${slug}${l !== LATEST_LEGISLATURE ? `/${l}` : ''}`,
+      `/depute/${slug}${l !== LATEST_LEGISLATURE ? `/${l}` : ''}`,
     ]
     return tuple
   })
