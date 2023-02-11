@@ -19,7 +19,7 @@ export function Page(props: types.Props) {
         urlsByLegislature={legislatureNavigationUrls}
       />
 
-      <div className="grid grid-cols-12 gap-4 bg-slate-200">
+      <div className="grid grid-cols-12 gap-4">
         <div
           className="col-span-2 flex 
     h-full items-center justify-center"

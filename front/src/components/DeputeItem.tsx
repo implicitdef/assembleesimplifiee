@@ -1,16 +1,16 @@
-import { GroupeBadgeWithFonction } from './GroupeBadge'
-import { MyLink } from './MyLink'
 import { FonctionInGroupe } from '../lib/addLatestGroup'
+import type {
+  FonctionInBureau,
+  FonctionInCom,
+  ReleveTables,
+} from '../lib/dbReleve'
 import {
   ComPermAcronym,
   getComPermNameWithPrefix,
   LATEST_LEGISLATURE,
 } from '../lib/hardcodedData'
-import type {
-  ReleveTables,
-  FonctionInCom,
-  FonctionInBureau,
-} from '../lib/dbReleve'
+import { GroupeBadge } from './GroupeBadge'
+import { MyLink } from './MyLink'
 
 type Props = {
   depute: {
@@ -63,11 +63,19 @@ export function DeputeItem({
     latestComPerm &&
     latestComPerm.fonction !== 'Membre' &&
     latestComPerm.name_short
+
   return (
     <div
       className={`border-3 flex min-h-[52px] flex-row  border-black ${borderSize} ${bg} ${className}`}
     >
-      <GroupeBadgeWithFonction groupe={latestGroup} marginLeft={false} />
+      {latestGroup && (
+        <GroupeBadge
+          acronym={latestGroup.acronym}
+          color={latestGroup.color}
+          nom={latestGroup.nom}
+          fonction={latestGroup.fonction}
+        />
+      )}
       <div
         className={`flex w-full flex-col items-start ${
           displayComPerm ? 'justify-between' : 'justify-center'

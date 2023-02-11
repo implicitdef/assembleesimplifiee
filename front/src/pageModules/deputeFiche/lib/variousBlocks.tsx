@@ -1,7 +1,4 @@
-import {
-  GroupeBadge,
-  GroupeBadgeWithFonction,
-} from '../../../components/GroupeBadge'
+import { GroupeBadge } from '../../../components/GroupeBadge'
 import { addPrefixToCirconscription } from '../../../lib/hardcodedData'
 import {
   formatDate,
@@ -173,10 +170,17 @@ export function InformationsBlock(props: types.Props) {
   return (
     <div className=" px-8 py-4">
       <h1 className="text-xl">
-        <span className="font-bold">
-          <GroupeBadge groupe={groupe} marginLeft={false} />
-          {depute.full_name}
-        </span>{' '}
+        {groupe && (
+          <GroupeBadge
+            acronym={groupe.acronym}
+            color={groupe.color}
+            nom={groupe.nom}
+            fonction={groupe.fonction}
+            className="mr-1"
+            withFonction={false}
+          />
+        )}
+        <span className="font-bold">{depute.full_name}</span>{' '}
         {formerDepute ? 'était député' : 'Député'}
         {feminineE} de la {depute.circo_num}
         <sup>
@@ -189,7 +193,15 @@ export function InformationsBlock(props: types.Props) {
           <li>{age} ans</li>
           <li>
             Groupe
-            <GroupeBadgeWithFonction groupe={groupe} fullName bold />
+            {groupe && (
+              <GroupeBadge
+                acronym={groupe.acronym}
+                color={groupe.color}
+                nom={groupe.nom}
+                fonction={groupe.fonction}
+                fullName
+              />
+            )}
           </li>
         </ul>
       </div>
