@@ -72,7 +72,7 @@ export default function Page(
       depute => depute.circo_num === parseInt(circonscriptionId),
     )
     if (depute) {
-      router.push(`/${depute.slug}`)
+      router.push(`/depute/${depute.slug}`)
     }
   }
   const onCirconscriptionMouseOut = (circonscriptionId: string) => {

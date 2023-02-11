@@ -32,8 +32,8 @@ export function GroupeBadge({
       )} ${className}`}
       style={{ background: color }}
     >
-      <div className="flex h-full items-center justify-center">
-        <p>
+      <span className="flex h-full items-center justify-center">
+        <span className="block">
           <span>{fullName ? nom : acronym}</span>
           {fonctionLabel ? (
             <>
@@ -43,8 +43,8 @@ export function GroupeBadge({
               </span>
             </>
           ) : null}
-        </p>
-      </div>
+        </span>
+      </span>
     </span>
   )
 }

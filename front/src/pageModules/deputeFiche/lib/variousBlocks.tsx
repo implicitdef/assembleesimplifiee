@@ -14,8 +14,8 @@ export function LegislaturesBlock({
   legislature: currentLegislature,
 }: types.Props) {
   const { legislatures } = deputeData
-  const feminine = deputeData.depute.gender === 'F'
-  const feminineE = feminine ? 'e' : ''
+  const fem = deputeData.depute.gender === 'F'
+  const femE = fem ? 'e' : ''
   if (legislatures.length == 1) {
     return <p>C'est sa première législature</p>
   }
@@ -24,20 +24,20 @@ export function LegislaturesBlock({
     otherLegislatures.length === 1 &&
     otherLegislatures[0] === currentLegislature - 1
   ) {
-    return <p>Était déjà député(e) dans la législature précédente</p>
+    return <p>Était déjà député{femE} dans la législature précédente</p>
   }
   if (otherLegislatures.length === 1) {
     const otherLegislature = otherLegislatures[0]
     return (
       <p>
-        A aussi été député{feminineE} dans la {otherLegislature}ème législature
+        A aussi été député{femE} dans la {otherLegislature}ème législature
       </p>
     )
   }
 
   return (
     <p>
-      A aussi été député{feminineE} dans les{' '}
+      A aussi été député{femE} dans les{' '}
       {otherLegislatures.map(_ => `${_}ème`).join(', ')} législatures{' '}
     </p>
   )
@@ -159,7 +159,7 @@ export function InformationsBlock(props: types.Props) {
   const lastMandat = mandats[mandats.length - 1]
   const formerDepute = lastMandat.date_fin !== null
   const groupe =
-    depute.group_acronym && depute.group_fonction
+    depute.group_acronym && depute.group_name && depute.group_fonction
       ? {
           acronym: depute.group_acronym,
           nom: depute.group_name,
@@ -170,41 +170,29 @@ export function InformationsBlock(props: types.Props) {
   return (
     <div className="">
       <h1 className="text-xl">
-        {groupe && (
-          <GroupeBadge
-            acronym={groupe.acronym}
-            color={groupe.color}
-            nom={groupe.nom}
-            fonction={groupe.fonction}
-            className="mr-1"
-            withFonction={false}
-          />
-        )}
         <span className="font-bold">{depute.full_name}</span>{' '}
         {formerDepute ? 'était député' : 'Député'}
         {feminineE} de la {depute.circo_num}
         <sup>
           {getOrdinalSuffixFeminine(depute.circo_num)}
         </sup> circonscription{' '}
-        {addPrefixToCirconscription(depute.circo_dpt_name)}
-      </h1>{' '}
-      <div className="py-4">
-        <ul className="list-none">
-          <li>{age} ans</li>
-          <li>
-            Groupe
-            {groupe && (
-              <GroupeBadge
-                acronym={groupe.acronym}
-                color={groupe.color}
-                nom={groupe.nom}
-                fonction={groupe.fonction}
-                fullName
-              />
-            )}
-          </li>
-        </ul>
-      </div>
+        {addPrefixToCirconscription(depute.circo_dpt_name)} (
+        {depute.circo_dpt_num})
+      </h1>
+      <p className="mb-4">{age} ans</p>
+      <p className="mb-4">
+        Groupe
+        {groupe && (
+          <GroupeBadge
+            acronym={groupe.acronym}
+            color={groupe.color}
+            nom={groupe.nom}
+            fonction={groupe.fonction}
+            className="ml-1"
+            fullName
+          />
+        )}
+      </p>
       <MandatsBlock {...{ deputeData }} />
       <LegislaturesBlock {...props} />
     </div>
