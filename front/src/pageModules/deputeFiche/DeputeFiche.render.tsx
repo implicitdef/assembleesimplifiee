@@ -11,6 +11,8 @@ export function Page(props: types.Props) {
 
   const { uid, full_name } = deputeData.depute
 
+  const fem = deputeData.depute.gender === 'F'
+  const femE = fem ? 'e' : ''
   return (
     <div className="">
       <LegislatureNavigation
@@ -19,28 +21,19 @@ export function Page(props: types.Props) {
         urlsByLegislature={legislatureNavigationUrls}
       />
 
-      <div className="grid grid-cols-12 gap-4">
-        <div
-          className="col-span-2 flex 
-    h-full items-center justify-center"
-        >
-          <Image
-            className="shadow-lg"
-            src={`/deputes/photos/${LATEST_LEGISLATURE}/${uid.substring(
-              2,
-            )}.jpg`}
-            alt={`Photo du (de la) député(e)} ${full_name}`}
-            width={150}
-            height={192}
-          />
-        </div>
-        <div className="col-span-10">
-          <InformationsBlock {...props} />
-        </div>
+      <div className="flex gap-4">
+        <Image
+          className=" border-4 border-black"
+          src={`/deputes/photos/${LATEST_LEGISLATURE}/${uid.substring(2)}.jpg`}
+          alt={`Photo ${fem ? 'de la' : 'du'} député${femE} ${full_name}`}
+          width={150}
+          height={192}
+        />
+        <InformationsBlock {...props} />
       </div>
 
       {deputeData.stats && (
-        <div className="col-span-full my-4 h-44 bg-slate-200 p-4 pb-8">
+        <div className=" my-4 h-44 bg-slate-200 p-4 pb-8">
           <h2 className="text-center text-xl font-bold">
             Présences à l'Assemblée
           </h2>

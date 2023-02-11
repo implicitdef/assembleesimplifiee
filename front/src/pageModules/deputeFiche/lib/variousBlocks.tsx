@@ -168,7 +168,7 @@ export function InformationsBlock(props: types.Props) {
         }
       : null
   return (
-    <div className=" px-8 py-4">
+    <div className="">
       <h1 className="text-xl">
         {groupe && (
           <GroupeBadge
