@@ -20,6 +20,7 @@ import {
   dropTable,
   readFilesInSubdir,
   toInt,
+  withChunkFactor,
   WORKDIR,
 } from '../utils/utils'
 import { hardcodedAdditionalGroupColors } from '../utils/hardcodedGroupColors'
@@ -39,6 +40,7 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
     circo_num INTEGER NOT NULL,
     group_uid TEXT,
     group_acronym TEXT,
+    group_name TEXT,
     group_fonction TEXT,
     group_color TEXT,
     group_pos TEXT CHECK (group_pos IN ('maj', 'min', 'opp')),   
@@ -110,6 +112,7 @@ CREATE INDEX ON ${table} (slug);
       const bureau_an_fonction = mandatBureau?.infosQualite.codeQualite
 
       const group_acronym = groupe?.libelleAbrev ?? null
+      const group_name = groupe?.libelle ?? null
       const group_color =
         groupe?.couleurAssociee ?? pickFallbackColor(group_acronym, legislature)
       const row: NosDeputesDatabase['deputes_in_legislatures'] = {
@@ -125,6 +128,7 @@ CREATE INDEX ON ${table} (slug);
         date_fin: lastMandat.dateFin ?? null,
         group_uid: groupe?.uid ?? null,
         group_acronym,
+        group_name,
         group_fonction: groupeFonction ?? null,
         group_color,
         group_pos:
@@ -148,8 +152,10 @@ CREATE INDEX ON ${table} (slug);
       return row
     },
   )
-  console.log(`Inserting ${rows.length} rows`)
-  await getDb().insertInto(table).values(rows).execute()
+  for (const chunkOfRows of lo.chunk(rows, withChunkFactor(500))) {
+    console.log(`Inserting a chunk of ${chunkOfRows.length} rows`)
+    await getDb().insertInto(table).values(chunkOfRows).execute()
+  }
 }
 
 function pickFallbackColor(

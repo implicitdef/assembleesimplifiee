@@ -171,6 +171,7 @@ export type OrganeGroupe = {
   codeType: 'GP'
   legislature: string
   libelleAbrev: string
+  libelle: string
   couleurAssociee?: string
   positionPolitique?: 'Majoritaire' | 'Minoritaire' | 'Opposition'
 }
