@@ -63,6 +63,7 @@ export type Mandat =
   | MandatAssemblee
   | MandatGroupe
   | MandatComPerm
+  | MandatBureau
   | {
       typeOrgane: '__other__'
     }
@@ -87,6 +88,18 @@ export type MandatAssemblee = {
   dateFin?: string
   // c'est la date de debut
   mandature: { datePriseFonction: string }
+}
+
+export type MandatBureau = {
+  typeOrgane: 'BUREAU'
+  uid: string
+  legislature: string
+  dateDebut: string
+  dateFin?: string
+  infosQualite: {
+    codeQualite: string
+    libQualite: string
+  }
 }
 
 export type MandatGroupe = {
@@ -132,6 +145,10 @@ export function isMandatGroupe(mandat: Mandat): mandat is MandatGroupe {
 
 export function isMandatComPerm(mandat: Mandat): mandat is MandatComPerm {
   return mandat.typeOrgane === 'COMPER'
+}
+
+export function isMandatBureau(mandat: Mandat): mandat is MandatBureau {
+  return mandat.typeOrgane === 'BUREAU'
 }
 
 export type OrganeJson =

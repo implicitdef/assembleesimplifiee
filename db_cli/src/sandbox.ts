@@ -1,30 +1,48 @@
-import { getDb } from './utils/db'
-import lo from 'lodash'
 import path from 'path'
-import { readFileAsJson, readFilesInSubdir, WORKDIR } from './utils/utils'
+import {
+  readAllComPerm,
+  readAllDeputesAndMap,
+} from './utils/readFromTricoteuses'
 import { AM030 } from './utils/tricoteusesDatasets'
+import { readFileAsJson, readFilesInSubdir, WORKDIR } from './utils/utils'
 
 export async function sandbox() {
   console.log('@@@ sandbox')
-  findOrganesYaelBraunPivet()
+
+  const dir = path.join(WORKDIR, 'tricoteuses', AM030, 'organes')
+  const filenames = readFilesInSubdir(dir)
+  const res = filenames.flatMap(filename => {
+    const organeJson = readFileAsJson(path.join(dir, filename))
+    if (organeJson.codeType === 'BUREAU') {
+      console.log('-----')
+      console.log(organeJson)
+    }
+  })
+
   return Promise.resolve()
 }
 
+const DANIELE_OBONO = 'PA721960'
+const CHRISTOPHE_BLANCHET = 'PA719024'
+const YAEL_BRAUN_PIVET = 'PA721908'
+
+const BUREAU_UID = 'PO800442'
+
 // pour essayer de voir si le Bureau est apparu
-function findOrganesYaelBraunPivet() {
+function findOrganesOfDepute(deputeUid: string) {
   const yealBraunPivetFile = path.join(
     WORKDIR,
     'tricoteuses',
     AM030,
     'acteurs',
-    'PA721908.json',
+    `${deputeUid}.json`,
   )
   const acteurJson = readFileAsJson(yealBraunPivetFile)
   const mandats = acteurJson.mandats.map((mandat: any) => {
     console.log(
       mandat.uid,
       mandat.typeOrgane,
-      mandat.infosQualite.codeQualite,
+      mandat.infosQualite.libQualite,
       mandat.organesRefs,
     )
   })

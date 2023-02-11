@@ -5,6 +5,7 @@ import { getDb, NosDeputesDatabase } from '../utils/db'
 import {
   ActeurJson,
   isMandatAssemblee,
+  isMandatBureau,
   isMandatComPerm,
   isMandatGroupe,
   MandatAssemblee,
@@ -44,6 +45,7 @@ export async function tricoteusesInsertTableDeputesInLegislature() {
     com_perm_uid TEXT,
     com_perm_name TEXT,
     com_perm_fonction TEXT,
+    bureau_an_fonction TEXT,
     date_fin TEXT,
     ongoing BOOLEAN NOT NULL
 );
@@ -88,6 +90,25 @@ CREATE INDEX ON ${table} (slug);
       const comPermUid = lastMandatComPerm?.organesRefs[0]
       const comPerm = comPerms.find(_ => _.uid === comPermUid)
 
+      const mandatsBureauEndOfThisLegislature = deputeJson.mandats
+        .filter(isMandatBureau)
+        .filter(_ => _.legislature === legislatureStr)
+        .filter(_ => !_.infosQualite.codeQualite.includes('âge')) // excluons le Bureau d'âge
+        .filter(
+          _ =>
+            // we want only the members of the bureau at the end of the legislature
+            (assemblee.viMoDe.dateFin === undefined &&
+              _.dateFin === undefined) ||
+            (assemblee.viMoDe.dateFin &&
+              _.dateFin &&
+              assemblee.viMoDe.dateFin <= _.dateFin),
+        )
+      const mandatBureau =
+        mandatsBureauEndOfThisLegislature.length > 0
+          ? mandatsBureauEndOfThisLegislature[0]
+          : null
+      const bureau_an_fonction = mandatBureau?.infosQualite.codeQualite
+
       const group_acronym = groupe?.libelleAbrev ?? null
       const group_color =
         groupe?.couleurAssociee ?? pickFallbackColor(group_acronym, legislature)
@@ -117,6 +138,7 @@ CREATE INDEX ON ${table} (slug);
         com_perm_uid: comPerm?.uid ?? null,
         com_perm_name: comPerm?.libelleAbrev ?? null,
         com_perm_fonction: comPermFonction ?? null,
+        bureau_an_fonction: bureau_an_fonction ?? null,
         ongoing:
           lastMandat.dateFin === undefined ||
           (assemblee.viMoDe.dateFin !== undefined &&
