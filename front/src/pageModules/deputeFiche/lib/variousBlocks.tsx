@@ -198,7 +198,7 @@ export function InformationsBlock(props: types.Props) {
       )}
       {depute.com_perm_fonction && depute.com_perm_name && (
         <p className="">
-          <span className="">Commission permanente : </span>{' '}
+          {/* <span className="">Commission permanente : </span>{' '} */}
           <span className="">
             Commission {getComPermNameWithPrefix(depute.com_perm_name)}
           </span>{' '}
@@ -209,8 +209,7 @@ export function InformationsBlock(props: types.Props) {
           ) : null}
         </p>
       )}
-      <p className="mb-4">{age} ans</p>
-      <p className="mb-2">
+      <p className="">
         Groupe
         {groupe && (
           <GroupeBadge
@@ -224,6 +223,7 @@ export function InformationsBlock(props: types.Props) {
           />
         )}
       </p>
+      <p className="mb-4">{age} ans</p>
 
       <MandatsBlock {...{ deputeData }} />
       <LegislaturesBlock {...props} />

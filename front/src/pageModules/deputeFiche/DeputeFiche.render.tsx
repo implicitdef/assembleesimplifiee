@@ -33,7 +33,7 @@ export function Page(props: types.Props) {
       </div>
 
       {deputeData.stats && (
-        <div className=" my-4 h-44 bg-slate-200 p-4 pb-8">
+        <div className=" my-4 h-44 p-4 pb-8">
           <h2 className="text-center text-xl font-bold">
             Présences à l'Assemblée
           </h2>
