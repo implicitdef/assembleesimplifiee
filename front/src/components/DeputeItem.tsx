@@ -6,7 +6,11 @@ import {
   getComPermNameWithPrefix,
   LATEST_LEGISLATURE,
 } from '../lib/hardcodedData'
-import type { ReleveTables, FonctionInCom } from '../lib/dbReleve'
+import type {
+  ReleveTables,
+  FonctionInCom,
+  FonctionInBureau,
+} from '../lib/dbReleve'
 
 type Props = {
   depute: {
@@ -26,7 +30,7 @@ type Props = {
       name_short: ComPermAcronym
       name_long: string
     } | null
-    bureau_an_fonction: string | null
+    bureau_an_fonction: FonctionInBureau | null
     gender: 'M' | 'F'
   }
   legislature: number
@@ -92,7 +96,8 @@ export function DeputeItem({
 
         {(displayComPerm || displayBureauFonction) && (
           <div className="block h-1/2 w-full overflow-hidden bg-slate-300 px-2 italic text-slate-600">
-            {displayBureauFonction && bureau_an_fonction}
+            {displayBureauFonction &&
+              translateFonctionInBureau(bureau_an_fonction, gender)}
             {displayComPerm &&
               `${translateFonctionInCom(latestComPerm.fonction, gender)} Com.
                 ${getComPermNameWithPrefix(latestComPerm.name_short).replace(
@@ -118,6 +123,25 @@ function translateFonctionInCom(
       return 'Président' + femE
     case 'Rapporteur général':
       return `Rapporteur${femE} gén.`
+    default:
+      return fonction
+  }
+}
+
+function translateFonctionInBureau(
+  fonction: FonctionInBureau,
+  gender: ReleveTables['deputes_in_legislatures']['gender'],
+) {
+  const femE = gender === 'F' ? 'e' : ''
+  switch (fonction) {
+    case 'Vice-Président':
+      return `Vice-Président${femE} de l'AN`
+    case 'Président':
+      return `Président${femE} de l'AN`
+    case 'Secrétaire':
+      return `Secrétaire de l'AN`
+    case 'Questeur':
+      return `Questeur${femE}`
     default:
       return fonction
   }

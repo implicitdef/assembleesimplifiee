@@ -89,7 +89,7 @@ export interface ReleveTables {
     com_perm_uid: string | null
     com_perm_name: ComPermAcronym | null
     com_perm_fonction: FonctionInCom | null
-    bureau_an_fonction: string | null
+    bureau_an_fonction: FonctionInBureau | null
     date_fin: string | null
     ongoing: boolean
   }
@@ -124,3 +124,9 @@ export type FonctionInCom =
   | 'Rapporteur général'
   | 'Secrétaire'
   | 'Vice-Président'
+
+export type FonctionInBureau =
+  | 'Président'
+  | 'Secrétaire'
+  | 'Vice-Président'
+  | 'Questeur'

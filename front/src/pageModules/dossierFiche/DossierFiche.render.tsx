@@ -90,6 +90,7 @@ function Acteur({
         slug: '',
         mandat_ongoing: true,
         gender: 'M',
+        bureau_an_fonction: null,
       }}
       legislature={LATEST_LEGISLATURE}
       className="grow"
