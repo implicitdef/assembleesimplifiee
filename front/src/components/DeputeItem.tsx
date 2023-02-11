@@ -26,6 +26,7 @@ type Props = {
       name_short: ComPermAcronym
       name_long: string
     } | null
+    bureau_an_fonction: string | null
     gender: 'M' | 'F'
   }
   legislature: number
@@ -42,6 +43,7 @@ export function DeputeItem({
     circo_departement: circoDepartement,
     mandat_ongoing: mandatOngoing,
     gender,
+    bureau_an_fonction,
   },
   legislature,
   displayCirco,
@@ -50,7 +52,10 @@ export function DeputeItem({
   const bg = mandatOngoing ? 'bg-white' : 'bg-slate-200'
   const borderSize = latestGroup ? ` border-2 border-r-4` : ''
 
+  const displayBureauFonction = bureau_an_fonction !== null
+
   const displayComPerm =
+    !displayBureauFonction &&
     latestComPerm &&
     latestComPerm.fonction !== 'Membre' &&
     latestComPerm.name_short
@@ -85,14 +90,15 @@ export function DeputeItem({
           )}
         </div>
 
-        {displayComPerm && (
+        {(displayComPerm || displayBureauFonction) && (
           <div className="block h-1/2 w-full overflow-hidden bg-slate-300 px-2 italic text-slate-600">
-            {' '}
-            {translateFonctionInCom(latestComPerm.fonction, gender)} Com.{' '}
-            {getComPermNameWithPrefix(latestComPerm.name_short).replace(
-              'développement',
-              'dév.',
-            )}
+            {displayBureauFonction && bureau_an_fonction}
+            {displayComPerm &&
+              `${translateFonctionInCom(latestComPerm.fonction, gender)} Com.
+                ${getComPermNameWithPrefix(latestComPerm.name_short).replace(
+                  'développement',
+                  'dév.',
+                )}`}
           </div>
         )}
       </div>
@@ -156,6 +162,7 @@ export function NewDeputeItem({
     latestGroup,
     latestComPerm,
     gender: depute.gender,
+    bureau_an_fonction: depute.bureau_an_fonction,
   }
 
   return (

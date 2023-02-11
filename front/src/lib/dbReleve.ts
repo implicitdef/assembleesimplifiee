@@ -89,6 +89,7 @@ export interface ReleveTables {
     com_perm_uid: string | null
     com_perm_name: ComPermAcronym | null
     com_perm_fonction: FonctionInCom | null
+    bureau_an_fonction: string | null
     date_fin: string | null
     ongoing: boolean
   }
