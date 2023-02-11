@@ -6,6 +6,53 @@ import { LegislatureNavigation } from '../../components/LegislatureNavigation'
 import { newPartitionDeputesByGroup } from '../../lib/utils'
 import * as types from './DeputeList.types'
 
+function scoreDepute(depute: types.Depute) {
+  return (
+    getScoreForGroupeFonction(depute) * 10000 +
+    getScoreForBureauAnFonction(depute) * 100 +
+    getScoreForComPermFonction(depute)
+  )
+}
+
+function getScoreForBureauAnFonction(depute: types.Depute) {
+  switch (depute.bureau_an_fonction) {
+    case 'Président':
+      return 100
+    case 'Vice-Président':
+      return 60
+    case 'Questeur':
+      return 50
+    default:
+      return 10
+  }
+}
+
+function getScoreForGroupeFonction(depute: types.Depute) {
+  switch (depute.group_fonction) {
+    case 'Président':
+      return 100
+    case 'Membre':
+      return 2
+    default:
+      return 1
+  }
+}
+
+function getScoreForComPermFonction(depute: types.Depute) {
+  switch (depute.com_perm_fonction) {
+    case 'Président':
+      return 100
+    case 'Vice-Président':
+      return 80
+    case 'Rapporteur général':
+      return 70
+    case 'Secrétaire':
+      return 30
+    default:
+      return 0
+  }
+}
+
 export function ChunkOfDeputes({
   title,
   explanation,
@@ -22,10 +69,7 @@ export function ChunkOfDeputes({
   const allInSameGroupe = uniq(deputes.map(_ => _.group_acronym)).length === 1
   const deputesSorted = allInSameGroupe
     ? sortBy(deputes, _ => {
-        const fonction = _.group_fonction
-        const score =
-          fonction === 'Président' ? 100 : fonction === 'Membre' ? 50 : 10
-        return -score
+        return -scoreDepute(_)
       })
     : deputes
 
