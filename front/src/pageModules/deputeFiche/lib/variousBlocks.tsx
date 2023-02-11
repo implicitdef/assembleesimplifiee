@@ -1,5 +1,14 @@
 import { GroupeBadge } from '../../../components/GroupeBadge'
-import { addPrefixToCirconscription } from '../../../lib/hardcodedData'
+import {
+  FonctionInBureau,
+  FonctionInCom,
+  ReleveTables,
+} from '../../../lib/dbReleve'
+import {
+  addPrefixToCirconscription,
+  getComPermName,
+  getComPermNameWithPrefix,
+} from '../../../lib/hardcodedData'
 import {
   formatDate,
   getAge,
@@ -94,7 +103,8 @@ export function MandatsBlock({ deputeData }: { deputeData: types.DeputeData }) {
   const { date_debut: date_debut_legislature, date_fin: date_fin_legislature } =
     deputeData.legislatureDates
 
-  const feminine = deputeData.depute.gender === 'F'
+  const gender = deputeData.depute.gender
+  const feminine = gender === 'F'
   const feminineE = feminine ? 'e' : ''
 
   return (
@@ -150,7 +160,8 @@ export function InformationsBlock(props: types.Props) {
   const { deputeData } = props
   const { depute } = deputeData
   const age = getAge(depute.date_birth)
-  const feminine = depute.gender === 'F'
+  const { gender } = depute
+  const feminine = gender === 'F'
   const feminineE = feminine ? 'e' : ''
   const mandats = deputeData.mandats_this_legislature
   if (mandats.length === 0) {
@@ -180,8 +191,26 @@ export function InformationsBlock(props: types.Props) {
         {addPrefixToCirconscription(depute.circo_dpt_name)} (
         {depute.circo_dpt_num})
       </h1>
+      {depute.bureau_an_fonction && (
+        <p className="font-bold">
+          {translateFonctionInBureau(depute.bureau_an_fonction, gender)}
+        </p>
+      )}
+      {depute.com_perm_fonction && depute.com_perm_name && (
+        <p className="">
+          <span className="">Commission permanente : </span>{' '}
+          <span className="">
+            Commission {getComPermNameWithPrefix(depute.com_perm_name)}
+          </span>{' '}
+          {depute.com_perm_fonction !== 'Membre' ? (
+            <span className="font-bold">
+              ({translateFonctionInCom(depute.com_perm_fonction, gender)})
+            </span>
+          ) : null}
+        </p>
+      )}
       <p className="mb-4">{age} ans</p>
-      <p className="mb-4">
+      <p className="mb-2">
         Groupe
         {groupe && (
           <GroupeBadge
@@ -190,12 +219,54 @@ export function InformationsBlock(props: types.Props) {
             nom={groupe.nom}
             fonction={groupe.fonction}
             className="ml-1"
+            fonctionClassName="font-bold"
             fullName
           />
         )}
       </p>
+
       <MandatsBlock {...{ deputeData }} />
       <LegislaturesBlock {...props} />
     </div>
   )
+}
+
+function translateFonctionInCom(
+  fonction: FonctionInCom,
+  gender: ReleveTables['deputes_in_legislatures']['gender'],
+) {
+  const femE = gender === 'F' ? 'e' : ''
+  switch (fonction) {
+    case 'Vice-Président':
+      return `Vice-président${femE}`
+    case 'Président':
+      return `Président${femE}`
+    case 'Rapporteur général':
+      return `Rapporteur${femE} générale`
+    default:
+      return fonction
+  }
+}
+
+function translateFonctionInBureau(
+  fonction: FonctionInBureau,
+  gender: ReleveTables['deputes_in_legislatures']['gender'],
+) {
+  const femE = gender === 'F' ? 'e' : ''
+  switch (fonction) {
+    case 'Vice-Président':
+      return `Vice-Président${femE} de l'Assemblée
+          Nationale`
+
+    case 'Président':
+      return `Président${femE} de l'Assemblée
+          Nationale`
+    case 'Secrétaire':
+      return `Secrétaire de l'Assemblée
+          Nationale`
+    case 'Questeur':
+      return `Questeur${femE}`
+    default:
+      return fonction
+  }
 }

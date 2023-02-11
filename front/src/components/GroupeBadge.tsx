@@ -8,6 +8,7 @@ export function GroupeBadge({
   color,
   fullName = false,
   className = '',
+  fonctionClassName = '',
   withFonction = true,
 }: {
   acronym: string
@@ -16,6 +17,7 @@ export function GroupeBadge({
   color: string
   fullName?: boolean
   className?: string
+  fonctionClassName?: string
   withFonction?: boolean
 }) {
   const fonctionLabel = withFonction
@@ -38,8 +40,8 @@ export function GroupeBadge({
           {fonctionLabel ? (
             <>
               {' '}
-              <span className={`italic ${pickTextColorForGroupeBadge(color)}`}>
-                ({fonctionLabel})
+              <span className={` italic ${pickTextColorForGroupeBadge(color)}`}>
+                (<span className={fonctionClassName}>{fonctionLabel}</span>)
               </span>
             </>
           ) : null}

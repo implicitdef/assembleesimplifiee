@@ -110,6 +110,7 @@ export type ComPermAcronym = keyof typeof commissionsPermanentes
 export function getComPermName(comPermAcronym: ComPermAcronym): string {
   return commissionsPermanentes[comPermAcronym]
 }
+
 export function getComPermNameWithPrefix(
   comPermAcronym: ComPermAcronym,
 ): string {

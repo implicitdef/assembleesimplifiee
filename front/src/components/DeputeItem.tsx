@@ -169,7 +169,7 @@ export function NewDeputeItem({
   className,
 }: NewDeputeItemProps) {
   const latestGroup =
-    depute.group_acronym && depute.group_fonction
+    depute.group_acronym && depute.group_name && depute.group_fonction
       ? {
           nom: depute.group_name,
           acronym: depute.group_acronym,
