@@ -96,8 +96,7 @@ export function MandatsBlock({ deputeData }: { deputeData: types.DeputeData }) {
 
   const feminine = deputeData.depute.gender === 'F'
   const feminineE = feminine ? 'e' : ''
-  // Note : pour voir un cas d'un député avec 3 mandats dans la même législature :
-  // cf alain-vidalies dans la legislature 14
+
   return (
     <div className="">
       <p>
@@ -125,11 +124,13 @@ export function MandatsBlock({ deputeData }: { deputeData: types.DeputeData }) {
         </div>
       )}
       {previousMandats.length > 1 && (
+        // Note : pour voir cas cas (un député avec 3 mandats dans la même législature) :
+        // cf alain-vidalies dans la legislature 14
         <div>
           Était déjà en mandat dans cette législature :
-          <ul>
+          <ul className="list-disc">
             {previousMandats.map(mandat => (
-              <li key={mandat.mandat_uid}>
+              <li key={mandat.mandat_uid} className="ml-8">
                 Du{' '}
                 {labelDateDebutMandat(
                   mandat.date_debut,
