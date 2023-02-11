@@ -162,7 +162,7 @@ export function InformationsBlock(props: types.Props) {
     depute.group_acronym && depute.group_fonction
       ? {
           acronym: depute.group_acronym,
-          nom: depute.group_acronym, // TODO il faudrait le nom ?
+          nom: depute.group_name,
           fonction: depute.group_fonction,
           color: depute.group_color ?? '#ffffff',
         }

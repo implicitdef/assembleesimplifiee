@@ -83,6 +83,7 @@ export interface ReleveTables {
     circo_num: number
     group_uid: string | null
     group_acronym: string | null
+    group_name: string | null
     group_fonction: FonctionInGroupe | null
     group_color: string | null
     group_pos: 'maj' | 'min' | 'opp' | null

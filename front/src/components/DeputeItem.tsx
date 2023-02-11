@@ -171,7 +171,7 @@ export function NewDeputeItem({
   const latestGroup =
     depute.group_acronym && depute.group_fonction
       ? {
-          nom: 'Nom du groupe', // TODO this should not be needed
+          nom: depute.group_name,
           acronym: depute.group_acronym,
           color: depute.group_color ?? '#ffffff',
           fonction: depute.group_fonction,
