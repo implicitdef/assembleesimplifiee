@@ -19,6 +19,7 @@ export type DeputeData = {
     date_debut: string
     date_fin: string | null
   }
+  nosDeputesUrl: string | null
 }
 
 export type Mandat = {

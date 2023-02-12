@@ -5,6 +5,7 @@ import { dbReleve } from '../../lib/dbReleve'
 import { LATEST_LEGISLATURE } from '../../lib/hardcodedData'
 import { readLegislatureFromContext } from '../../lib/routingUtils'
 import * as types from './DeputeFiche.types'
+import max from 'lodash/max'
 
 async function queryStats(
   uid: string,
@@ -109,6 +110,27 @@ function queryDatesLegislature(
     .executeTakeFirstOrThrow()
 }
 
+function getNosDeputesUrl(
+  legislaturesOfDepute: number[],
+  slug: string,
+): string | null {
+  const nosDeputesLegislatures = [
+    [16, 'www.nosdeputes.fr'],
+    [15, '2017-2022.nosdeputes.fr'],
+    [14, '2012-2017.nosdeputes.fr'],
+    [13, '2007-2012.nosdeputes.fr'],
+  ] as const
+  // on link toujours vers la dernière législature disponible pour ce député
+  const latestLegislature = max(legislaturesOfDepute)
+  const domain = nosDeputesLegislatures.find(
+    _ => _[0] === latestLegislature,
+  )?.[1]
+  if (domain) {
+    return `https://${domain}/${slug}`
+  }
+  return null
+}
+
 export const getStaticProps: GetStaticProps<
   types.Props,
   types.Params
@@ -142,6 +164,7 @@ export const getStaticProps: GetStaticProps<
   const legislatureDates = await queryDatesLegislature(legislature)
   const mandats_this_legislature = await queryMandats(depute.uid, legislature)
   const stats = await queryStats(depute.uid, legislature)
+  const nosDeputesUrl = getNosDeputesUrl(legislatures, slug)
 
   return {
     props: {
@@ -153,6 +176,7 @@ export const getStaticProps: GetStaticProps<
         legislatures,
         stats,
         legislatureDates,
+        nosDeputesUrl,
       },
     },
   }

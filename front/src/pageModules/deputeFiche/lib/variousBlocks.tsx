@@ -1,4 +1,5 @@
 import { GroupeBadge } from '../../../components/GroupeBadge'
+import { MyLink } from '../../../components/MyLink'
 import {
   FonctionInBureau,
   FonctionInCom,
@@ -227,6 +228,21 @@ export function InformationsBlock(props: types.Props) {
 
       <MandatsBlock {...{ deputeData }} />
       <LegislaturesBlock {...props} />
+      <p>
+        <MyLink
+          href={`https://www.assemblee-nationale.fr/dyn/deputes/${deputeData.depute.uid}`}
+          targetBlank
+        >
+          Voir sa fiche sur le site officiel de l'AN
+        </MyLink>
+      </p>
+      {deputeData.nosDeputesUrl && (
+        <p>
+          <MyLink href={`${deputeData.nosDeputesUrl}`} targetBlank>
+            Voir sa fiche sur NosDéputés.fr
+          </MyLink>
+        </p>
+      )}
     </div>
   )
 }
