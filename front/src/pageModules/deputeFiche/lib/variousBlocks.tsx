@@ -228,7 +228,7 @@ export function InformationsBlock(props: types.Props) {
 
       <MandatsBlock {...{ deputeData }} />
       <LegislaturesBlock {...props} />
-      <p>
+      <p className="">
         <MyLink
           href={`https://www.assemblee-nationale.fr/dyn/deputes/${deputeData.depute.uid}`}
           targetBlank

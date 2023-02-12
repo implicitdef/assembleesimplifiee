@@ -23,7 +23,7 @@ export function Page(props: types.Props) {
 
       <div className="flex gap-4">
         <Image
-          className=" border-4 border-black"
+          className="self-start border-4 border-black"
           src={`/deputes/photos/${LATEST_LEGISLATURE}/${uid.substring(2)}.jpg`}
           alt={`Photo ${fem ? 'de la' : 'du'} député${femE} ${full_name}`}
           width={150}
