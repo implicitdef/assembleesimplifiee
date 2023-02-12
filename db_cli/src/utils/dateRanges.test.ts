@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals'
 import {
   getDateRangeNumericalInsideRatio,
-  NumericalDateRange
+  NumericalDateRange,
 } from './dateRanges'
 
 function sum(a: number, b: number) {
