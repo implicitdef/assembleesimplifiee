@@ -31,7 +31,6 @@ export const getStaticProps: GetStaticProps<
     .selectAll()
     .execute()
 
-
   return {
     props: {
       legislature,
