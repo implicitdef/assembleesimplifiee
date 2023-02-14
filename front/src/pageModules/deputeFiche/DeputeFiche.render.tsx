@@ -1,7 +1,6 @@
 import Image from 'next/image'
 
 import sortBy from 'lodash/sortBy'
-import { Fragment } from 'react'
 import { GroupeBadge } from '../../components/GroupeBadge'
 import { MyLink } from '../../components/MyLink'
 import {
@@ -13,7 +12,6 @@ import {
   addPrefixToCirconscription,
   getComPermNameWithPrefix,
   LATEST_LEGISLATURE,
-  legislaturesData,
 } from '../../lib/hardcodedData'
 import { formatDate, getAge, getOrdinalSuffixFeminine } from '../../lib/utils'
 import * as types from './DeputeFiche.types'
@@ -29,6 +27,14 @@ export function Page(props: types.Props) {
   const { uid, full_name, gender } = latestDeputeData.depute
   const fem = gender === 'F'
   const femE = fem ? 'e' : ''
+
+  // autres caveats a ajouter :
+
+  // pendant le début du covid (mars-juin 2020) l'assemblee faisait des visio et il n'y avait quasiment plus de compte rendus pour ces réunions
+  // les présidents de séance ne sont pas toujours corrects
+  // c'est un travail manuel (de la part du service des comptes rendus de l'assemblee), donc il y a quelques erreurs
+  // les députés qui sont dans des circos eloignees (DOM-TOM surtout) sont desavantages
+
   return (
     <div className="">
       <h1 className="mx-auto mb-10 w-fit border-8 border-double border-black px-14 py-4 text-center text-4xl font-bold uppercase">
@@ -72,11 +78,49 @@ export function Page(props: types.Props) {
       })}
 
       <h2 className="mb-4 mt-8 border-b-4 border-dotted border-slate-500 pb-2 text-2xl font-bold">
-        Données de présence à l'Assemblée
+        Données de présence
       </h2>
-      {/* <p className="m-4 rounded-2xl bg-amber-200 p-4">
-        Comment lire ces graphiques ?
-      </p> */}
+      <div>
+        <p>
+          Ces graphiques montrent{' '}
+          <span className="font-bold">approximativement</span> la présence du
+          député dans les <span className="font-bold">réunions publiques</span>{' '}
+          à l'Assemblée. C'est-à-dire les séances en hémicycle, et les réunions
+          de commissions.
+        </p>
+      </div>
+      <div className="my-2 mx-6 rounded-xl bg-yellow-100 py-2 px-6 italic">
+        Il y a plusieurs limitations :
+        <ul className="list-inside list-disc">
+          <li>
+            Pour les séances en hémicycle, l'Assemblée ne fait pas de liste de
+            présences. Cependant la présence d'un député peut-être devinée s'il
+            a fait une prise de parole qui est inscrite dans le compte-rendu, ou
+            s'il prend part à un vote électronique public. Un député ne sera pas
+            compté s'il ne fait pas de prise de parole et s'il n'y a que des
+            votes à main levée .
+          </li>
+          <li>
+            Le reste du travail que fait le député à l'Assemblée n'est pas
+            visible. On ne sait pas les réunions qu'il peut faire avec les
+            députés de son groupe, avec des électeurs, des lobbyistes, ni le
+            travail à son bureau.
+          </li>
+          <li>
+            Nous n'avons pas de visibilité non plus sur tout ce que fait le
+            député quand il retourne dans sa circonscription.
+          </li>
+        </ul>
+      </div>
+      <div className="my-4">
+        <p className="mb-2">
+          <span className="font-bold">À notre avis</span>, le fait que le député
+          soit plus présent dans les réunions publiques n'indique pas qu'il
+          travaille plus, ou mieux qu'un autre. En revanche, si le député ne
+          fait aucune réunion publique pendant plusieurs semaines d'affilée, il
+          s'agit probablement d'un cas d'absentéisme.
+        </p>
+      </div>
       {deputesSorted.map(deputeDataInLegislature => {
         const legislature = deputeDataInLegislature.depute.legislature
         return (
@@ -87,6 +131,10 @@ export function Page(props: types.Props) {
           />
         )
       })}
+      <p className="mt-4">
+        Ces données sont le fruit du travail régulier de l'association{' '}
+        <MyLink href="https://www.regardscitoyens.org">RegardsCitoyens</MyLink>.
+      </p>
     </div>
   )
 }
