@@ -7,7 +7,6 @@ import {
 } from '../../../lib/dbReleve'
 import {
   addPrefixToCirconscription,
-  getComPermName,
   getComPermNameWithPrefix,
 } from '../../../lib/hardcodedData'
 import {
@@ -21,9 +20,12 @@ const f = formatDate
 
 export function LegislaturesBlock({
   deputeData,
-  legislature: currentLegislature,
-}: types.Props) {
-  const { legislatures } = deputeData
+  legislatures,
+}: {
+  deputeData: types.DeputeDataForLegislature
+  legislatures: number[]
+}) {
+  const currentLegislature = deputeData.depute.legislature
   const fem = deputeData.depute.gender === 'F'
   const femE = fem ? 'e' : ''
   if (legislatures.length == 1) {
@@ -95,7 +97,7 @@ export function MandatsBlock({
 }: {
   deputeData: types.DeputeDataForLegislature
 }) {
-  const mandats = deputeData.mandats_this_legislature
+  const mandats = deputeData.mandats
   if (mandats.length === 0) {
     // should not happen, but let's be safe
     return null
@@ -159,14 +161,21 @@ export function MandatsBlock({
   )
 }
 
-export function InformationsBlock(props: types.Props) {
-  const { deputeData } = props
+export function InformationsBlock({
+  deputeData,
+  nosDeputesUrl,
+  legislatures,
+}: {
+  deputeData: types.DeputeDataForLegislature
+  nosDeputesUrl: string | null
+  legislatures: number[]
+}) {
   const { depute } = deputeData
   const age = getAge(depute.date_birth)
   const { gender } = depute
   const feminine = gender === 'F'
   const feminineE = feminine ? 'e' : ''
-  const mandats = deputeData.mandats_this_legislature
+  const mandats = deputeData.mandats
   if (mandats.length === 0) {
     // should not happen
     return null
@@ -229,7 +238,7 @@ export function InformationsBlock(props: types.Props) {
       <p className="mb-4">{age} ans</p>
 
       <MandatsBlock {...{ deputeData }} />
-      <LegislaturesBlock {...props} />
+      <LegislaturesBlock {...{ deputeData }} legislatures={legislatures} />
       <p className="">
         <MyLink
           href={`https://www.assemblee-nationale.fr/dyn/deputes/${deputeData.depute.uid}`}
@@ -238,9 +247,9 @@ export function InformationsBlock(props: types.Props) {
           Voir sa fiche sur le site officiel de l'AN
         </MyLink>
       </p>
-      {deputeData.nosDeputesUrl && (
+      {nosDeputesUrl && (
         <p>
-          <MyLink href={`${deputeData.nosDeputesUrl}`} targetBlank>
+          <MyLink href={`${nosDeputesUrl}`} targetBlank>
             Voir sa fiche sur NosDéputés.fr
           </MyLink>
         </p>

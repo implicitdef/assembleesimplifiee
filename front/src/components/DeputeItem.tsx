@@ -33,7 +33,6 @@ type Props = {
     bureau_an_fonction: FonctionInBureau | null
     gender: 'M' | 'F'
   }
-  legislature: number
   displayCirco?: boolean
   className?: string
 }
@@ -49,7 +48,6 @@ export function DeputeItem({
     gender,
     bureau_an_fonction,
   },
-  legislature,
   displayCirco,
   className,
 }: Props) {
@@ -83,13 +81,7 @@ export function DeputeItem({
       >
         <div className="px-2">
           {slug ? (
-            <MyLink
-              href={`/depute/${slug}${
-                legislature !== LATEST_LEGISLATURE ? `/${legislature}` : ''
-              }`}
-            >
-              {fullName}
-            </MyLink>
+            <MyLink href={`/depute/${slug}`}>{fullName}</MyLink>
           ) : (
             fullName
           )}
@@ -197,10 +189,5 @@ export function NewDeputeItem({
     bureau_an_fonction: depute.bureau_an_fonction,
   }
 
-  return (
-    <DeputeItem
-      {...{ legislature, displayCirco, className }}
-      depute={deputeOldShape}
-    />
-  )
+  return <DeputeItem {...{ displayCirco, className }} depute={deputeOldShape} />
 }

@@ -92,7 +92,6 @@ function Acteur({
         gender: 'M',
         bureau_an_fonction: null,
       }}
-      legislature={LATEST_LEGISLATURE}
       className="grow"
     />
   ) : (
@@ -265,7 +264,6 @@ function Rapporteurs({
                             gender: 'M',
                             bureau_an_fonction: null,
                           }}
-                          legislature={LATEST_LEGISLATURE}
                           className="grow"
                         />
                       ) : (

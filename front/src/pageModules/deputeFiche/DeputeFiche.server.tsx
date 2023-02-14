@@ -119,36 +119,9 @@ async function queryMandats(deputeUid: string): Promise<types.Mandat[]> {
     .execute()
 }
 
-export const getStaticPathsOlderLegislatures: GetStaticPaths<
-  types.Params
-> = async () => {
+export const getStaticPaths: GetStaticPaths<types.Params> = async () => {
   const rows = await dbReleve
     .selectFrom('deputes_in_legislatures')
-    .where('legislature', '!=', LATEST_LEGISLATURE)
-    .where('slug', 'is not', null)
-    .select('legislature')
-    .select(sql<string>`slug`.as('slug'))
-    .execute()
-  return {
-    paths: rows.map(_ => {
-      const { slug, legislature } = _
-      return {
-        params: {
-          slug,
-          legislature: legislature.toString(),
-        },
-      }
-    }),
-    fallback: false,
-  }
-}
-
-export const getStaticPathsLatestLegislatures: GetStaticPaths<
-  types.Params
-> = async () => {
-  const rows = await dbReleve
-    .selectFrom('deputes_in_legislatures')
-    .where('legislature', '=', LATEST_LEGISLATURE)
     .where('slug', 'is not', null)
     .select(sql<string>`slug`.as('slug'))
     .execute()
