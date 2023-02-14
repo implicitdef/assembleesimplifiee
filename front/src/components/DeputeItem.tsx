@@ -149,14 +149,12 @@ function translateFonctionInBureau(
 
 export type NewDeputeItemProps = {
   depute: ReleveTables['deputes_in_legislatures']
-  legislature: number
   displayCirco?: boolean
   className?: string
 }
 
 export function NewDeputeItem({
   depute,
-  legislature,
   displayCirco,
   className,
 }: NewDeputeItemProps) {

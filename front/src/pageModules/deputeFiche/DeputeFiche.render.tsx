@@ -45,9 +45,10 @@ export function Page(props: types.Props) {
             width={150}
             height={192}
           />
-          <InfosBlockLatestLegislature
+          <InfosBlock
             deputeData={latestDeputeData}
             {...{ nosDeputesUrl, legislatures }}
+            isForLatestLegislature
           />
         </div>
         <Stats stats={latestDeputeData.stats} />
@@ -55,27 +56,19 @@ export function Page(props: types.Props) {
 
       {otherDeputeData.length > 0 && (
         <h2 className="mb-4 mt-8 border-b-4 border-dotted border-slate-500 pb-2 text-2xl font-bold">
-          Dans les législatures précédentes
+          Législatures précédentes
         </h2>
       )}
       {otherDeputeData.map(deputeData => {
         const legislature = deputeData.depute.legislature
         return (
-          <Fragment key={legislature}>
-            <h3 className="text-xl font-bold">
-              {legislature}
-              {getOrdinalSuffixFeminine(legislature)} législature
-            </h3>
-            <div>
-              <div className="flex gap-4">
-                <InfosBlockLatestLegislature
-                  {...{ deputeData, nosDeputesUrl, legislatures }}
-                />
-              </div>
-
-              <Stats stats={deputeData.stats} />
-            </div>
-          </Fragment>
+          <div className="mb-8" key={legislature}>
+            <InfosBlock
+              {...{ deputeData, nosDeputesUrl, legislatures }}
+              isForLatestLegislature={false}
+            />
+            <Stats stats={deputeData.stats} />
+          </div>
         )
       })}
     </div>
@@ -292,7 +285,7 @@ function Groupe({ depute }: { depute: types.Depute }) {
 
 function Age({ depute }: { depute: types.Depute }) {
   const age = getAge(depute.date_birth)
-  return <p className="mb-4">{age} ans</p>
+  return <p className="">{age} ans</p>
 }
 
 function ExternalLinks({
@@ -323,38 +316,67 @@ function ExternalLinks({
   )
 }
 
-export function InfosBlockLatestLegislature({
+function NameAndCircoTitle({
   deputeData,
-  nosDeputesUrl,
-  legislatures,
+  isForLatestLegislature,
 }: {
   deputeData: types.DeputeDataForLegislature
-  nosDeputesUrl: string | null
-  legislatures: number[]
+  isForLatestLegislature: boolean
 }) {
-  const { depute } = deputeData
-  const { gender } = depute
-  const feminine = gender === 'F'
-  const feminineE = feminine ? 'e' : ''
-  const mandats = deputeData.mandats
+  const { mandats, depute } = deputeData
   if (mandats.length === 0) {
     // should not happen
     return null
   }
   const lastMandat = mandats[mandats.length - 1]
   const formerDepute = lastMandat.date_fin !== null
+  const { gender, legislature } = depute
+  const feminine = gender === 'F'
+  const feminineE = feminine ? 'e' : ''
+
+  const firstPart = isForLatestLegislature ? (
+    <span className="font-bold">{depute.full_name}</span>
+  ) : (
+    <span>
+      Dans la{' '}
+      <span className="font-bold">
+        {legislature}
+        {getOrdinalSuffixFeminine(legislature)} législature
+      </span>
+      , {feminine ? 'elle' : 'il'}
+    </span>
+  )
+
   return (
-    <div className="">
-      <h1 className="text-xl">
-        <span className="font-bold">{depute.full_name}</span>{' '}
-        {formerDepute ? 'était député' : 'Député'}
-        {feminineE} de la {depute.circo_num}
-        <sup>
-          {getOrdinalSuffixFeminine(depute.circo_num)}
-        </sup> circonscription{' '}
-        {addPrefixToCirconscription(depute.circo_dpt_name)} (
-        {depute.circo_dpt_num})
-      </h1>
+    <h1 className="text-xl">
+      {firstPart} {formerDepute ? 'était député' : 'Député'}
+      {feminineE} de la {depute.circo_num}
+      <sup>
+        {getOrdinalSuffixFeminine(depute.circo_num)}
+      </sup> circonscription {addPrefixToCirconscription(depute.circo_dpt_name)}{' '}
+      ({depute.circo_dpt_num})
+    </h1>
+  )
+}
+
+export function InfosBlock({
+  deputeData,
+  nosDeputesUrl,
+  legislatures,
+  isForLatestLegislature,
+  className = '',
+}: {
+  deputeData: types.DeputeDataForLegislature
+  nosDeputesUrl: string | null
+  legislatures: number[]
+  isForLatestLegislature: boolean
+  className?: string
+}) {
+  const { depute } = deputeData
+  const { gender } = depute
+  return (
+    <div className={className}>
+      <NameAndCircoTitle {...{ deputeData, isForLatestLegislature }} />
       {depute.bureau_an_fonction && (
         <p className="font-bold">
           {translateFonctionInBureau(depute.bureau_an_fonction, gender)}
@@ -362,10 +384,19 @@ export function InfosBlockLatestLegislature({
       )}
       <ComPerm {...{ depute }} />
       <Groupe {...{ depute }} />
-      <Age {...{ depute }} />
-      <MandatsBlock {...{ deputeData }} />
-      <LegislaturesBlock {...{ deputeData }} legislatures={legislatures} />
-      <ExternalLinks {...{ depute, nosDeputesUrl }} />
+      {isForLatestLegislature && <Age {...{ depute }} />}
+      <div className="mt-4">
+        <MandatsBlock {...{ deputeData }} />
+        {isForLatestLegislature && (
+          <>
+            <LegislaturesBlock
+              {...{ deputeData }}
+              legislatures={legislatures}
+            />
+            <ExternalLinks {...{ depute, nosDeputesUrl }} />
+          </>
+        )}
+      </div>
     </div>
   )
 }
