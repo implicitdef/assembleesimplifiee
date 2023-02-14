@@ -13,6 +13,7 @@ import {
   addPrefixToCirconscription,
   getComPermNameWithPrefix,
   LATEST_LEGISLATURE,
+  legislaturesData,
 } from '../../lib/hardcodedData'
 import { formatDate, getAge, getOrdinalSuffixFeminine } from '../../lib/utils'
 import * as types from './DeputeFiche.types'
@@ -51,7 +52,6 @@ export function Page(props: types.Props) {
             isForLatestLegislature
           />
         </div>
-        <Stats stats={latestDeputeData.stats} />
       </div>
 
       {otherDeputeData.length > 0 && (
@@ -67,8 +67,24 @@ export function Page(props: types.Props) {
               {...{ deputeData, nosDeputesUrl, legislatures }}
               isForLatestLegislature={false}
             />
-            <Stats stats={deputeData.stats} />
           </div>
+        )
+      })}
+
+      <h2 className="mb-4 mt-8 border-b-4 border-dotted border-slate-500 pb-2 text-2xl font-bold">
+        Données de présence à l'Assemblée
+      </h2>
+      {/* <p className="m-4 rounded-2xl bg-amber-200 p-4">
+        Comment lire ces graphiques ?
+      </p> */}
+      {deputesSorted.map(deputeDataInLegislature => {
+        const legislature = deputeDataInLegislature.depute.legislature
+        return (
+          <Stats
+            key={legislature}
+            legislature={legislature}
+            stats={deputeDataInLegislature.stats}
+          />
         )
       })}
     </div>
@@ -77,16 +93,21 @@ export function Page(props: types.Props) {
 
 function Stats({
   stats,
+  legislature,
 }: {
   stats: types.WeeklyStats<types.StatsFinal> | null
+  legislature: number
 }) {
   if (stats) {
     return (
-      <div className=" my-4 h-44 p-4 pb-8">
-        <h2 className="text-center text-xl font-bold">
-          Présences à l'Assemblée
+      <div className="">
+        <h2 className="ml-8 text-left font-bold">
+          {legislature}
+          {getOrdinalSuffixFeminine(legislature)} législature
         </h2>
-        <StatsGraph stats={stats} />
+        <div className="h-44">
+          <StatsGraph stats={stats} />
+        </div>
       </div>
     )
   }
