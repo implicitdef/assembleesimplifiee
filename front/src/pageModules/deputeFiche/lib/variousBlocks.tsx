@@ -73,9 +73,7 @@ function labelDateDebutMandat(
     date_debut,
     date_debut_legislature,
   )
-  return dateDebutIsDebutLegislature
-    ? `début de la législature (${f(date_debut)})`
-    : f(date_debut)
+  return dateDebutIsDebutLegislature ? `début de la législature` : f(date_debut)
 }
 
 function labelDateFinMandat(
@@ -87,7 +85,7 @@ function labelDateFinMandat(
 
   return date_fin
     ? dateFinIsFinLegislature
-      ? `jusqu'à la fin de la législature (${f(date_fin)})`
+      ? `jusqu'à la fin de la législature`
       : `au ${f(date_fin)}`
     : null
 }
