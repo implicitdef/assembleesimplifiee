@@ -4,9 +4,9 @@ import sum from 'lodash/sum'
 import sortBy from 'lodash/sortBy'
 import { GetStaticProps } from 'next'
 import { dbReleve } from '../../lib/dbReleve'
-import * as types from './Stats.types'
+import * as types from './deputesAbsents.types'
 
-const MINIMUM_ABSENT_WEEKS = 4
+const MINIMUM_ABSENT_WEEKS = 8
 const COVID_WEEKS = [
   '2020-03-16',
   '2020-03-23',

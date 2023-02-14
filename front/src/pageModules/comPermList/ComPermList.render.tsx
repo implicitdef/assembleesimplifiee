@@ -23,7 +23,7 @@ function ChunkOfDeputes({
           return (
             <NewDeputeItem
               key={depute.uid}
-              {...{ legislature, depute }}
+              {...{ depute }}
               className="grow"
               displayCirco
             />

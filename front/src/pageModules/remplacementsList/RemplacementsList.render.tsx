@@ -185,7 +185,6 @@ export function Page({
                                   // on force l'affichage comme ongoing, c'est plus lisible ici
                                   ongoing: true,
                                 }}
-                                legislature={legislature}
                                 className={'border border-slate-400'}
                               />
                               <div className="flex items-center">

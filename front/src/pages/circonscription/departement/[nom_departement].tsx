@@ -134,11 +134,7 @@ export default function Page(
                   {depute.circo_num}
                   {getOrdinalSuffixFeminine(depute.circo_num)} circonscription
                 </h3>
-                <NewDeputeItem
-                  {...{ depute }}
-                  legislature={LATEST_LEGISLATURE}
-                  displayCirco
-                />
+                <NewDeputeItem {...{ depute }} displayCirco />
               </div>
             )
           })}

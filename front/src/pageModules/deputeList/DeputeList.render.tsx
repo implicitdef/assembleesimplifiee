@@ -83,7 +83,7 @@ export function ChunkOfDeputes({
           return (
             <NewDeputeItem
               key={depute.uid}
-              {...{ depute, legislature }}
+              {...{ depute }}
               displayCirco
               className="grow"
             />
