@@ -90,7 +90,11 @@ function labelDateFinMandat(
     : null
 }
 
-export function MandatsBlock({ deputeData }: { deputeData: types.DeputeData }) {
+export function MandatsBlock({
+  deputeData,
+}: {
+  deputeData: types.DeputeDataForLegislature
+}) {
   const mandats = deputeData.mandats_this_legislature
   if (mandats.length === 0) {
     // should not happen, but let's be safe

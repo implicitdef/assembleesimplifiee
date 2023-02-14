@@ -5,24 +5,27 @@ export type Params = {
 }
 
 export type Props = {
-  legislature: number
-  legislatureNavigationUrls: [number, string][]
   deputeData: DeputeData
 }
 export type Depute = ReleveTables['deputes_in_legislatures']
+
 export type DeputeData = {
+  nosDeputesUrl: string | null
+  dataInLegislatures: [number, DeputeDataForLegislature][]
+}
+
+export type DeputeDataForLegislature = {
   depute: Depute
-  mandats_this_legislature: Mandat[]
-  legislatures: number[]
+  mandats: Mandat[]
   stats: WeeklyStats<StatsFinal> | null
   legislatureDates: {
     date_debut: string
     date_fin: string | null
   }
-  nosDeputesUrl: string | null
 }
 
 export type Mandat = {
+  legislature: number
   mandat_uid: string
   date_debut: string
   date_fin: string | null
