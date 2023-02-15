@@ -181,8 +181,7 @@ export function Layout({ children }: Props) {
         </title>
         {/* TODO il faudra repasser sur les métas, balises pour SEO, partage twitter, etc.
          */}
-        {/* favicon commenté pour le moment car il m'embrouille dans mes onglets */}
-        {/* <link rel="icon" href="/favicon.ico" /> */}
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div
         className="flex min-h-screen flex-col bg-white
