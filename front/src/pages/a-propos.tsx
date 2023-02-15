@@ -1,8 +1,24 @@
 import type { NextPage } from 'next'
 import Script from 'next/script'
+import { useEffect, useState } from 'react'
 import { MyLink } from '../components/MyLink'
 
+function useEmailAdress() {
+  const [address, setAddress] = useState(
+    'con.tu.tact.aro.assem.tu.blee.tu.simplifiee.tu..com',
+  )
+  const [displayable, setDisplayable] = useState(false)
+  useEffect(() => {
+    setTimeout(() => {
+      setAddress(_ => _.replaceAll('.tu.', '').replaceAll('.aro.', '@'))
+      setDisplayable(true)
+    }, 10)
+  })
+  return [address, displayable]
+}
+
 const Home: NextPage = () => {
+  const [address, addressIsDisplayable] = useEmailAdress()
   return (
     <div className="flex h-full items-center justify-center">
       <div className="m-4 max-w-2xl border border-slate-800">
@@ -40,7 +56,13 @@ const Home: NextPage = () => {
           Les cartes des départements et des circonscriptions viennent également
           de Regards Citoyens. Elles sont aussi sous licence ODBL.
         </p>
-
+        <h1 className="m-4 text-xl font-bold">Nous contacter</h1>
+        <p className="m-4">
+          Par email :{' '}
+          {addressIsDisplayable && (
+            <MyLink href={`mailto:${address}`}>{address}</MyLink>
+          )}
+        </p>
         <h1 className="m-4 text-xl font-bold">
           Vie privée et données personnelles
         </h1>
