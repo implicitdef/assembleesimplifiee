@@ -62,17 +62,17 @@ const Home: NextPage = () => {
           de connaître les attentes des électeurs, mais aussi d'avancer leur
           carrière politique en se faisant connaître et en accumulant un réseau.
         </Paragraph>
-        <Title>Comment se répartissent les députés ?</Title>
+        {/* <Title>Comment se répartissent les députés ?</Title>
         <Paragraph>
           Les députés se regroupent par groupes de 15 députés ou plus, suivant
           leurs affinités politiques. On appelle cela les{' '}
           <span className="italic">groupes parlementaires</span>. Ce sont un peu
           comme des partis, mais internes à l'Assemblée.
         </Paragraph>
-        {/* <Paragraph>
+        <Paragraph>
           Ils n'ont pas forcément le même nom qu'un parti politique. Par exemple
           les députés .
-        </Paragraph> */}
+        </Paragraph>
         <Paragraph>
           Faire partie d'un groupe donne plusieurs avantages, notamment du temps
           de parole dans les débats. Les députés rejoignent presque tous un
@@ -84,7 +84,7 @@ const Home: NextPage = () => {
           Dans un même groupe, les députés d'un même groupe votent généralement
           de la même manière. Ils n'y sont pas obligés, mais risquent de se
           faire exclure du groupe par leur collègues s'ils se rebellent.
-        </Paragraph>
+        </Paragraph> */}
       </div>
     </div>
   )
