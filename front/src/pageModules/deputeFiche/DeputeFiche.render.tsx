@@ -16,6 +16,7 @@ import {
 import { formatDate, getAge, getOrdinalSuffixFeminine } from '../../lib/utils'
 import * as types from './DeputeFiche.types'
 import { StatsGraph } from './lib/StatsGraph'
+import { TitleAndDescription } from '../../components/TitleAndDescription'
 
 export function Page(props: types.Props) {
   const { deputeData } = props
@@ -28,15 +29,31 @@ export function Page(props: types.Props) {
   const fem = gender === 'F'
   const femE = fem ? 'e' : ''
 
-  // autres caveats a ajouter :
+  // autres caveats a ajouter dans les stats :
 
   // pendant le début du covid (mars-juin 2020) l'assemblee faisait des visio et il n'y avait quasiment plus de compte rendus pour ces réunions
   // les présidents de séance ne sont pas toujours corrects
   // c'est un travail manuel (de la part du service des comptes rendus de l'assemblee), donc il y a quelques erreurs
   // les députés qui sont dans des circos eloignees (DOM-TOM surtout) sont desavantages
 
+  const isCurrentlyDepute =
+    latestDeputeData.depute.legislature === LATEST_LEGISLATURE &&
+    latestDeputeData.depute.ongoing
+
   return (
     <div className="">
+      <TitleAndDescription
+        title={`${full_name}`}
+        description={`Fiche ${
+          isCurrentlyDepute
+            ? fem
+              ? 'de la députée'
+              : 'du député'
+            : fem
+            ? `de l'ancienne députée`
+            : `de l'ancien député`
+        } ${full_name}. Sa circonscription, son groupe, sa commission permanente. Les dates exactes de son mandat. Le graphe de ses présences à l'Assemblée.`}
+      />
       <h1 className="mx-auto mb-10 w-fit border-8 border-double border-black px-14 py-4 text-center text-4xl font-bold uppercase">
         Fiche de {full_name}
       </h1>
