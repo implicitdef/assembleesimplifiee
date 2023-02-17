@@ -3,7 +3,12 @@ import uniq from 'lodash/uniq'
 import { BigTitle } from '../../components/BigTitle'
 import { NewDeputeItem } from '../../components/DeputeItem'
 import { LegislatureNavigation } from '../../components/LegislatureNavigation'
-import { newPartitionDeputesByGroup } from '../../lib/utils'
+import { TitleAndDescription } from '../../components/TitleAndDescription'
+import { LATEST_LEGISLATURE } from '../../lib/hardcodedData'
+import {
+  getOrdinalSuffixFeminine,
+  newPartitionDeputesByGroup,
+} from '../../lib/utils'
 import * as types from './DeputeList.types'
 
 function scoreDepute(depute: types.Depute) {
@@ -264,8 +269,13 @@ export function Page({
   const deputesCurrent = deputes.filter(_ => _.ongoing)
   const deputesFormer = deputes.filter(_ => !_.ongoing)
 
+  const legDesc = buildLegislatureDescription(legislature)
   return (
     <div>
+      <TitleAndDescription
+        title={`Députés${legDesc}`}
+        description={`Liste complète des ${deputesCurrent.length} députés${legDesc}, organisée par groupes. Leur position (majorité ou opposition), leur rôles en commission ou au Bureau (Président, Vice-Président, questeur, etc.). Les non-inscrits, les anciens députés.`}
+      />
       <LegislatureNavigation
         title="Tous les députés"
         currentLegislature={legislature}
@@ -283,4 +293,12 @@ export function Page({
       )}
     </div>
   )
+}
+
+function buildLegislatureDescription(legi: number) {
+  return legi === LATEST_LEGISLATURE
+    ? ``
+    : legi === LATEST_LEGISLATURE - 1
+    ? ` de la législature précédente`
+    : ` de la ${legi}${getOrdinalSuffixFeminine(legi)} législature`
 }

@@ -1,8 +1,10 @@
 import type { NextPage } from 'next'
+import { TitleAndDescription } from '../components/TitleAndDescription'
 
 const Home: NextPage = () => {
   return (
     <div className="flex h-full items-center justify-center bg-slate-200">
+      <TitleAndDescription />
       <div className="text-center">
         <p className="font-bold text-red-600">
           page with very little content, to test the layout

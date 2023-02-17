@@ -1,8 +1,10 @@
 import type { NextPage } from 'next'
+import { TitleAndDescription } from '../components/TitleAndDescription'
 
 const Home: NextPage = () => {
   return (
     <div className="text-center">
+      <TitleAndDescription />
       <p className="font-bold text-red-600">Long content, to test the layout</p>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque lectus

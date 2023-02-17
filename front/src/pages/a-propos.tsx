@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
 import { MyLink } from '../components/MyLink'
+import { TitleAndDescription } from '../components/TitleAndDescription'
 
 function useEmailAdress() {
   const [address, setAddress] = useState(
@@ -21,6 +22,12 @@ const Home: NextPage = () => {
   const [address, addressIsDisplayable] = useEmailAdress()
   return (
     <div className="flex h-full items-center justify-center">
+      <TitleAndDescription
+        title="À propos"
+        description="AssembleeSimplifiee.com est un site d'information et de vulgarisation
+          sur le fonctionnement de l'Assemblée nationale française, et sur les députés."
+      />
+
       <div className="m-4 max-w-2xl border border-slate-800">
         <h1 className="m-4 text-center text-2xl  font-bold">À propos</h1>
         <p className="m-4">
