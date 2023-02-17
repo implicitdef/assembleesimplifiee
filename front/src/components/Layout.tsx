@@ -79,7 +79,7 @@ function Division({
 function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
   return (
     <nav
-      className={`fixed z-50 flex min-h-full w-screen flex-col border-r border-black bg-white text-left lg:static lg:w-[250px] lg:text-right ${
+      className={`fixed z-20 flex min-h-full w-screen flex-col border-r border-black bg-white text-left lg:static lg:w-[250px] lg:text-right ${
         mobileMenuFolded ? 'hidden lg:block' : ''
       }`}
     >
@@ -117,7 +117,7 @@ function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
 
 function MobileTopBar({ toggleMobileMenu }: { toggleMobileMenu: () => void }) {
   return (
-    <div className="fixed z-50 flex h-11 w-full justify-between bg-black text-white lg:hidden">
+    <div className="fixed z-20 flex h-11 w-full justify-between bg-black text-white lg:hidden">
       <button
         className="my-2 flex w-fit items-center justify-center border-r border-white p-2 text-white "
         onClick={toggleMobileMenu}
@@ -157,6 +157,18 @@ function MatomoScript() {
   )
 }
 
+function DevModeMarker() {
+  if (process.env.NODE_ENV === 'development') {
+    // Run development-only code here
+    return (
+      <div className="absolute top-0 left-20 z-50 bg-green-900 p-1 text-white lg:left-0">
+        DEV
+      </div>
+    )
+  }
+  return null
+}
+
 export function Layout({ children }: Props) {
   const [mobileMenuFolded, setMobileMenuFolded] = useState(true)
   const router = useRouter()
@@ -177,6 +189,8 @@ export function Layout({ children }: Props) {
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <DevModeMarker />
       <div
         className="flex min-h-screen flex-col bg-white
       "
