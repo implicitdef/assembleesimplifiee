@@ -7,16 +7,16 @@ const Home: NextPage = () => {
     <div className="flex h-full items-center justify-center">
       <TitleAndDescription description="Site d'information et de vulgarisation sur les députés et l'Assemblée nationale. Nous expliquons ce que font les députés, leur rôles, leur cironscriptions, ou ce que sont les groupes ou les commissions." />
       <div className="bg-blXue-400 max-w-4xl  space-y-4 text-justify">
-        <div className="mb-10 border-8 border-double border-slate-800 px-1 pb-6 pt-5">
-          <div className="flex items-center justify-center">
-            <h1 className="text-right text-4xl font-bold leading-none  sm:text-5xl">
+        <div className="mb-10 flex items-center justify-center border-8 border-double border-slate-800 px-1  pb-6 pt-5">
+          <div className="mx-4 flex w-fit flex-col items-center justify-center">
+            <h1 className="text-left text-4xl font-bold leading-none md:text-5xl">
               Assemblee Simplifiee.com{' '}
             </h1>
+            <p className=" text-left">
+              Site d'information et de vulgarisation sur le fonctionnement de
+              l'Assemblée Nationale.
+            </p>
           </div>
-          <p className=" text-center">
-            Site d'information et de vulgarisation sur le fonctionnement de
-            l'Assemblée Nationale.
-          </p>
         </div>
         <Title>C'est quoi l'Assemblée ?</Title>
         <Paragraph>
