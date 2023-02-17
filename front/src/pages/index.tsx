@@ -1,9 +1,11 @@
 import type { NextPage } from 'next'
 import { ReactNode } from 'react'
+import { TitleAndDescription } from '../components/TitleAndDescription'
 
 const Home: NextPage = () => {
   return (
     <div className="flex h-full items-center justify-center">
+      <TitleAndDescription description="Site d'information et de vulgarisation sur les députés et l'Assemblée nationale. Nous expliquons ce que font les députés, leur rôles, leur cironscriptions, ou ce que sont les groupes ou les commissions." />
       <div className="bg-blXue-400 max-w-4xl  space-y-4 text-justify">
         <div className="mb-10 border-8 border-double border-slate-800 px-1 pb-6 pt-5">
           <div className="flex items-center justify-center">

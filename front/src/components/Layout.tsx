@@ -175,12 +175,6 @@ export function Layout({ children }: Props) {
     <>
       <MatomoScript />
       <Head>
-        <title>
-          AssembleeSimplifiee.com : site d'information et de vulgarisation sur
-          le fonctionnement de l'Assemblée Nationale
-        </title>
-        {/* TODO il faudra repasser sur les métas, balises pour SEO, partage twitter, etc.
-         */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div
