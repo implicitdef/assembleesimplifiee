@@ -2,6 +2,8 @@ import { Fragment } from 'react'
 import { BigTitle } from '../../components/BigTitle'
 import { NewDeputeItem } from '../../components/DeputeItem'
 import { LegislatureNavigation } from '../../components/LegislatureNavigation'
+import { TitleAndDescription } from '../../components/TitleAndDescription'
+import { LATEST_LEGISLATURE } from '../../lib/hardcodedData'
 import {
   dateDiffInDays,
   formatDateWithoutWeekday,
@@ -102,8 +104,13 @@ export function Page({
   legislatureNavigationUrls,
   dataByCirco,
 }: types.Props) {
+  const legiDesc = buildLegislatureDescription(legislature)
   return (
     <div className="">
+      <TitleAndDescription
+        title={`Historiques des remplacements de députés${legiDesc}`}
+        description={`Liste des changements de député${legiDesc}, par circonscription. Députés nommés au gouvernement, élections partielles, démissions.`}
+      />
       <LegislatureNavigation
         title="Historique des remplacements de députés"
         currentLegislature={legislature}
@@ -237,4 +244,12 @@ export function Page({
       </div>
     </div>
   )
+}
+
+function buildLegislatureDescription(legi: number) {
+  return legi === LATEST_LEGISLATURE
+    ? ``
+    : legi === LATEST_LEGISLATURE - 1
+    ? ` de la législature précédente`
+    : ` de la ${legi}${getOrdinalSuffixFeminine(legi)} législature`
 }

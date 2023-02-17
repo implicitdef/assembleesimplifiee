@@ -3,8 +3,12 @@ import sortBy from 'lodash/sortBy'
 import { Fragment } from 'react'
 import { NewDeputeItem } from '../../components/DeputeItem'
 import { LegislatureNavigation } from '../../components/LegislatureNavigation'
-import { getComPermFullName } from '../../lib/hardcodedData'
-import { newPartitionDeputesByGroup } from '../../lib/utils'
+import { TitleAndDescription } from '../../components/TitleAndDescription'
+import { getComPermFullName, LATEST_LEGISLATURE } from '../../lib/hardcodedData'
+import {
+  getOrdinalSuffixFeminine,
+  newPartitionDeputesByGroup,
+} from '../../lib/utils'
 import * as types from './ComPermList.types'
 
 function ChunkOfDeputes({
@@ -43,9 +47,13 @@ export function Page({
   const deputesWithComGroupedByCom = Object.values(
     groupBy(deputesWithCom, _ => _.com_perm_name),
   )
-
+  const legiDesc = buildLegislatureDescription(legislature)
   return (
     <div>
+      <TitleAndDescription
+        title={`Commissions permanentes${legiDesc}`}
+        description={`Liste des commissions permanentes${legiDesc} à l'Assemblée nationale, et liste des députés qui en sont membres, avec leur rôles (Président, Vice-président, secrétaire, etc.). Explique ce que sont les commissions permanentes et ce qu'elles font.`}
+      />
       <LegislatureNavigation
         title="Commissions permanentes"
         currentLegislature={legislature}
@@ -164,4 +172,12 @@ export function Page({
       )}
     </div>
   )
+}
+
+function buildLegislatureDescription(legi: number) {
+  return legi === LATEST_LEGISLATURE
+    ? ``
+    : legi === LATEST_LEGISLATURE - 1
+    ? ` de la législature précédente`
+    : ` de la ${legi}${getOrdinalSuffixFeminine(legi)} législature`
 }
