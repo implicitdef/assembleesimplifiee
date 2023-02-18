@@ -1,9 +1,17 @@
-# La "db_cli"
+# www.AssembleeSimplifiee.com
 
-Outil en ligne de commande pour créer les tables de la DB et injecter toutes les données dedans.
-Voir README dans le sous dossier
+Website to display general informations about "l'Assemblée Nationale" (main legislative body in France), its members, how it works, etc.
 
-# Le Front
+This is the main repo. It is split into 2 parts :
 
-C'est le front-end Next.js qui utilise la DB mentionnée ci-dessus.
-Voir README dans le sous-dossier
+## ./front
+
+The website itself.
+
+(Next.js/Typescript/Yarn)
+
+## ./db_cli
+
+A command-line tool to fetch the data from original sources (mostly the open data from the Assemblee Nationale) and inject it into a PostgreSQL database.
+
+(Node.js/Typescript/Yarn/Postgresql)
