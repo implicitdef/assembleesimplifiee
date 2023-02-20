@@ -3,6 +3,7 @@ import sortBy from 'lodash/sortBy'
 import { Fragment } from 'react'
 import { NewDeputeItem } from '../../components/DeputeItem'
 import { LegislatureNavigation } from '../../components/LegislatureNavigation'
+import { NiceItalic } from '../../components/NiceItalic'
 import { TitleAndDescription } from '../../components/TitleAndDescription'
 import { getComPermFullName, LATEST_LEGISLATURE } from '../../lib/hardcodedData'
 import {
@@ -60,21 +61,21 @@ export function Page({
         urlsByLegislature={legislatureNavigationUrls}
       />
 
-      <div className="max-w-3xl space-y-2 text-justify">
+      <div className="max-w-3xl space-y-2 text-left">
         <h2 className="text-2xl font-bold">
           C'est quoi les commissions permanentes ?
         </h2>
         <p>
           Pour travailler plus efficacement, les députés sont partagés en huit
           groupes de travail principaux, les{' '}
-          <span className="italic">commissions permanentes</span>, qui vont
-          dégrossir les projets et propositions de loi avant qu'ils n'arrivent
-          devant l'ensemble des députés en hémicycle.
+          <NiceItalic>commissions permanentes</NiceItalic>, qui vont dégrossir
+          les projets et propositions de loi avant qu'ils n'arrivent devant
+          l'ensemble des députés en hémicycle.
         </p>
         <p>
-          Elles sont dites <span className="italic">permanentes</span> par
-          rapport à d'autres commissions qui peuvent être créées ponctuellement
-          pour un besoin précis.
+          Elles sont dites <NiceItalic>permanentes</NiceItalic> par rapport à
+          d'autres commissions qui peuvent être créées ponctuellement pour un
+          besoin précis.
         </p>
 
         <p>

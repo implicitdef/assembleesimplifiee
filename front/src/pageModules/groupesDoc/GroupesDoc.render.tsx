@@ -24,11 +24,9 @@ export function Page({ groupes }: types.Props) {
         title="Les groupes"
         description="Explication de ce que sont les groupes parlementaires à l'Assemblée Nationale, comment ils regroupent les députés, comment ils fonctionnent"
       />
-      <h1 className="mx-auto mb-8 w-fit border-8 border-double border-black px-14 py-4 text-center text-4xl font-bold uppercase">
-        Les groupes parlementaires
-      </h1>
+
       <div className="mx-auto max-w-4xl">
-        <Title>C'est quoi les "groupes" à l'Assemblée?</Title>
+        <h1 className="mt-4 text-4xl font-bold">C'EST QUOI LES GROUPES ?</h1>
         <Paragraph>
           Les députés s'organisent par groupes de 15 députés ou plus, suivant
           leurs affinités politiques. On appelle cela les{' '}
@@ -115,7 +113,7 @@ export function Page({ groupes }: types.Props) {
               <QuickBadge groupe={groupeMajoritaire} /> est le groupe
               majoritaire.
             </p>
-            <p className="mb-1">
+            <div className="mb-1">
               Les groupes minoritaires sont :
               <ul className="pl-4">
                 {groupesMinoritaires.map(g => (
@@ -124,8 +122,8 @@ export function Page({ groupes }: types.Props) {
                   </li>
                 ))}
               </ul>
-            </p>
-            <p className="mb-1">
+            </div>
+            <div className="mb-1">
               Les groupes d'opposition sont :
               <ul className="pl-4">
                 {groupesOpposition.map(g => (
@@ -134,7 +132,7 @@ export function Page({ groupes }: types.Props) {
                   </li>
                 ))}
               </ul>
-            </p>
+            </div>
           </HelperText>
         )}
 
@@ -175,8 +173,22 @@ export function Page({ groupes }: types.Props) {
   )
 }
 
-function Title({ children }: { children: ReactNode }) {
-  return <h2 className="mt-6 text-left text-3xl font-bold">{children}</h2>
+function Title({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <h2
+      className={`mt-6 border-b-4 border-dotted border-slate-500 pb-2 text-left text-3xl font-bold ${
+        className ?? ''
+      }`}
+    >
+      {children}
+    </h2>
+  )
 }
 
 function Paragraph({ children }: { children: ReactNode }) {

@@ -89,11 +89,11 @@ function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
       <Division>
         <MenuLink to="/deputes" label="Liste des députés" />
         <MenuLink to="/circonscription" label="Les circonscriptions" />
-        <MenuLink to="/groupes" label="Les groupes" />
         <MenuLink
           to="/commissions-permanentes"
           label="Les commissions permanentes"
         />
+        <MenuLink to="/groupes" label="C'est quoi les groupes ?" />
         <MenuLink
           to="/historique-remplacements"
           label="Historique des départs et remplacements"
