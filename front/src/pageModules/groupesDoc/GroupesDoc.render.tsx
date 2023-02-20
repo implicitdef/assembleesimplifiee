@@ -155,14 +155,14 @@ export function Page({ groupes }: types.Props) {
         <Paragraph>
           La seule différence est que les membres apparentés ne comptent pas
           dans les 15 membres minimum qu'il faut pour constituer (et maintenir)
-          un groupe. Par exemple un groupe ne peut pas voir juste 14 membres à
-          part entière et 3 membres apparentés, il doit convertir un membre
-          apparenté en membre, ou disparaitre
+          un groupe. Par exemple un groupe ne peut pas avoir 14 membres à part
+          entière et 3 membres apparentés - il doit absorber un des membres
+          apparentés, ou disparaitre.
         </Paragraph>
         <Title>Ne pas confondre</Title>
         <Paragraph>
-          Quand on parle de "groupes", on parlent des groupes parlementaires. Il
-          existe aussi à l'Assemblée des{' '}
+          Quand on parle de "groupes", on parle typiquement des groupes
+          parlementaires. Il existe aussi à l'Assemblée des{' '}
           <NiceItalic>groupes d'études</NiceItalic>, des{' '}
           <NiceItalic>groupes d'amitié</NiceItalic>, et des{' '}
           <NiceItalic>groupes de travail</NiceItalic>, qui n'ont rien à avoir
