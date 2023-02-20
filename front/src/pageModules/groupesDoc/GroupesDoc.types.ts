@@ -1,10 +1,12 @@
+import { ReleveTables } from '../../lib/dbReleve'
+
 export type Props = {
-  groupeRN: Groupe | null
-  groupeECOLO: Groupe | null
-  groupeLIOT: Groupe | null
+  groupes: Groupe[]
 }
 export type Groupe = {
-  acronym: string
-  nom: string
-  color: string
+  group_acronym: string
+  group_color: string
+  group_name: string
+  group_pos: ReleveTables['deputes_in_legislatures']['group_pos']
+  nb_deputes: number
 }

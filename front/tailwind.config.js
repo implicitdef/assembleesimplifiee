@@ -8,6 +8,13 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Raleway', ...defaultTheme.fontFamily.sans],
+        serif: [
+          'PT Serif',
+          'Libre Baskerville',
+          // 'Merriweather',
+          'Playfair Display',
+          ...defaultTheme.fontFamily.mono,
+        ],
       },
     },
   },

@@ -4,28 +4,40 @@ import { LATEST_LEGISLATURE } from '../../lib/hardcodedData'
 import * as types from './GroupesDoc.types'
 
 export const getStaticProps: GetStaticProps<types.Props> = async context => {
+  const groupes = await getAllGroupes()
+
   return {
     props: {
-      groupeRN: await getGroupe('RN'),
-      groupeECOLO: await getGroupe('ECOLO'),
-      groupeLIOT: await getGroupe('LIOT'),
+      groupes,
     },
   }
 }
 
-async function getGroupe(acronym: string): Promise<types.Groupe | null> {
-  const row = await dbReleve
-    .selectFrom('deputes_in_legislatures')
-    .where('group_acronym', '=', acronym)
-    .where('legislature', '=', LATEST_LEGISLATURE)
-    .selectAll()
-    .executeTakeFirst()
-  if (!row || !row.group_acronym || !row.group_name || !row.group_color) {
-    return null
-  }
-  return {
-    acronym: row.group_acronym,
-    nom: row.group_name,
-    color: row.group_color,
-  }
+async function getAllGroupes(): Promise<types.Groupe[]> {
+  const rows = (
+    await dbReleve
+      .selectFrom('deputes_in_legislatures')
+      .where('legislature', '=', LATEST_LEGISLATURE)
+      .where('group_acronym', 'is not', null)
+      .groupBy(['group_acronym', 'group_color', 'group_name', 'group_pos'])
+      .select(['group_acronym', 'group_color', 'group_name', 'group_pos'])
+      .select(dbReleve.fn.count<number>('uid').as('nb_deputes'))
+      .execute()
+  ).filter(_ => _.nb_deputes > 0)
+  return rows.map(row => {
+    const { group_acronym, group_color, group_name, group_pos, nb_deputes } =
+      row
+    if (!group_acronym || !group_color || !group_name) {
+      throw new Error(
+        `Missing values for a group ${JSON.stringify({
+          group_acronym,
+          group_color,
+          group_name,
+          group_pos,
+          nb_deputes,
+        })}`,
+      )
+    }
+    return { group_acronym, group_color, group_name, group_pos, nb_deputes }
+  })
 }

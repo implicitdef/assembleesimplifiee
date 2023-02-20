@@ -1,11 +1,25 @@
 import { ReactNode } from 'react'
 import { GroupeBadge } from '../../components/GroupeBadge'
+import { NiceItalic } from '../../components/NiceItalic'
 import { TitleAndDescription } from '../../components/TitleAndDescription'
 import * as types from './GroupesDoc.types'
+import sortBy from 'lodash/sortBy'
 
-export function Page({ groupeRN, groupeECOLO, groupeLIOT }: types.Props) {
+export function Page({ groupes }: types.Props) {
+  const groupeRN = groupes.find(_ => _.group_acronym === 'RN')
+  const groupeECOLO = groupes.find(_ => _.group_acronym === 'ECOLO')
+  const groupeLIOT = groupes.find(_ => _.group_acronym === 'LIOT')
+
+  const groupeMajoritaire = groupes.find(_ => _.group_pos === 'maj')
+  const groupesMinoritaires = sortGroupes(
+    groupes.filter(_ => _.group_pos === 'min'),
+  )
+  const groupesOpposition = sortGroupes(
+    groupes.filter(_ => _.group_pos === 'opp'),
+  )
+
   return (
-    <div className="">
+    <div className="mb-10">
       <TitleAndDescription
         title="Les groupes"
         description="Explication de ce que sont les groupes parlementaires à l'Assemblée Nationale, comment ils regroupent les députés, comment ils fonctionnent"
@@ -13,13 +27,13 @@ export function Page({ groupeRN, groupeECOLO, groupeLIOT }: types.Props) {
       <h1 className="mx-auto mb-8 w-fit border-8 border-double border-black px-14 py-4 text-center text-4xl font-bold uppercase">
         Les groupes parlementaires
       </h1>
-      <div className="mx-auto max-w-4xl space-y-4">
+      <div className="mx-auto max-w-4xl">
         <Title>C'est quoi les "groupes" à l'Assemblée?</Title>
         <Paragraph>
           Les députés s'organisent par groupes de 15 députés ou plus, suivant
           leurs affinités politiques. On appelle cela les{' '}
-          <span className="font-bold">groupes parlementaires</span>. Ce sont un
-          peu comme des partis, mais internes à l'Assemblée.
+          <NiceItalic>groupes parlementaires</NiceItalic>. Ce sont un peu comme
+          des partis, mais internes à l'Assemblée.
         </Paragraph>
 
         <HelperText>
@@ -45,12 +59,15 @@ export function Page({ groupeRN, groupeECOLO, groupeLIOT }: types.Props) {
           Faire partie d'un groupe donne plusieurs avantages, notamment du temps
           de parole dans les débats. Les députés rejoignent presque tous un
           groupe. Les quelques-uns qui ne le font pas sont appelés les{' '}
-          <span className="font-bold">non-inscrits</span>.
+          <NiceItalic>non-inscrits</NiceItalic>.
         </Paragraph>
         <Paragraph>
-          Dans un même groupe, les députés votent généralement de la même
-          manière. Ils n'y sont pas obligés, mais risquent de se faire exclure
-          du groupe par leur collègues s'ils désobéissent.
+          <span className="font-bold">
+            Dans un même groupe, les députés votent généralement de la même
+            manière
+          </span>
+          . Ils n'y sont pas obligés, mais risquent de se faire exclure du
+          groupe par leur collègues s'ils désobéissent.
         </Paragraph>
         <HelperText>
           Les groupes peuvent parfois ne pas correspondre à une ligne politique.
@@ -63,7 +80,64 @@ export function Page({ groupeRN, groupeECOLO, groupeLIOT }: types.Props) {
             </>
           )}
         </HelperText>
-        <Title>Les groupes actuels</Title>
+        <Title>La majorité et l'opposition</Title>
+        <Paragraph>
+          Lorsque des députés forment un groupe, ils peuvent choisir d'être un{' '}
+          <NiceItalic>«groupe d'opposition»</NiceItalic> (c'est-à-dire, opposé à
+          la politique du gouvernement).{' '}
+          <span className="font-bold">C'est purement déclaratif</span>, cela
+          n'engage à rien et peut être changé à tout moment. Un groupe
+          d'opposition a quelques droits supplémentaires : les journées de
+          "niche parlementaire" et la présidence de la commission des finances
+          notamment.
+        </Paragraph>
+
+        <Paragraph>
+          Parmi les autres groupes, le plus grand d'entre eux est
+          automatiquement appelé <NiceItalic>«groupe majoritaire»</NiceItalic>,
+          et les autres sont dit <NiceItalic>«minoritaires»</NiceItalic>. Dans
+          la pratique, les groupes minoritaires sont alliés du groupe
+          majoritaire et votent exactement comme lui. On dit souvent{' '}
+          <span className="font-bold">"la majorité" </span> pour désigner à la
+          fois le groupe majoritaire et les groupes minoritaires.
+        </Paragraph>
+
+        <Paragraph>
+          Les groupes minoritaires ont également accès aux journées de niche
+          parlementaire, mais pas aux autres avantages de l'opposition. Quant au
+          groupe majoritaire, il n'a aucun droit particulier.
+        </Paragraph>
+
+        {groupeMajoritaire && (
+          <HelperText>
+            <p className="mb-1">
+              Dans la configuration actuelle
+              <QuickBadge groupe={groupeMajoritaire} /> est le groupe
+              majoritaire.
+            </p>
+            <p className="mb-1">
+              Les groupes minoritaires sont :
+              <ul className="pl-4">
+                {groupesMinoritaires.map(g => (
+                  <li key={g.group_acronym}>
+                    <QuickBadge groupe={g} />
+                  </li>
+                ))}
+              </ul>
+            </p>
+            <p className="mb-1">
+              Les groupes d'opposition sont :
+              <ul className="pl-4">
+                {groupesOpposition.map(g => (
+                  <li key={g.group_acronym}>
+                    <QuickBadge groupe={g} />
+                  </li>
+                ))}
+              </ul>
+            </p>
+          </HelperText>
+        )}
+
         <Title>Les "membres apparentés"</Title>
         <Paragraph>
           Ce sont des députés qui souhaitent être affiliés à un groupe sans en
@@ -83,9 +157,18 @@ export function Page({ groupeRN, groupeECOLO, groupeLIOT }: types.Props) {
         <Paragraph>
           La seule différence est que les membres apparentés ne comptent pas
           dans les 15 membres minimum qu'il faut pour constituer (et maintenir)
-          un groupe. Par exemple un groupe qui serait composé de 15 membres à
-          part entière et de 3 membres apparentés serait menacé de disparition
-          si l'un des 15 quittait le groupe.
+          un groupe. Par exemple un groupe ne peut pas voir juste 14 membres à
+          part entière et 3 membres apparentés, il doit convertir un membre
+          apparenté en membre, ou disparaitre
+        </Paragraph>
+        <Title>Ne pas confondre</Title>
+        <Paragraph>
+          Quand on parle de "groupes", on parlent des groupes parlementaires. Il
+          existe aussi à l'Assemblée des{' '}
+          <NiceItalic>groupes d'études</NiceItalic>, des{' '}
+          <NiceItalic>groupes d'amitié</NiceItalic>, et des{' '}
+          <NiceItalic>groupes de travail</NiceItalic>, qui n'ont rien à avoir
+          avec les premiers.
         </Paragraph>
       </div>
     </div>
@@ -93,21 +176,35 @@ export function Page({ groupeRN, groupeECOLO, groupeLIOT }: types.Props) {
 }
 
 function Title({ children }: { children: ReactNode }) {
-  return <h2 className="text-left text-3xl font-bold uppercase">{children}</h2>
+  return <h2 className="mt-6 text-left text-3xl font-bold">{children}</h2>
 }
 
 function Paragraph({ children }: { children: ReactNode }) {
-  return <p className="">{children}</p>
+  return <p className="mt-4">{children}</p>
 }
 
 function HelperText({ children }: { children: ReactNode }) {
   return (
-    <div className="my-2 mx-6 rounded-xl border border-slate-300 bg-yellow-100 py-2 px-6">
+    <div className="mx-6 mt-4 rounded-xl border border-slate-300 bg-yellow-100 py-2 px-6">
       {children}
     </div>
   )
 }
 
 function QuickBadge({ groupe }: { groupe: types.Groupe }) {
-  return <GroupeBadge {...groupe} fullName className="ml-1 py-0" />
+  const { group_acronym, group_color, group_name } = groupe
+
+  return (
+    <GroupeBadge
+      acronym={group_acronym}
+      color={group_color}
+      nom={group_name}
+      fullName
+      className="ml-1 py-0"
+    />
+  )
+}
+
+function sortGroupes(groupes: types.Groupe[]) {
+  return sortBy(groupes, _ => -_.nb_deputes)
 }
