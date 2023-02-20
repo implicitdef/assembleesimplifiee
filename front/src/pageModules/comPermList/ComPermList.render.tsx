@@ -87,7 +87,7 @@ export function Page({
         <p>
           Chaque député appartient à une et une seule commission permanente.
           Généralement ils essayent d'être dans une commission qui correspond à
-          leur centre d'intérêt ou à leur compétence.
+          leurs centres d'intérêts ou à leurs compétences.
         </p>
       </div>
       {deputesWithComGroupedByCom.map(deputesSameCom => {
