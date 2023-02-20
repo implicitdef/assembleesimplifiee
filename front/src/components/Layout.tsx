@@ -89,6 +89,7 @@ function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
       <Division>
         <MenuLink to="/deputes" label="Liste des députés" />
         <MenuLink to="/circonscription" label="Les circonscriptions" />
+        <MenuLink to="/groupes" label="Les groupes" />
         <MenuLink
           to="/commissions-permanentes"
           label="Les commissions permanentes"
@@ -161,7 +162,7 @@ function DevModeMarker() {
   if (process.env.NODE_ENV === 'development') {
     // Run development-only code here
     return (
-      <div className="absolute top-0 left-20 z-50 bg-green-900 p-1 text-white lg:left-0">
+      <div className="absolute top-0 left-20 z-50 bg-lime-400 p-1 font-bold text-black lg:left-2">
         DEV
       </div>
     )
