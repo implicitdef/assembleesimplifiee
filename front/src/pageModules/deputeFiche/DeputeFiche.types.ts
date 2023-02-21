@@ -1,7 +1,6 @@
 import type { ReleveTables } from '../../lib/dbReleve'
 export type Params = {
   slug: string
-  legislature?: string
 }
 
 export type Props = {

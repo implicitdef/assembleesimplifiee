@@ -124,6 +124,7 @@ export const getStaticPaths: GetStaticPaths<types.Params> = async () => {
     .selectFrom('deputes_in_legislatures')
     .where('slug', 'is not', null)
     .select(sql<string>`slug`.as('slug'))
+    .distinct()
     .execute()
   return {
     paths: rows.map(_ => {
