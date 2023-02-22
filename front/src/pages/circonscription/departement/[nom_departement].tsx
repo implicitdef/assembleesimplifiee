@@ -14,6 +14,7 @@ import {
 } from '../../../lib/queryDeputesForDepartement'
 import { getOrdinalSuffixFeminine } from '../../../lib/utils'
 import sortBy from 'lodash/sortBy'
+import { TitleAndDescription } from '../../../components/TitleAndDescription'
 type Params = {
   nom_departement: string
 }
@@ -95,6 +96,10 @@ export default function Page(
   const deputesSorted = sortBy(deputes, _ => _.circo_num)
   return (
     <>
+      <TitleAndDescription
+        title={`${nom} | Circonscriptions`}
+        description={`Carte des circonscriptions électorales de ${nom}, pour les élections législatives : trouvez votre député`}
+      />
       <h1 className="text-center text-4xl font-bold">
         {nom} ({id})
       </h1>

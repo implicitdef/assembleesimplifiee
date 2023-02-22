@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { MapFrance } from '../../components/MapFrance'
+import { TitleAndDescription } from '../../components/TitleAndDescription'
 import { departements } from '../../lib/hardcodedData'
 
 type DepartementEntry = [string, string]
@@ -55,6 +56,10 @@ export default function Page() {
   }
   return (
     <>
+      <TitleAndDescription
+        title="Circonscriptions"
+        description="Carte de France des circonscriptions électorales, département par département, pour les élections législatives : trouvez votre député"
+      />
       <h1 className="my-4 text-center text-4xl font-bold">
         Toutes les circonscriptions par département
       </h1>
