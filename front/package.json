@@ -8,10 +8,10 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "yarn import-photos && next build && next export",
     "start": "next start",
     "lint": "next lint",
-    "import-photos": "git clone --depth 1 https://github.com/implicitdef/auto_archive_deputes_data.git ./tmp/auto_archive",
+    "import-photos": "rm -rf ./tmp/auto_archive && rm -rf ./public/deputes_photos && git clone --depth 1 https://github.com/implicitdef/auto_archive_deputes_data.git ./tmp/auto_archive && mv ./tmp/auto_archive/data/an_photos ./public/deputes_photos && rm -rf ./tmp/auto_archive",
     "checktypes": "tsc --noEmit",
     "format": "prettier --write .",
     "checkformat": "prettier --check .",
