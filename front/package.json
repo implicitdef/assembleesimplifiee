@@ -11,6 +11,7 @@
     "build": "next build && next export",
     "start": "next start",
     "lint": "next lint",
+    "import-photos": "git clone --depth 1 https://github.com/implicitdef/auto_archive_deputes_data.git ./tmp/auto_archive",
     "checktypes": "tsc --noEmit",
     "format": "prettier --write .",
     "checkformat": "prettier --check .",
