@@ -4,11 +4,7 @@ import type {
   FonctionInCom,
   ReleveTables,
 } from '../lib/dbReleve'
-import {
-  ComPermAcronym,
-  getComPermNameWithPrefix,
-  LATEST_LEGISLATURE,
-} from '../lib/hardcodedData'
+import { ComPermAcronym, getComPermName } from '../lib/hardcodedData'
 import { GroupeBadge } from './GroupeBadge'
 import { MyLink } from './MyLink'
 
@@ -100,10 +96,11 @@ export function DeputeItem({
               translateFonctionInBureau(bureau_an_fonction, gender)}
             {displayComPerm &&
               `${translateFonctionInCom(latestComPerm.fonction, gender)} Com.
-                ${getComPermNameWithPrefix(latestComPerm.name_short).replace(
-                  'développement',
-                  'dév.',
-                )}`}
+                ${getComPermName(latestComPerm.name_short, 'short')
+                  .replace('commission ', '')
+                  .replace('Développement', 'Dév.')
+                  .replace(` et de l'Aménagement du territoire`, '')
+                  .replace(` et de l'Éducation`, '')}`}
           </div>
         )}
       </div>

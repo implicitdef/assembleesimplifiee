@@ -47,8 +47,8 @@ const Home: NextPage = () => {
         </p>
 
         <p className="m-4">
-          Les données de présence des députés (les graphes) viennent de
-          l'excellent travail de l'association RegardsCitoyens (
+          Les données de présence des députés (les graphes) viennent du travail
+          de l'association RegardsCitoyens (
           <QuickExternalLink url={'https://www.regardscitoyens.org'} />
           ), qui les affichent sur leur site{' '}
           <QuickExternalLink url={`https://www.nosdeputes.fr`} />. Ces données

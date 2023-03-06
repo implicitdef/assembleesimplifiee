@@ -70,7 +70,9 @@ function Division({
   children: ReactNode
 }) {
   return (
-    <div className={`mx-4  border-slate-800 last:border-b-0 ${classname}`}>
+    <div
+      className={` border-b-2 border-dotted border-slate-800 first:border-b-0 last:border-b-0  ${classname}`}
+    >
       {children}
     </div>
   )
@@ -79,35 +81,36 @@ function Division({
 function SideMenu({ mobileMenuFolded }: { mobileMenuFolded: boolean }) {
   return (
     <nav
-      className={`fixed z-20 flex min-h-full w-screen flex-col border-r border-black bg-white text-left lg:static lg:w-[250px] lg:text-right ${
+      className={`fixed z-20 flex min-h-full w-screen flex-col border-r border-black bg-white text-left lg:static lg:w-[250px] lg:text-left ${
         mobileMenuFolded ? 'hidden lg:block' : ''
       }`}
     >
       <Division classname="hidden lg:block mx-0">
         <Logo />
       </Division>
-      <Division>
-        <MenuLink to="/deputes" label="Liste des députés" />
-        <MenuLink to="/circonscription" label="Les circonscriptions" />
+      <Division classname="mx-2">
+        <MenuLink to="/deputes" label="Tous les députés" />
+        <MenuLink to="/circonscription" label="Députés par circonscription" />
         <MenuLink
           to="/commissions-permanentes"
-          label="Les commissions permanentes"
+          label="Députés par commission permanente"
         />
-        <MenuLink to="/groupes" label="C'est quoi les groupes ?" />
         <MenuLink
           to="/historique-remplacements"
           label="Historique des départs et remplacements"
         />
       </Division>
-      <Division>
+      <Division classname="mx-2">
+        <MenuLink to="/groupes" label="C'est quoi les groupes ?" />
+
+        <MenuLink
+          to="/doc/commissions-permanentes"
+          label="C'est quoi les commissions permanentes ?"
+        />
+      </Division>
+      <Division classname="mx-1">
         <MenuLink to="/a-propos" label="À propos" />
       </Division>
-      {/* <Division>
-        <MenuLink to="/seances" label="Les séances en hémicycle" wip />
-        <MenuLink to="/sessions" label="Les sessions parlementaires" wip />
-        <MenuLink to="/dossiers" label="Les dossiers législatifs" wip />
-        <MenuLink to="/scrutins" label="Les scrutins" wip />
-      </Division> */}
       {/* <Division>
         <MenuLink to="/long" label="Page avec beaucoup de contenu" smaller />
         <MenuLink to="/short" label="Page avec très peu de contenu" smaller />

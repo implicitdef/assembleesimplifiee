@@ -3,6 +3,7 @@ import Image from 'next/image'
 import sortBy from 'lodash/sortBy'
 import { GroupeBadge } from '../../components/GroupeBadge'
 import { MyLink } from '../../components/MyLink'
+import { TitleAndDescription } from '../../components/TitleAndDescription'
 import {
   FonctionInBureau,
   FonctionInCom,
@@ -10,13 +11,17 @@ import {
 } from '../../lib/dbReleve'
 import {
   addPrefixToCirconscription,
-  getComPermNameWithPrefix,
+  getComPermName,
   LATEST_LEGISLATURE,
 } from '../../lib/hardcodedData'
-import { formatDate, getAge, getOrdinalSuffixFeminine } from '../../lib/utils'
+import {
+  capitalizeFirstLetter,
+  formatDate,
+  getAge,
+  getOrdinalSuffixFeminine,
+} from '../../lib/utils'
 import * as types from './DeputeFiche.types'
 import { StatsGraph } from './lib/StatsGraph'
-import { TitleAndDescription } from '../../components/TitleAndDescription'
 
 export function Page(props: types.Props) {
   const { deputeData } = props
@@ -109,7 +114,7 @@ export function Page(props: types.Props) {
         <ul className="list-inside list-disc">
           <li>
             Pour les séances en hémicycle, l'Assemblée ne fait pas de liste de
-            présences. Cependant la présence d'un député peut-être devinée s'il
+            présences. Cependant la présence d'un député peut être devinée s'il
             a fait une prise de parole qui est inscrite dans le compte-rendu, ou
             s'il prend part à un vote électronique public. Un député ne sera pas
             compté s'il ne fait pas de prise de parole et s'il n'y a que des
@@ -329,7 +334,9 @@ function ComPerm({ depute }: { depute: types.Depute }) {
       {depute.com_perm_fonction && depute.com_perm_name && (
         <p className="">
           <span className="">
-            Commission {getComPermNameWithPrefix(depute.com_perm_name)}
+            {capitalizeFirstLetter(
+              getComPermName(depute.com_perm_name, 'short'),
+            )}
           </span>{' '}
           {depute.com_perm_fonction !== 'Membre' ? (
             <span className="font-bold">

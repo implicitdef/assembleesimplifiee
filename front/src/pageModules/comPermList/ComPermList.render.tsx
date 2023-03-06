@@ -3,10 +3,16 @@ import sortBy from 'lodash/sortBy'
 import { Fragment } from 'react'
 import { NewDeputeItem } from '../../components/DeputeItem'
 import { LegislatureNavigation } from '../../components/LegislatureNavigation'
-import { NiceItalic } from '../../components/NiceItalic'
+import { MyLink } from '../../components/MyLink'
+import { NiceItalic } from '../../components/textHelpers'
 import { TitleAndDescription } from '../../components/TitleAndDescription'
-import { getComPermFullName, LATEST_LEGISLATURE } from '../../lib/hardcodedData'
 import {
+  comPermDisplayOrder,
+  getComPermName,
+  LATEST_LEGISLATURE,
+} from '../../lib/hardcodedData'
+import {
+  capitalizeFirstLetter,
   getOrdinalSuffixFeminine,
   newPartitionDeputesByGroup,
 } from '../../lib/utils'
@@ -45,49 +51,39 @@ export function Page({
   legislature,
   legislatureNavigationUrls,
 }: types.Props) {
-  const deputesWithComGroupedByCom = Object.values(
-    groupBy(deputesWithCom, _ => _.com_perm_name),
+  const deputesWithComGroupedByCom = sortComPerm(
+    Object.values(groupBy(deputesWithCom, _ => _.com_perm_name)),
   )
   const legiDesc = buildLegislatureDescription(legislature)
   return (
     <div>
       <TitleAndDescription
-        title={`Commissions permanentes${legiDesc}`}
-        description={`Liste des commissions permanentes${legiDesc} à l'Assemblée nationale, et liste des députés qui en sont membres, avec leur rôles (Président, Vice-président, secrétaire, etc.). Explique ce que sont les commissions permanentes et ce qu'elles font.`}
+        title={`Les députés par commission permanente${legiDesc}`}
+        description={`Liste des députés membres de chaque commission permanente${legiDesc} à l'Assemblée nationale, avec leur rôles (Président, Vice-président, secrétaire, etc.)`}
       />
       <LegislatureNavigation
-        title="Commissions permanentes"
+        title="Les députés par commission permanente"
         currentLegislature={legislature}
         urlsByLegislature={legislatureNavigationUrls}
       />
 
-      <div className="max-w-3xl space-y-2 text-left">
-        <h2 className="text-2xl font-bold">
+      <div className="space-y-2 text-left">
+        {/* <h2 className="text-2xl font-bold">
           C'est quoi les commissions permanentes ?
-        </h2>
+        </h2> */}
         <p>
-          Pour travailler plus efficacement, les députés sont partagés en huit
-          groupes de travail principaux, les{' '}
-          <NiceItalic>commissions permanentes</NiceItalic>, qui vont dégrossir
-          les projets et propositions de loi avant qu'ils n'arrivent devant
-          l'ensemble des députés en hémicycle.
+          Les députés sont répartis dans huit groupes de travail principaux, les{' '}
+          <NiceItalic>commissions permanentes</NiceItalic>, pour préparer les
+          projets de loi avant qu'ils n'arrivent devant l'ensemble des députés.
+          Si vous voyez que votre député est dans telle ou telle commission,
+          cela peut vous donner une idée (très approximative) du genre de
+          problèmatiques sur lesquelles il travaille.
         </p>
         <p>
-          Elles sont dites <NiceItalic>permanentes</NiceItalic> par rapport à
-          d'autres commissions qui peuvent être créées ponctuellement pour un
-          besoin précis.
-        </p>
-
-        <p>
-          Les commissions sont des versions miniatures de l'hémicycle : la
-          proportion de députés de chaque groupe dans l'hémicycle est reproduite
-          dans chaque commission. On retrouve la même majorité, la même
-          opposition.
-        </p>
-        <p>
-          Chaque député appartient à une et une seule commission permanente.
-          Généralement ils essayent d'être dans une commission qui correspond à
-          leurs centres d'intérêts ou à leurs compétences.
+          Pour plus d'explications sur les commissions permanentes, voir la page{' '}
+          <MyLink href="/doc/commissions-permanentes">
+            C'est quoi les commissions permanentes ?
+          </MyLink>
         </p>
       </div>
       {deputesWithComGroupedByCom.map(deputesSameCom => {
@@ -144,11 +140,22 @@ export function Page({
           .map(_ => _.flat())
           .flat()
 
+        const nameShort = getComPermName(comName, 'short')
+        const nameFull = getComPermName(comName, 'full')
+
         return (
           <Fragment key={comName ?? 'none'}>
-            <h2 className="mb-2 mt-6 text-2xl font-bold">
-              {getComPermFullName(comName)}
-            </h2>
+            <div className="mb-2">
+              <h2 className="mt-6 text-2xl font-bold">
+                {capitalizeFirstLetter(getComPermName(comName, 'short'))}
+              </h2>
+              {nameFull !== nameShort && (
+                <p>
+                  Plus précisément :{' '}
+                  <NiceItalic>{capitalizeFirstLetter(nameFull)}</NiceItalic>
+                </p>
+              )}
+            </div>
             <ChunkOfDeputes
               deputes={deputesImportantsSorted}
               {...{ legislature }}
@@ -181,4 +188,13 @@ function buildLegislatureDescription(legi: number) {
     : legi === LATEST_LEGISLATURE - 1
     ? ` de la législature précédente`
     : ` de la ${legi}${getOrdinalSuffixFeminine(legi)} législature`
+}
+
+function sortComPerm(
+  deputesWithComGrouped: types.DeputeWithCom[][],
+): types.DeputeWithCom[][] {
+  return sortBy(deputesWithComGrouped, _ => {
+    const comPermName = _[0].com_perm_name
+    return comPermDisplayOrder.indexOf(comPermName)
+  })
 }

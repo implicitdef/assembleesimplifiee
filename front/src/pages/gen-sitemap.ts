@@ -14,6 +14,7 @@ const fixedPaths = [
   '/',
   '/a-propos',
   '/groupes',
+  '/doc/commissions-permanentes',
   // '/circonscription',
   '/commissions-permanentes',
   '/deputes',

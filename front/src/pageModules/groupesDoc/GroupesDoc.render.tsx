@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { GroupeBadge } from '../../components/GroupeBadge'
-import { NiceItalic } from '../../components/NiceItalic'
+import { NiceItalic } from '../../components/textHelpers'
 import { TitleAndDescription } from '../../components/TitleAndDescription'
 import * as types from './GroupesDoc.types'
 import sortBy from 'lodash/sortBy'
