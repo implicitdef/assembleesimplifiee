@@ -34,15 +34,15 @@ export function Page({ groupes }: types.Props) {
           <B>huit groupes de travail principaux</B>, les{' '}
           <NiceItalic>commissions permanentes</NiceItalic>, qui vont dégrossir
           les projets et propositions de loi avant qu'ils n'arrivent devant
-          l'ensemble des députés en hémicycle. Elles sont dites "permanentes"
-          par rapport à d'autres commissions qui peuvent être créées
-          ponctuellement pour un besoin précis.
+          l'ensemble des députés en hémicycle. On les appelle "permanentes" par
+          rapport à d'autres commissions qui peuvent être créées ponctuellement
+          pour un besoin précis.
         </Paragraph>
 
         <Paragraph>
           Chaque député appartient à une et une seule commission permanente.
           Généralement ils essayent d'être dans une commission qui correspond à
-          leurs centres d'intérêts ou à leurs compétences. 
+          leurs centres d'intérêts ou à leurs compétences.
         </Paragraph>
 
         <Paragraph>
@@ -56,11 +56,11 @@ export function Page({ groupes }: types.Props) {
 
         <Paragraph>
           Ce qui se passe en commission pour un texte de loi donné permet donc
-          de deviner facilement ce qui se passera dans l’hémicycle.{' '}
-          <B>Si un texte de loi est adopté par une commission</B> (avec
+          de deviner facilement ce qui se passera dans l’hémicycle .{' '}
+          <B>Si un texte de loi est adopté par la commission</B> (avec
           éventuellement des modifications),{' '}
           <B>il sera généralement adopté par l’hémicycle</B> avec peu de
-          nouvelles modifications. S’il est rejeté par la commission, on le
+          nouvelles modifications . S’il est rejeté par la commission, on le
           présente quand même dans l’hémicycle, mais il y sera probablement
           rejeté.
         </Paragraph>
