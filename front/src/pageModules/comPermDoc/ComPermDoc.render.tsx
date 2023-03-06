@@ -32,14 +32,11 @@ export function Page({ groupes }: types.Props) {
         <Paragraph>
           Pour travailler plus efficacement, les députés sont partagés en{' '}
           <B>huit groupes de travail principaux</B>, les{' '}
-          <NiceItalic>commissions permanentes</NiceItalic>, qui{' '}
-          <B>
-            discutent et modifient les projets/propositions de loi avant qu'ils
-            n'arrivent devant l'ensemble des députés
-          </B>{' '}
-          dans l'hémicycle. On les appelle "permanentes" par rapport à d'autres
-          commissions qui peuvent être créées ponctuellement pour un besoin
-          précis.
+          <NiceItalic>commissions permanentes</NiceItalic>, qui dégrossissent
+          les projets ou propositions de loi avant qu'ils n'arrivent devant
+          l'ensemble des députés dans l'hémicycle. On les appelle "permanentes"
+          par rapport à d'autres commissions qui peuvent être créées
+          ponctuellement pour un besoin précis.
         </Paragraph>
 
         <Paragraph>
@@ -62,7 +59,7 @@ export function Page({ groupes }: types.Props) {
           de deviner facilement ce qui se passera dans l’hémicycle .{' '}
           <B>Si un texte de loi est adopté par la commission</B> (avec
           éventuellement des modifications),{' '}
-          <B>il sera généralement adopté par l’hémicycle</B> avec peu de
+          <B>il sera ensuite généralement adopté par l’hémicycle</B> avec peu de
           nouvelles modifications . S’il est rejeté par la commission, on le
           présente quand même dans l’hémicycle, mais il y sera probablement
           rejeté.
