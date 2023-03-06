@@ -1,8 +1,8 @@
 import { ReactNode } from 'react'
 import { GroupeBadge } from '../../components/GroupeBadge'
-import { NiceItalic } from '../../components/textHelpers'
+import { B, NiceItalic } from '../../components/textHelpers'
 import { TitleAndDescription } from '../../components/TitleAndDescription'
-import * as types from './GroupesDoc.types'
+import * as types from './ComPermDoc.types'
 import sortBy from 'lodash/sortBy'
 
 export function Page({ groupes }: types.Props) {
@@ -21,63 +21,49 @@ export function Page({ groupes }: types.Props) {
   return (
     <div className="mb-10">
       <TitleAndDescription
-        title="Les groupes"
-        description="Explication de ce que sont les groupes parlementaires à l'Assemblée Nationale, comment ils regroupent les députés, comment ils fonctionnent"
+        title="Les commissions permanentes"
+        description="Explication de ce que sont les commissions permanentes à l'Assemblée Nationale, comment elles travaillent, comment elles fonctionnent"
       />
 
       <div className="mx-auto max-w-4xl">
-        <h1 className="mt-4 text-4xl font-bold">C'EST QUOI LES GROUPES ?</h1>
+        <h1 className="mt-4 text-4xl font-bold">
+          C'EST QUOI LES COMMISSIONS PERMANENTES?
+        </h1>
         <Paragraph>
-          Les députés s'organisent par groupes de 15 députés ou plus, suivant
-          leurs affinités politiques. On appelle cela les{' '}
-          <NiceItalic>groupes parlementaires</NiceItalic>. Ce sont un peu comme
-          des partis, mais internes à l'Assemblée.
+          Pour travailler plus efficacement, les députés sont partagés en{' '}
+          <B>huit groupes de travail principaux</B>, les{' '}
+          <NiceItalic>commissions permanentes</NiceItalic>, qui vont dégrossir
+          les projets et propositions de loi avant qu'ils n'arrivent devant
+          l'ensemble des députés en hémicycle. Elles sont dites "permanentes"
+          par rapport à d'autres commissions qui peuvent être créées
+          ponctuellement pour un besoin précis.
         </Paragraph>
 
-        <HelperText>
-          Ils peuvent avoir le même nom qu'un parti politique, ou pas.
-          {groupeRN && groupeECOLO && (
-            <ul>
-              <li className="list-inside list-disc">
-                Par exemple les candidats du parti politique{' '}
-                <span className="font-bold">Rassemblement National</span> qui
-                ont été élus ont formé à l'Assemblée le groupe
-                <QuickBadge groupe={groupeRN} />
-              </li>
-              <li className="list-inside list-disc">
-                A l'inverse, ceux issus d'
-                <span className="font-bold">Europe Écologie Les Verts</span> ont
-                nommés leur groupe
-                <QuickBadge groupe={groupeECOLO} />
-              </li>
-            </ul>
-          )}
-        </HelperText>
         <Paragraph>
-          Faire partie d'un groupe donne plusieurs avantages, notamment du temps
-          de parole dans les débats. Les députés rejoignent presque tous un
-          groupe. Les quelques-uns qui ne le font pas sont appelés les{' '}
-          <NiceItalic>non-inscrits</NiceItalic>.
+          Chaque député appartient à une et une seule commission permanente.
+          Généralement ils essayent d'être dans une commission qui correspond à
+          leurs centres d'intérêts ou à leurs compétences. 
         </Paragraph>
+
         <Paragraph>
-          <span className="font-bold">
-            Dans un même groupe, les députés votent généralement de la même
-            manière
-          </span>
-          . Ils n'y sont pas obligés, mais risquent de se faire exclure du
-          groupe par leur collègues s'ils désobéissent.
+          Ces commissions sont des <B>versions miniatures de l'hémicycle</B> :
+          la proportion de députés de chaque groupe dans l'hémicycle est
+          reproduite dans chaque commission. On retrouve la même majorité, la
+          même opposition. Les débats y sont juste un peu plus calmes, et les
+          députés présents sont un peu plus impliqués sur les sujets qui y sont
+          discutés.
         </Paragraph>
-        <HelperText>
-          Les groupes peuvent parfois ne pas correspondre à une ligne politique.
-          {groupeLIOT && (
-            <>
-              {' '}
-              Par exemple, le groupe <QuickBadge groupe={groupeLIOT} /> est
-              constitué de députés qui ne votent pas toujours pareil, mais ont
-              préfèré former un groupe plutôt que d'être non-inscrits.
-            </>
-          )}
-        </HelperText>
+
+        <Paragraph>
+          Ce qui se passe en commission pour un texte de loi donné permet donc
+          de deviner facilement ce qui se passera dans l’hémicycle.{' '}
+          <B>Si un texte de loi est adopté par une commission</B> (avec
+          éventuellement des modifications),{' '}
+          <B>il sera généralement adopté par l’hémicycle</B> avec peu de
+          nouvelles modifications. S’il est rejeté par la commission, on le
+          présente quand même dans l’hémicycle, mais il y sera probablement
+          rejeté.
+        </Paragraph>
         <Title>La majorité et l'opposition</Title>
         <Paragraph>
           Lorsque des députés forment un groupe, ils peuvent choisir d'être un{' '}

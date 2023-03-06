@@ -3,7 +3,7 @@ import sortBy from 'lodash/sortBy'
 import { Fragment } from 'react'
 import { NewDeputeItem } from '../../components/DeputeItem'
 import { LegislatureNavigation } from '../../components/LegislatureNavigation'
-import { NiceItalic } from '../../components/NiceItalic'
+import { NiceItalic } from '../../components/textHelpers'
 import { TitleAndDescription } from '../../components/TitleAndDescription'
 import { getComPermFullName, LATEST_LEGISLATURE } from '../../lib/hardcodedData'
 import {

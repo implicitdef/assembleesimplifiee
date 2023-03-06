@@ -7,3 +7,7 @@ export function NiceItalic({ children }: { children: ReactNode }) {
     </span>
   )
 }
+
+export function B({ children }: { children: ReactNode }) {
+  return <span className="font-bold">{children}</span>
+}

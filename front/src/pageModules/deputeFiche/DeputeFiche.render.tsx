@@ -109,7 +109,7 @@ export function Page(props: types.Props) {
         <ul className="list-inside list-disc">
           <li>
             Pour les séances en hémicycle, l'Assemblée ne fait pas de liste de
-            présences. Cependant la présence d'un député peut-être devinée s'il
+            présences. Cependant la présence d'un député peut être devinée s'il
             a fait une prise de parole qui est inscrite dans le compte-rendu, ou
             s'il prend part à un vote électronique public. Un député ne sera pas
             compté s'il ne fait pas de prise de parole et s'il n'y a que des
