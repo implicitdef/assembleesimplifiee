@@ -32,11 +32,14 @@ export function Page({ groupes }: types.Props) {
         <Paragraph>
           Pour travailler plus efficacement, les députés sont partagés en{' '}
           <B>huit groupes de travail principaux</B>, les{' '}
-          <NiceItalic>commissions permanentes</NiceItalic>, qui vont dégrossir
-          les projets et propositions de loi avant qu'ils n'arrivent devant
-          l'ensemble des députés en hémicycle. On les appelle "permanentes" par
-          rapport à d'autres commissions qui peuvent être créées ponctuellement
-          pour un besoin précis.
+          <NiceItalic>commissions permanentes</NiceItalic>, qui{' '}
+          <B>
+            discutent et modifient les projets/propositions de loi avant qu'ils
+            n'arrivent devant l'ensemble des députés
+          </B>{' '}
+          dans l'hémicycle. On les appelle "permanentes" par rapport à d'autres
+          commissions qui peuvent être créées ponctuellement pour un besoin
+          précis.
         </Paragraph>
 
         <Paragraph>
