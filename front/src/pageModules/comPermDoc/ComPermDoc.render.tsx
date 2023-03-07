@@ -4,6 +4,7 @@ import { B, NiceItalic } from '../../components/textHelpers'
 import { TitleAndDescription } from '../../components/TitleAndDescription'
 import * as types from './ComPermDoc.types'
 import sortBy from 'lodash/sortBy'
+import Image from 'next/image'
 
 export function Page({ groupes }: types.Props) {
   const groupeRN = groupes.find(_ => _.group_acronym === 'RN')
@@ -32,15 +33,42 @@ export function Page({ groupes }: types.Props) {
         <Paragraph>
           Pour travailler plus efficacement, les députés sont partagés en{' '}
           <B>huit groupes de travail</B> principaux, les{' '}
-          <NiceItalic>commissions permanentes</NiceItalic>, qui dégrossissent
-          les projets de loi avant qu'ils n'arrivent devant l'ensemble des
-          députés dans l'hémicycle. On les appelle "permanentes" par rapport à
-          d'autres commissions qui peuvent être créées ponctuellement pour un
-          besoin précis.
+          <NiceItalic>commissions permanentes</NiceItalic> - on les appelle
+          "permanentes" par rapport à d'autres commissions qui peuvent être
+          créées ponctuellement pour un besoin précis.
+        </Paragraph>
+        <Image
+          className="mx-auto my-2"
+          src="/pics/com_aff_sociales.png"
+          width={500}
+          height={10000}
+          alt="Photo réunion de la commission des affaires sociales"
+        />
+        <Paragraph>
+          Ces huit commissions <B>dégrossissent les projets de loi</B> avant
+          qu'ils n'arrivent devant l'ensemble des députés dans l'hémicycle.
         </Paragraph>
 
+        <Paragraph>
+          Chaque commission est spécialisée sur une thématique très large. Quand
+          un projet de loi arrive à l'Assemblée, on l'assigne à la commission
+          qui correspond le mieux. Il y a la{' '}
+          <NiceItalic>commission des Lois</NiceItalic>, la{' '}
+          <NiceItalic>commission des Finances</NiceItalic>, la{' '}
+          <NiceItalic>commission des Affaires sociales</NiceItalic>, la{' '}
+          <NiceItalic>
+            commission des Affaires culturelles et de l'Education
+          </NiceItalic>
+          , la <NiceItalic>commission des Affaires économiques</NiceItalic>, la{' '}
+          <NiceItalic>
+            commission du Développement durable et de l'Aménagement du
+            territoire
+          </NiceItalic>
+          , la <NiceItalic>commission des Affaires étrangères</NiceItalic>, et
+          la <NiceItalic>commission de la Défense</NiceItalic>.
+        </Paragraph>
         <HelperText>
-          Un exemple au hasard : le projet de loi de 2022{' '}
+          Un exemple à l'automne 2022 : le projet de loi{' '}
           <NiceItalic>
             «Mesures d’urgence relatives au fonctionnement du marché du travail
             en vue du plein emploi»
@@ -56,19 +84,25 @@ export function Page({ groupes }: types.Props) {
         </HelperText>
 
         <Paragraph>
-          Chaque député appartient à une et une seule commission permanente.
-          Souvent ils essayent d'être dans une commission qui correspond à leurs
-          centres d'intérêts ou à leurs compétences.
+          <B>Chaque député appartient à une commission permanente</B>, et une
+          seule. Généralement ils essayent d'être dans la commission qui
+          correspond plus ou moins à leurs centres d'intérêts ou à leurs
+          compétences.
         </Paragraph>
 
+        <Title>Une version miniature de l'hémicycle</Title>
+
         <Paragraph>
-          Ces commissions sont des <B>versions miniatures de l'hémicycle</B> :
-          la proportion de députés de chaque groupe dans l'hémicycle est
-          reproduite dans chaque commission. On retrouve la même majorité, la
-          même opposition. Les débats y sont juste un peu plus calmes, et les
-          députés présents sont un peu plus impliqués sur les sujets qui y sont
-          discutés.
+          La proportion de députés de chaque groupe dans l'hémicycle est
+          reproduite dans chaque commission - c'est imposé par le règlement.{' '}
+          <B>On retrouve la même majorité, la même opposition</B>. Les débats y
+          sont juste un peu plus calmes, et les députés présents sont un peu
+          plus impliqués sur les sujets qui y sont discutés.
         </Paragraph>
+
+        <HelperText>
+          ...ajouter exemple répartition en se basant sur les données...
+        </HelperText>
 
         <Paragraph>
           Ce qui se passe en commission pour un texte de loi donné permet donc
@@ -80,96 +114,45 @@ export function Page({ groupes }: types.Props) {
           présente quand même dans l’hémicycle, mais il y sera probablement
           rejeté.
         </Paragraph>
-        <Title>La majorité et l'opposition</Title>
-        <Paragraph>
-          Lorsque des députés forment un groupe, ils peuvent choisir d'être un{' '}
-          <NiceItalic>«groupe d'opposition»</NiceItalic> (c'est-à-dire, opposé à
-          la politique du gouvernement).{' '}
-          <span className="font-bold">C'est purement déclaratif</span>, cela
-          n'engage à rien et peut être changé à tout moment. Un groupe
-          d'opposition a quelques droits supplémentaires : les journées de
-          "niche parlementaire" et la présidence de la commission des finances
-          notamment.
-        </Paragraph>
+        {/* 
+        <Title>Les rôles dans une commission</Title>
+        <Title>Comment se déroule une réunion de commission ?</Title> */}
 
-        <Paragraph>
-          Parmi les autres groupes, le plus grand d'entre eux est
-          automatiquement appelé <NiceItalic>«groupe majoritaire»</NiceItalic>,
-          et les autres sont dit <NiceItalic>«minoritaires»</NiceItalic>. Dans
-          la pratique, les groupes minoritaires sont alliés du groupe
-          majoritaire et votent exactement comme lui. On dit souvent{' '}
-          <span className="font-bold">"la majorité" </span> pour désigner à la
-          fois le groupe majoritaire et les groupes minoritaires.
-        </Paragraph>
-
-        <Paragraph>
-          Les groupes minoritaires ont également accès aux journées de niche
-          parlementaire, mais pas aux autres avantages de l'opposition. Quant au
-          groupe majoritaire, il n'a aucun droit particulier.
-        </Paragraph>
-
-        {groupeMajoritaire && (
-          <HelperText>
-            <p className="mb-1">
-              Dans la configuration actuelle
-              <QuickBadge groupe={groupeMajoritaire} /> est le groupe
-              majoritaire.
-            </p>
-            <div className="mb-1">
-              Les groupes minoritaires sont :
-              <ul className="pl-4">
-                {groupesMinoritaires.map(g => (
-                  <li key={g.group_acronym}>
-                    <QuickBadge groupe={g} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="mb-1">
-              Les groupes d'opposition sont :
-              <ul className="pl-4">
-                {groupesOpposition.map(g => (
-                  <li key={g.group_acronym}>
-                    <QuickBadge groupe={g} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </HelperText>
-        )}
-
-        <Title>Les "membres apparentés"</Title>
-        <Paragraph>
-          Ce sont des députés qui souhaitent être affiliés à un groupe sans en
-          faire vraiment partie. C'est une distinction subtile permise par le
-          règlement de l'Assemblée.
-        </Paragraph>
-        <Paragraph>
-          Dans la pratique{' '}
-          <span className="font-bold">
-            cette distinction n'a pas beaucoup d'importance
-          </span>
-          , tout se passe comme s'ils étaient des membres à part entière. Les
-          membres apparentés comptent dans l'effectif du groupe, lorsqu'il
-          s'agit d'assigner les postes dans les commissions, ou lors des votes
-          dans la Conférence des Présidents.
-        </Paragraph>
-        <Paragraph>
-          La seule différence est que les membres apparentés ne comptent pas
-          dans les 15 membres minimum qu'il faut pour constituer (et maintenir)
-          un groupe. Par exemple un groupe ne peut pas avoir 14 membres à part
-          entière et 3 membres apparentés - il doit absorber un des membres
-          apparentés, ou disparaitre.
-        </Paragraph>
         <Title>Ne pas confondre</Title>
         <Paragraph>
-          Quand on parle de "groupes", on parle typiquement des groupes
-          parlementaires. Il existe aussi à l'Assemblée des{' '}
-          <NiceItalic>groupes d'études</NiceItalic>, des{' '}
-          <NiceItalic>groupes d'amitié</NiceItalic>, et des{' '}
-          <NiceItalic>groupes de travail</NiceItalic>, qui n'ont rien à avoir
-          avec les premiers.
+          Quand on parle des "commissions",{' '}
+          <B>on parle typiquement des commissions permanentes</B>.
         </Paragraph>
+
+        <Paragraph>
+          Pour un certain projet de loi, on parle parfois de{' '}
+          <NiceItalic>la commission sur le fond</NiceItalic>, c'est la
+          commission permanente principale qui travaille sur ce texte. C'est
+          pour la distinguer des éventuelles{' '}
+          <NiceItalic>commissions pour avis</NiceItalic>, ce sont d'autres
+          commissions permanentes à qui on demande leur avis sur le texte, en
+          complément.
+        </Paragraph>
+
+        <HelperText>...ajouter exemple...</HelperText>
+
+        <Paragraph>
+          Il existe aussi à l'Assemblée des{' '}
+          <NiceItalic>commissions spéciales</NiceItalic>. Elles sont créées au
+          cas par cas, temporairement, pour s'occuper d'un projet de loi en
+          particulier. Elles remplacent la commission permanente uniquement pour
+          ce texte.
+        </Paragraph>
+        <HelperText>...ajouter exemple...</HelperText>
+
+        <Paragraph>
+          Il y a aussi les <NiceItalic>commissions d’enquêtes</NiceItalic>.
+          Celles-ci n'ont rien à voir avec l'élaboration de la loi. Elles sont
+          créées ponctuellement pour investiguer pendant quelques mois un sujet
+          de société, ou la gestion d'un service public par exemple, puis elles
+          écrivent un rapport qui est présenté au reste de l'Assemblée.
+        </Paragraph>
+        <HelperText>...ajouter exemple...</HelperText>
       </div>
     </div>
   )
@@ -194,7 +177,7 @@ function Title({
 }
 
 function Paragraph({ children }: { children: ReactNode }) {
-  return <p className="mt-4">{children}</p>
+  return <div className="mt-4">{children}</div>
 }
 
 function HelperText({ children }: { children: ReactNode }) {
