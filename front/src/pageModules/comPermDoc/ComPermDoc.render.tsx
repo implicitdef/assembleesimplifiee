@@ -31,18 +31,34 @@ export function Page({ groupes }: types.Props) {
         </h1>
         <Paragraph>
           Pour travailler plus efficacement, les députés sont partagés en{' '}
-          <B>huit groupes de travail principaux</B>, les{' '}
+          <B>huit groupes de travail</B> principaux, les{' '}
           <NiceItalic>commissions permanentes</NiceItalic>, qui dégrossissent
-          les projets ou propositions de loi avant qu'ils n'arrivent devant
-          l'ensemble des députés dans l'hémicycle. On les appelle "permanentes"
-          par rapport à d'autres commissions qui peuvent être créées
-          ponctuellement pour un besoin précis.
+          les projets de loi avant qu'ils n'arrivent devant l'ensemble des
+          députés dans l'hémicycle. On les appelle "permanentes" par rapport à
+          d'autres commissions qui peuvent être créées ponctuellement pour un
+          besoin précis.
         </Paragraph>
+
+        <HelperText>
+          Un exemple au hasard : le projet de loi de 2022{' '}
+          <NiceItalic>
+            «Mesures d’urgence relatives au fonctionnement du marché du travail
+            en vue du plein emploi»
+          </NiceItalic>{' '}
+          est passé par la{' '}
+          <NiceItalic>commission des Affaires sociales</NiceItalic>. Les députés
+          qui en sont membres l'ont débattu, et légèrement modifié, lors de
+          plusieurs réunions de la commission en septembre 2022.
+          <Paragraph>
+            Ensuite, en octobre, il a été discuté, et encore un peu modifié, par
+            l'ensemble des députés au cours de plusieurs séances en hémicycle.{' '}
+          </Paragraph>
+        </HelperText>
 
         <Paragraph>
           Chaque député appartient à une et une seule commission permanente.
-          Généralement ils essayent d'être dans une commission qui correspond à
-          leurs centres d'intérêts ou à leurs compétences.
+          Souvent ils essayent d'être dans une commission qui correspond à leurs
+          centres d'intérêts ou à leurs compétences.
         </Paragraph>
 
         <Paragraph>
