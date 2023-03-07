@@ -1,24 +1,11 @@
+import Image from 'next/image'
 import { ReactNode } from 'react'
-import { GroupeBadge } from '../../components/GroupeBadge'
+import { GrapheRepartitionGroupesLight } from '../../components/GrapheRepartitionGroupesLIght'
 import { B, NiceItalic } from '../../components/textHelpers'
 import { TitleAndDescription } from '../../components/TitleAndDescription'
 import * as types from './ComPermDoc.types'
-import sortBy from 'lodash/sortBy'
-import Image from 'next/image'
 
-export function Page({ groupes }: types.Props) {
-  const groupeRN = groupes.find(_ => _.group_acronym === 'RN')
-  const groupeECOLO = groupes.find(_ => _.group_acronym === 'ECOLO')
-  const groupeLIOT = groupes.find(_ => _.group_acronym === 'LIOT')
-
-  const groupeMajoritaire = groupes.find(_ => _.group_pos === 'maj')
-  const groupesMinoritaires = sortGroupes(
-    groupes.filter(_ => _.group_pos === 'min'),
-  )
-  const groupesOpposition = sortGroupes(
-    groupes.filter(_ => _.group_pos === 'opp'),
-  )
-
+export function Page({ groupesDataHemicycle, groupesDataComFin }: types.Props) {
   return (
     <div className="mb-10">
       <TitleAndDescription
@@ -101,7 +88,15 @@ export function Page({ groupes }: types.Props) {
         </Paragraph>
 
         <HelperText>
-          ...ajouter exemple répartition en se basant sur les données...
+          Pour illustrer, voici la répartition actuelle des groupes dans la{' '}
+          <NiceItalic>commission des Finances</NiceItalic> :{' '}
+          <GrapheRepartitionGroupesLight
+            groupesData={groupesDataComFin.groupes}
+          />
+          Comparée à celle des groupes dans tout l'hémicycle :
+          <GrapheRepartitionGroupesLight
+            groupesData={groupesDataHemicycle.groupes}
+          />
         </HelperText>
 
         <Paragraph>
@@ -186,22 +181,4 @@ function HelperText({ children }: { children: ReactNode }) {
       {children}
     </div>
   )
-}
-
-function QuickBadge({ groupe }: { groupe: types.Groupe }) {
-  const { group_acronym, group_color, group_name } = groupe
-
-  return (
-    <GroupeBadge
-      acronym={group_acronym}
-      color={group_color}
-      nom={group_name}
-      fullName
-      className="ml-1 py-0"
-    />
-  )
-}
-
-function sortGroupes(groupes: types.Groupe[]) {
-  return sortBy(groupes, _ => -_.nb_deputes)
 }
