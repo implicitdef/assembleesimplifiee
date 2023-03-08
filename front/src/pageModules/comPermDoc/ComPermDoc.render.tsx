@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { ReactNode } from 'react'
-import { GrapheRepartitionGroupesLight } from '../../components/GrapheRepartitionGroupesLIght'
+import { GrapheRepartitionGroupesLight } from '../../components/GrapheRepartitionGroupesLight'
 import { B, NiceItalic } from '../../components/textHelpers'
 import { TitleAndDescription } from '../../components/TitleAndDescription'
 import * as types from './ComPermDoc.types'
@@ -93,6 +93,7 @@ export function Page({ groupesDataHemicycle, groupesDataComFin }: types.Props) {
           {groupesDataComFin.total} députés) :{' '}
           <GrapheRepartitionGroupesLight
             groupesData={groupesDataComFin.groupes}
+            forCommission
           />
           Comparée à celle des groupes dans tout l'hémicycle (
           {groupesDataHemicycle.total} députés) :
