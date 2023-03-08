@@ -49,6 +49,7 @@ async function getGroupesData(
         acronym: group_acronym,
         color: group_color,
         deputesShareOfTotal: nb_deputes / nbTotal,
+        nbDeputes: nb_deputes,
       }
     }),
   }

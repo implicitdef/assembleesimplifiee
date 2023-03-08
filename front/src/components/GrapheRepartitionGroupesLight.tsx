@@ -1,5 +1,4 @@
 import { pickTextColor } from '../lib/utils'
-import { MyLink } from './MyLink'
 
 export type Props = {
   groupesData: GroupData[]
@@ -7,11 +6,13 @@ export type Props = {
 
 export type GroupData = {
   acronym: string
+  nbDeputes: number
   deputesShareOfTotal: number
   color: string
 }
 
 export function GrapheRepartitionGroupesLight({ groupesData }: Props) {
+  return <DottedGraph {...{ groupesData }} />
   return (
     <div className="m-2 flex h-10 flex-row shadow-lg">
       {groupesData.map(g => {
@@ -30,6 +31,28 @@ export function GrapheRepartitionGroupesLight({ groupesData }: Props) {
             {g.acronym}
           </div>
         )
+      })}
+    </div>
+  )
+}
+
+function DottedGraph({ groupesData }: Props) {
+  return (
+    <div className="m-2 flex flex-col flex-wrap gap-1 ">
+      {groupesData.map(g => {
+        return Array(g.nbDeputes)
+          .fill(0)
+          .map((_, idx) => {
+            return (
+              <div
+                key={g.acronym + idx}
+                style={{
+                  background: g.color,
+                }}
+                className="h-3 w-3 rounded"
+              ></div>
+            )
+          })
       })}
     </div>
   )

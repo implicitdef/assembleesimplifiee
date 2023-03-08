@@ -1,4 +1,4 @@
-import { GroupData } from '../../components/GrapheRepartitionGroupesLIght'
+import { GroupData } from '../../components/GrapheRepartitionGroupesLight'
 
 export type Props = {
   groupesDataHemicycle: Repartition

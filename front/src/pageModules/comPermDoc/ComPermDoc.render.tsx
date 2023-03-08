@@ -89,11 +89,13 @@ export function Page({ groupesDataHemicycle, groupesDataComFin }: types.Props) {
 
         <HelperText>
           Pour illustrer, voici la répartition actuelle des groupes dans la{' '}
-          <NiceItalic>commission des Finances</NiceItalic> :{' '}
+          <NiceItalic>commission des Finances</NiceItalic> (
+          {groupesDataComFin.total} députés) :{' '}
           <GrapheRepartitionGroupesLight
             groupesData={groupesDataComFin.groupes}
           />
-          Comparée à celle des groupes dans tout l'hémicycle :
+          Comparée à celle des groupes dans tout l'hémicycle (
+          {groupesDataHemicycle.total} députés) :
           <GrapheRepartitionGroupesLight
             groupesData={groupesDataHemicycle.groupes}
           />
