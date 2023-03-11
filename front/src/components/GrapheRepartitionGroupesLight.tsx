@@ -1,3 +1,4 @@
+import { sortGroupes } from '../lib/hardcodedData'
 import { pickTextColor } from '../lib/utils'
 
 export type Props = {
@@ -17,13 +18,14 @@ export function GrapheRepartitionGroupesLight({
   forCommission,
 }: Props) {
   // return <DottedGraph {...{ groupesData }} />
+
   return (
     <div
       className={`m-2 flex flex-row shadow-lg ${
         forCommission ? 'h-6' : 'h-48'
       }`}
     >
-      {groupesData.map(g => {
+      {sortGroupes(groupesData).map(g => {
         return (
           <div
             key={g.acronym}

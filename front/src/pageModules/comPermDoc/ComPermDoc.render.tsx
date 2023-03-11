@@ -151,7 +151,18 @@ export function Page({
           particulier. Elles remplacent la commission permanente uniquement pour
           ce texte.
         </Paragraph>
-        <HelperText>...ajouter exemple...</HelperText>
+        <HelperText>
+          Par exemple, en 2020 le projet de loi{' '}
+          <NiceItalic>
+            «Accélération et simplification de l’action publique»
+          </NiceItalic>{' '}
+          a été confiée à la{' '}
+          <NiceItalic>
+            commission spéciale chargée d'examiner le projet de loi
+            d’accélération et de simplification de l’action publique
+          </NiceItalic>
+          .
+        </HelperText>
 
         <Paragraph>
           Il y a aussi les <NiceItalic>commissions d’enquêtes</NiceItalic>.
@@ -160,7 +171,14 @@ export function Page({
           de société, ou la gestion d'un service public par exemple, puis elles
           écrivent un rapport qui est présenté au reste de l'Assemblée.
         </Paragraph>
-        <HelperText>...ajouter exemple...</HelperText>
+        <HelperText>
+          Par exemple, en début d'année 2023, il y a eu une{' '}
+          <NiceItalic>
+            commission d’enquête relative aux révélations des Uber Files :
+            l’ubérisation, son lobbying et ses conséquences
+          </NiceItalic>
+          .
+        </HelperText>
       </div>
     </div>
   )
