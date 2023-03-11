@@ -5,7 +5,11 @@ import { B, NiceItalic } from '../../components/textHelpers'
 import { TitleAndDescription } from '../../components/TitleAndDescription'
 import * as types from './ComPermDoc.types'
 
-export function Page({ groupesDataHemicycle, groupesDataComFin }: types.Props) {
+export function Page({
+  groupesDataHemicycle,
+  groupesDataComFin,
+  groupesDataComLois,
+}: types.Props) {
   return (
     <div className="mb-10">
       <TitleAndDescription
@@ -86,20 +90,26 @@ export function Page({ groupesDataHemicycle, groupesDataComFin }: types.Props) {
           sont juste un peu plus calmes, et les députés présents sont un peu
           plus impliqués sur les sujets qui y sont discutés.
         </Paragraph>
-
         <HelperText>
-          Pour illustrer, voici la répartition actuelle des groupes dans la{' '}
+          Pour illustrer, voici la répartition actuelle des groupes dans tout
+          l'hémicycle ({groupesDataHemicycle.total} députés) :{' '}
+          <GrapheRepartitionGroupesLight
+            groupesData={groupesDataHemicycle.groupes}
+          />
+          On retrouve à peu près la même répartition par exemple dans la{' '}
           <NiceItalic>commission des Finances</NiceItalic> (
-          {groupesDataComFin.total} députés) :{' '}
+          {groupesDataComFin.total} députés) :
           <GrapheRepartitionGroupesLight
             groupesData={groupesDataComFin.groupes}
             forCommission
           />
-          Comparée à celle des groupes dans tout l'hémicycle (
-          {groupesDataHemicycle.total} députés) :
+          Ou dans la <NiceItalic>commission des Lois</NiceItalic> (
+          {groupesDataComLois.total} députés) :
           <GrapheRepartitionGroupesLight
-            groupesData={groupesDataHemicycle.groupes}
+            groupesData={groupesDataComLois.groupes}
+            forCommission
           />
+          Etc.
         </HelperText>
 
         <Paragraph>

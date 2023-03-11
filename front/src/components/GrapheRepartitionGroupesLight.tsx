@@ -27,21 +27,48 @@ export function GrapheRepartitionGroupesLight({
         return (
           <div
             key={g.acronym}
-            className={` flex  cursor-default items-center justify-center overflow-hidden break-all text-center leading-4 ${pickTextColor(
+            className={` flex  cursor-default items-center justify-center overflow-hidden text-center leading-4 ${pickTextColor(
               g.color,
             )} ${forCommission ? 'text-sm' : 'text-md'}`}
             style={{
               background: g.color,
               width: `${g.deputesShareOfTotal * 100}%`,
+              writingMode: 'vertical-rl',
+              textOrientation: 'upright',
             }}
           >
-            {g.acronym}
+            {forCommission || g.acronym}
           </div>
         )
       })}
     </div>
   )
 }
+
+// export function GrapheRepartitionLegend({
+//   groupesData,
+// }: {
+//   groupesData: GroupData[]
+// }) {
+//   return (
+//     <ul className="flex list-none flex-wrap items-baseline space-y-4 space-x-4">
+//       {groupesData.map(g => (
+//         <li key={g.acronym} className="block">
+//           <span
+//             className={`mx-2 inline-block  py-1 px-2 ${pickTextColor(g.color)}`}
+//             style={{
+//               background: g.color,
+//             }}
+//           >
+//             {g.acronym}
+//           </span>
+//           <span className="text-slate-400">{g.nom}</span>
+//         </li>
+//       ))}
+//       <li></li>
+//     </ul>
+//   )
+// }
 
 // Essayer avec cette data viz d'un hémicycle ? https://flourish.studio/blog/visualize-elections-2022/
 // voir si c'est payant ou pas et si je peux le pomper

@@ -1,30 +1,32 @@
 import sum from 'lodash/sum'
 import { GetStaticProps } from 'next'
 import { dbReleve } from '../../lib/dbReleve'
-import { LATEST_LEGISLATURE } from '../../lib/hardcodedData'
+import { ComPermAcronym, LATEST_LEGISLATURE } from '../../lib/hardcodedData'
 import * as types from './ComPermDoc.types'
 
 export const getStaticProps: GetStaticProps<types.Props> = async context => {
-  const groupesDataHemicycle = await getGroupesData(false)
-  const groupesDataComFin = await getGroupesData(true)
+  const groupesDataHemicycle = await getGroupesData()
+  const groupesDataComFin = await getGroupesData('CION_FIN')
+  const groupesDataComLois = await getGroupesData('CION_LOIS')
 
   return {
     props: {
       groupesDataHemicycle,
       groupesDataComFin,
+      groupesDataComLois,
     },
   }
 }
 
 async function getGroupesData(
-  comFinancesOnly: boolean,
+  comPermName?: ComPermAcronym,
 ): Promise<types.Repartition> {
   const q1 = dbReleve
     .selectFrom('deputes_in_legislatures')
     .where('legislature', '=', LATEST_LEGISLATURE)
     .where('ongoing', '=', true)
     .where('group_acronym', 'is not', null)
-  const q2 = comFinancesOnly ? q1.where('com_perm_name', '=', 'CION_FIN') : q1
+  const q2 = comPermName ? q1.where('com_perm_name', '=', comPermName) : q1
   const q3 = q2
     .groupBy(['group_acronym', 'group_color'])
     .select(['group_acronym', 'group_color'])
