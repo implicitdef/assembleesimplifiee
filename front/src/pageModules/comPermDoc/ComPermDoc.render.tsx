@@ -142,7 +142,16 @@ export function Page({
           complément.
         </Paragraph>
 
-        <HelperText>...ajouter exemple...</HelperText>
+        <HelperText>
+          Par exemple, début 2016, le travail sur le projet de loi{' '}
+          <NiceItalic>«Economie : pour une République numérique»</NiceItalic>{' '}
+          est confiée à la <NiceItalic>commission des Lois</NiceItalic> en tant
+          que commission sur le fond. Mais trois autres commissions (
+          <NiceItalic>Affaires culturelles</NiceItalic>,{' '}
+          <NiceItalic>Affaires sociales</NiceItalic>,{' '}
+          <NiceItalic>Affaires économiques</NiceItalic>) ont aussi travaillé
+          dessus, en tant que commissions pour avis.
+        </HelperText>
 
         <Paragraph>
           Il existe aussi à l'Assemblée des{' '}
