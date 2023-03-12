@@ -174,6 +174,31 @@ export function Page({
         </HelperText>
 
         <Paragraph>
+          Il y a aussi pour certain projets de loi une{' '}
+          <NiceItalic>commission mixte paritaire</NiceItalic>. Quand les députés
+          à l'Assemblée et les sénateurs au Sénat n'arrivent pas à s'accorder
+          sur même version du texte, on finit souvent par créer une petite
+          commission dédiée pour obtenir une version finale du texte. Elle est
+          dite <NiceItalic>mixte</NiceItalic> car elle contient à la fois des
+          députés et des sénateurs, et <NiceItalic>paritaire</NiceItalic> parce
+          qu'elle contient autant des uns que des autres : 7 députés, 7
+          sénateurs.
+        </Paragraph>
+        <HelperText>
+          Par exemple, fin 2022 le projet de loi{' '}
+          <NiceItalic>
+            «d’orientation et de programmation du ministère de l’intérieur»
+          </NiceItalic>{' '}
+          a fini par passer par la{' '}
+          <NiceItalic>
+            commission mixte paritaire chargée de proposer un texte sur les
+            dispositions restant en discussion du projet de loi d'orientation et
+            de programmation du ministère de l'intérieur
+          </NiceItalic>
+          .
+        </HelperText>
+
+        <Paragraph>
           Il y a aussi les <NiceItalic>commissions d’enquêtes</NiceItalic>.
           Celles-ci n'ont rien à voir avec l'élaboration de la loi. Elles sont
           créées ponctuellement pour investiguer pendant quelques mois un sujet
