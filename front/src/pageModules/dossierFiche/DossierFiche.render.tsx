@@ -4,10 +4,7 @@ import uniqBy from 'lodash/uniqBy'
 import { Fragment, ReactNode, useState } from 'react'
 import { DeputeItem } from '../../components/DeputeItem'
 import { MyLink } from '../../components/MyLink'
-import {
-  LATEST_LEGISLATURE,
-  simplifyCommissionName,
-} from '../../lib/hardcodedData'
+import { LATEST_LEGISLATURE } from '../../lib/hardcodedData'
 import * as acteTypes from '../../lib/types/acte'
 import { capitalizeFirstLetter, formatDate } from '../../lib/utils'
 import * as types from './DossierFiche.types'
@@ -322,9 +319,7 @@ function Acte({
         {dateActe && <p className="font-bold">{f(dateActe)} </p>}
         {organe && (
           <p className=" text-slate-500">
-            {organe.code_type === 'COMPER'
-              ? simplifyCommissionName(organe.libelle)
-              : organe.libelle}
+            {organe.code_type === 'COMPER' ? organe.libelle : organe.libelle}
           </p>
         )}
       </div>

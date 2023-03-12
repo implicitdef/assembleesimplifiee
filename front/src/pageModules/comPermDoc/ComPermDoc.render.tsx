@@ -30,9 +30,9 @@ export function Page({
         </Paragraph>
         <Image
           className="mx-auto my-2"
-          src="/pics/com_aff_sociales.png"
+          src="/pics/com_aff_sociales_500.jpeg"
           width={500}
-          height={10000}
+          height={281}
           alt="Photo réunion de la commission des affaires sociales"
         />
         <Paragraph>
