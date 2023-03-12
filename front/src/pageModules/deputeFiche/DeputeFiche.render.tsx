@@ -3,6 +3,7 @@ import Image from 'next/image'
 import sortBy from 'lodash/sortBy'
 import { GroupeBadge } from '../../components/GroupeBadge'
 import { MyLink } from '../../components/MyLink'
+import { TitleAndDescription } from '../../components/TitleAndDescription'
 import {
   FonctionInBureau,
   FonctionInCom,
@@ -11,7 +12,6 @@ import {
 import {
   addPrefixToCirconscription,
   getComPermName,
-  getComPermNameWithPrefix,
   LATEST_LEGISLATURE,
 } from '../../lib/hardcodedData'
 import {
@@ -22,7 +22,6 @@ import {
 } from '../../lib/utils'
 import * as types from './DeputeFiche.types'
 import { StatsGraph } from './lib/StatsGraph'
-import { TitleAndDescription } from '../../components/TitleAndDescription'
 
 export function Page(props: types.Props) {
   const { deputeData } = props

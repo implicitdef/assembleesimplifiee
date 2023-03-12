@@ -4,12 +4,7 @@ import type {
   FonctionInCom,
   ReleveTables,
 } from '../lib/dbReleve'
-import {
-  ComPermAcronym,
-  getComPermName,
-  getComPermNameWithPrefix,
-  LATEST_LEGISLATURE,
-} from '../lib/hardcodedData'
+import { ComPermAcronym, getComPermName } from '../lib/hardcodedData'
 import { GroupeBadge } from './GroupeBadge'
 import { MyLink } from './MyLink'
 
