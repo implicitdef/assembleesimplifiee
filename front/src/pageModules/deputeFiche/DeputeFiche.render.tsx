@@ -10,10 +10,16 @@ import {
 } from '../../lib/dbReleve'
 import {
   addPrefixToCirconscription,
+  getComPermName,
   getComPermNameWithPrefix,
   LATEST_LEGISLATURE,
 } from '../../lib/hardcodedData'
-import { formatDate, getAge, getOrdinalSuffixFeminine } from '../../lib/utils'
+import {
+  capitalizeFirstLetter,
+  formatDate,
+  getAge,
+  getOrdinalSuffixFeminine,
+} from '../../lib/utils'
 import * as types from './DeputeFiche.types'
 import { StatsGraph } from './lib/StatsGraph'
 import { TitleAndDescription } from '../../components/TitleAndDescription'
@@ -329,7 +335,9 @@ function ComPerm({ depute }: { depute: types.Depute }) {
       {depute.com_perm_fonction && depute.com_perm_name && (
         <p className="">
           <span className="">
-            Commission {getComPermNameWithPrefix(depute.com_perm_name)}
+            {capitalizeFirstLetter(
+              getComPermName(depute.com_perm_name, 'short'),
+            )}
           </span>{' '}
           {depute.com_perm_fonction !== 'Membre' ? (
             <span className="font-bold">

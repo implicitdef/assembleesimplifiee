@@ -92,67 +92,80 @@ export const colorsForGroupsOldLegislatures: { [acronym: string]: string } = {
   NI: '#8D949A',
 }
 
-const commissionsPermanentes = {
-  'CION-CEDU': 'affaires culturelles',
-  CION_LOIS: 'lois',
-  'CION-DVP': 'développement durable',
-  CION_AFETR: 'affaires étrangères',
-  'CION-ECO': 'affaires économiques',
-  'CION-SOC': 'affaires sociales',
-  CION_FIN: 'finances',
-  CION_DEF: 'défense',
+const commissionPermanentes = [
+  // L'ordre de déclaration sert d'ordre d'affichage
+  {
+    acronym: 'CION_LOIS',
+    shortName: 'commission des Lois',
+
+    fullName: `commission des lois constitutionnelles, de la législation et de l'administration générale de la République`,
+  },
+  {
+    acronym: 'CION_FIN',
+    shortName: 'commission des Finances',
+    fullName: `commission des finances, de l'économie générale et du contrôle budgétaire`,
+  },
+  {
+    acronym: 'CION-SOC',
+    shortName: null,
+    fullName: 'commission des Affaires sociales',
+  },
+  {
+    acronym: 'CION-ECO',
+    shortName: null,
+
+    fullName: 'commission des Affaires économiques',
+  },
+  {
+    acronym: 'CION-CEDU',
+    shortName: null,
+
+    fullName: `commission des Affaires culturelles et de l'Éducation`,
+  },
+  {
+    acronym: 'CION-DVP',
+    shortName: null,
+
+    fullName: `commission du Développement durable et de l'Aménagement du territoire`,
+  },
+  {
+    acronym: 'CION_AFETR',
+    shortName: null,
+    fullName: 'commission des Affaires étrangères',
+  },
+  {
+    acronym: 'CION_DEF',
+    shortName: 'commission de la Défense',
+    fullName: 'commission de la défense nationale et des forces armées',
+  },
   // old ones before 2008 reform
-  CION_CULT: 'affaires culturelles',
-  CION_AFECO: 'affaires économiques',
-} as const
-export type ComPermAcronym = keyof typeof commissionsPermanentes
+  {
+    acronym: 'CION_CULT',
+    shortName: 'commission des Affaires culturelles',
+    fullName: 'commission des affaires culturelles, familiales et sociales',
+  },
+  {
+    acronym: 'CION_AFECO',
+    shortName: 'commission des Affaires économiques',
+    fullName:
+      "commission des affaires économiques, de l'environnement et du territoire",
+  },
+] as const
 
-export function getComPermName(comPermAcronym: ComPermAcronym): string {
-  return commissionsPermanentes[comPermAcronym]
-}
+export type ComPermAcronym = typeof commissionPermanentes[number]['acronym']
 
-export function getComPermNameWithPrefix(
+export function getComPermName(
   comPermAcronym: ComPermAcronym,
+  kind: 'short' | 'full',
 ): string {
-  const name = getComPermName(comPermAcronym)
-  const firstWord = name.split(' ')[0]
-  const preposition =
-    firstWord === 'défense'
-      ? 'de la'
-      : firstWord === 'développement'
-      ? 'du'
-      : 'des'
-  return `${preposition} ${name}`
-}
-
-export function getComPermFullName(comPermAcronym: ComPermAcronym): string {
-  return `Commission ${getComPermNameWithPrefix(comPermAcronym)}`
-}
-
-export function simplifyCommissionName(commissionFullName: string) {
-  switch (commissionFullName) {
-    case `Commission des finances, de l'économie générale et du contrôle budgétaire`:
-      return 'Commission des finances'
-    case `Commission de la défense nationale et des forces armées`:
-      return 'Commission de la Défense'
-    case `Commission des affaires économiques, de l'environnement et du territoire`:
-    case `Commission des affaires économiques`:
-      return 'Commission des affaires économiques'
-    case `Commission des affaires culturelles, familiales et sociales`:
-    case `Commission des affaires culturelles et de l'éducation`:
-      return 'Commission des affaires culturelles'
-    case `Commission du développement durable et de l'aménagement du territoire`:
-      return 'Commission du développement durable'
-    case `Commission des lois constitutionnelles, de la législation et de l'administration générale de la République`:
-      return 'Commission des lois'
-    case `Commission des affaires sociales`:
-      return 'Commission des affaires sociales'
-    case `Commission des affaires étrangères`:
-      return 'Commission des affaires étrangères'
-    default:
-      return commissionFullName
+  const com = commissionPermanentes.find(_ => _.acronym === comPermAcronym)
+  if (!com) {
+    throw new Error(`No commission for acronym ${comPermAcronym}`)
   }
+  return kind === 'short' && com.shortName ? com.shortName : com.fullName
 }
+
+export const comPermDisplayOrder = commissionPermanentes.map(_ => _.acronym)
 
 const groupesDisplayOrder: string[] = [
   'LFI-NUPES',

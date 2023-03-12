@@ -71,7 +71,7 @@ function Division({
 }) {
   return (
     <div
-      className={` border-b-2 border-dotted border-slate-800 last:border-b-0  ${classname}`}
+      className={` border-b-2 border-dotted border-slate-800 first:border-b-0 last:border-b-0  ${classname}`}
     >
       {children}
     </div>
